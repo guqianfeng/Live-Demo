@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        :root{
+            --size: 400px;
+        }
+        div{
+            position: relative;
+            width: var(--size);
+            height: var(--size);
+            border: calc(var(--size) / 40) solid skyblue;
+            margin: 100px auto;
+            background: url("./images/shanyi.jpg") no-repeat center;
+            background-size: var(--size);
+            overflow: hidden;
+            cursor: pointer;
+            transition: .5s;
+        }
+        div:after{
+            position: absolute;
+            content: "善逸你好帅啊";
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            font: calc(var(--size) / 5) / var(--size) "微软雅黑";
+            opacity: 0;
+            transition: .5s;
+            top: var(--size);
+        }
+        div:hover{
+            transform: translateY(-5px);
+            box-shadow: 5px 5px 5px 5px;
+            background-size: calc(var(--size) * 1.5);
+        }
+        div:hover:after{
+            top: 0;
+            opacity: .5;
+        }
+    </style>
+</head>
+<body>
+    <div>
+
+    </div>
+</body>
+</html>
