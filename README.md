@@ -4,7 +4,7 @@
 
 * 直播小案例，萌新间的知识交流，或是菜逼主播直播打游戏被打的嗷嗷叫的过程
 * 先介绍个大佬的博客，该大佬叫[阮一峰](http://www.ruanyifeng.com/home.html)
-* 在他最新一期的[科技爱好者周刊：第 76 期](http://www.ruanyifeng.com/blog/2019/10/weekly-issue-76.html),有这么一段话
+* 其中有一期[科技爱好者周刊：第 76 期](http://www.ruanyifeng.com/blog/2019/10/weekly-issue-76.html),有这么一段话
 
     ![](./images/直播的开始.jpg)
 
