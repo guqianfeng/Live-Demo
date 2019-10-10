@@ -20,4 +20,4 @@
 > 菜单   
 
 1. [hover_demo](https://qianfengg.github.io/Live-Demo/1-hover_demo/index), 录制视频暂无 
-2. [flex_game](https://flexboxfroggy.com/), 录制视频暂无 
+2. [flex_game](https://flexboxfroggy.com/), [录制视频](https://www.bilibili.com/video/av70801303/)
