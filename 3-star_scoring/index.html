@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        body{
+            display: flex;
+            height: 100vh;
+            background: linear-gradient(45deg, orange, skyblue);
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 50px;
+        }
+        #star{
+            display: flex;
+            cursor: pointer;
+        }
+        #score{
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+<div id="star">
+    <div>☆</div>
+    <div>☆</div>
+    <div>☆</div>
+    <div>☆</div>
+    <div>☆</div>
+</div>
+<div id="score">暂无评价</div>
+<script>
+    {
+        //☆★
+        let aStar = document.querySelectorAll("#star > div");
+        let oScore = document.getElementById("score");
+        let now = -1;
+        let resultArr = ["非常差","差","一般","好","满意"];
+
+        aStar.forEach((item,index) => {
+            item.addEventListener("mouseover", function(){
+                // console.log(item, index);
+                tab(index);
+            });
+            item.addEventListener("click", function(){
+                now = index;
+            });
+            item.addEventListener("mouseout", function(){
+                // console.log(item, index);
+                tab(now);
+            });
+        });
+
+        function tab(index){
+            aStar.forEach((item, idx) => {
+                idx <= index ? item.innerHTML = "★" : item.innerHTML = "☆";
+            });
+            if(index < 0){
+                oScore.style.visibility = "hidden";
+            }else{
+                oScore.style.visibility = "visible";
+                oScore.innerHTML = resultArr[index];
+            }
+        }
+    }
+</script>
+</body>
+</html>
