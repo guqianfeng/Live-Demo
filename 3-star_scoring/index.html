@@ -45,14 +45,12 @@
 
         aStar.forEach((item,index) => {
             item.addEventListener("mouseover", function(){
-                // console.log(item, index);
                 tab(index);
             });
             item.addEventListener("click", function(){
                 now = index;
             });
             item.addEventListener("mouseout", function(){
-                // console.log(item, index);
                 tab(now);
             });
         });
