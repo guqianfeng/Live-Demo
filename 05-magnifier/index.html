@@ -24,14 +24,11 @@
             border: none;
         }
 
-        div {
-            border: 1px solid black;
-        }
-
         #left {
             position: relative;
             width: 500px;
             height: 500px;
+            border: 1px solid #ccc;
         }
 
         #right {
@@ -41,6 +38,7 @@
             height: 400px;
             border-radius: 50%;
             overflow: hidden;
+            border: 1px solid #ccc;
         }
         #left > img{
             width: 100%;
@@ -53,6 +51,10 @@
             top: 0;
             background-color: rgba(0, 0, 0, .1);
             border-radius: 50%;
+        }
+
+        #right img{
+            position: absolute;
         }
     </style>
 </head>
@@ -84,6 +86,9 @@
         let move = (e) => {
             oMask.style.left = (e.clientX - x) + "px";
             oMask.style.top = (e.clientY - y) + "px";
+
+            oRightImage.style.left = -(e.clientX - x) * scale + "px";
+            oRightImage.style.top = -(e.clientY - y) * scale + "px";
         };
 
         oLeft.addEventListener("mouseenter", (e) => {
