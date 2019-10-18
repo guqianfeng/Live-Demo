@@ -40,11 +40,13 @@
             overflow: hidden;
             border: 1px solid #ccc;
         }
-        #left > img{
+
+        #left > img {
             width: 100%;
             height: 100%;
         }
-        #mask{
+
+        #mask {
             display: none;
             position: absolute;
             left: 0;
@@ -53,7 +55,7 @@
             border-radius: 50%;
         }
 
-        #right img{
+        #right img {
             position: absolute;
         }
     </style>
@@ -84,11 +86,15 @@
         let {x, y} = oLeft.getBoundingClientRect();
 
         let move = (e) => {
-            oMask.style.left = (e.clientX - x) + "px";
-            oMask.style.top = (e.clientY - y) + "px";
+            let LEFT = (e.clientX - x - oMask.clientWidth / 2);
+            let TOP = (e.clientY - y - oMask.clientHeight / 2);
+            LEFT = Math.min(Math.max(0, LEFT), oLeft.clientWidth - oMask.clientWidth);
+            TOP = Math.min(Math.max(0, TOP), oLeft.clientHeight - oMask.clientHeight);
+            oMask.style.left = LEFT + "px";
+            oMask.style.top = TOP + "px";
 
-            oRightImage.style.left = -(e.clientX - x) * scale + "px";
-            oRightImage.style.top = -(e.clientY - y) * scale + "px";
+            oRightImage.style.left = -LEFT * scale + "px";
+            oRightImage.style.top = -TOP * scale + "px";
         };
 
         oLeft.addEventListener("mouseenter", (e) => {
