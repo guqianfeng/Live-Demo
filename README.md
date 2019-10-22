@@ -19,7 +19,7 @@
 
 > 菜单   
 
-1. [hover_demo](https://qianfengg.github.io/Live-Demo/01-hover_demo/index), 录制视频暂无 
+1. [hover_demo](https://qianfengg.github.io/Live-Demo/01-hover_demo/index), [录制视频](https://www.bilibili.com/video/av72032058)
 2. [flex_game](https://flexboxfroggy.com/), [录制视频](https://www.bilibili.com/video/av70801303)
 3. [star_scoring](https://qianfengg.github.io/Live-Demo/03-star_scoring/index), [录制视频](https://www.bilibili.com/video/av71020298) 
 4. [Tower Hunter](./04-Tower%20Hunter游戏直播-10.13/Tower%20Hunter游戏.md), 录制视频暂无 
