@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        body {
+            display: grid;
+            height: 100vh;
+            grid-template: repeat(6, 1fr) / repeat(12, 1fr);
+        }
+
+        body > div {
+            box-sizing: border-box;
+            border: solid;
+        }
+
+        #header {
+            display: flex;
+            grid-area: 1 / 1 / span 1 / span 12;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #tree {
+            grid-area: 2 / 1 / span 5 / span 2;
+        }
+
+        #nav {
+            display: flex;
+            grid-area: 2 / 3 / span 1 / span 10;
+            align-items: center;
+        }
+
+        #nav > span {
+            margin-left: 3rem;
+        }
+
+        #nav > span.active {
+            color: red;
+            text-decoration: underline;
+        }
+
+        #content {
+            position: relative;
+            grid-area: 3 / 3 / span 4 / span 10;
+        }
+
+        #content > input {
+            display: none;
+        }
+
+        #content > input + label {
+            float: left;
+            min-width: 5rem;
+            min-height: 5rem;
+            margin: 2rem;
+            background-color: skyblue;
+            text-align: center;
+            font: 1rem / 5rem "宋体";
+            color: #fff;
+            font-weight: bold;
+            box-sizing: border-box;
+        }
+
+        #content > input:checked + label {
+            border: 3px solid black;
+        }
+
+        .has-children {
+            position: relative;
+        }
+
+        .has-children:before {
+            position: absolute;
+            content: "";
+            width: .3rem;
+            height: .3rem;
+            top: .4rem;
+            left: -.8rem;
+            border-right-style: solid;
+            border-bottom-style: solid;
+            transform: rotate(-45deg);
+        }
+
+        p.active {
+            background-color: rgba(255, 0, 0, .4);
+        }
+
+        li.open > .has-children:before {
+            transform: rotate(45deg);
+        }
+
+        li + ul {
+            display: none;
+        }
+
+        li.open + ul {
+            display: block;
+        }
+
+        #context-menu {
+            display: none;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            background-color: #fff;
+        }
+
+        #context-menu > li {
+            padding: 10px;
+            border: 1px solid #ccc;
+            transition: .1s;
+            cursor: pointer;
+        }
+
+        #context-menu > li:hover {
+            background-color: skyblue;
+            color: #fff;
+        }
+
+        #ope-btn-group button {
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<div id="header">
+    <div>练习</div>
+    <div id="ope-btn-group">
+        <button class="add-btn">新建</button>
+        <button class="del-btn">删除</button>
+    </div>
+</div>
+<div id="tree"></div>
+<div id="nav">
+    <span>1 > </span>
+    <span>2 > </span>
+    <span class="active">3</span>
+</div>
+<div id="content"></div>
+<ul id="context-menu">
+    <li class="del">删除</li>
+    <li class="rename">重命名</li>
+</ul>
+<script>
+    let data = [
+        {
+            id: 0,
+            name: "兽族英雄技能",
+            pid: -1
+        },
+        {
+            id: 1,
+            name: "剑圣",
+            pid: 0
+        },
+        {
+            id: 2,
+            name: "牛头人酋长",
+            pid: 0
+        },
+        {
+            id: 3,
+            name: "先知",
+            pid: 0
+        },
+        {
+            id: 4,
+            name: "巫医",
+            pid: 0
+        },
+        {
+            id: 5,
+            name: "疾风步",
+            pid: 1
+        },
+        {
+            id: 6,
+            name: "分身",
+            pid: 1
+        },
+        {
+            id: 7,
+            name: "致命一击",
+            pid: 1
+        },
+        {
+            id: 8,
+            name: "剑刃风暴",
+            pid: 1
+        },
+        {
+            id: 9,
+            name: "治疗波",
+            pid: 4
+        },
+        {
+            id: 10,
+            name: "妖术",
+            pid: 4
+        },
+        {
+            id: 11,
+            name: "毒蛇守卫",
+            pid: 4
+        },
+        {
+            id: 12,
+            name: "无敌",
+            pid: 4
+        },
+    ];
+    {
+        function getSelf(id) {
+            return data.filter(item => item.id == id)[0];
+        }
+
+
+        function getChildren(id) {
+            return data.filter(item => item.pid == id);
+        }
+
+        function getAllChildren(id) {
+            let children = getChildren(id);
+            let result = [].concat(children);
+            children.forEach(item => {
+                result = result.concat(getAllChildren(item.id));
+            });
+            return result;
+        }
+
+
+        function getParent(id) {
+            let self = getSelf(id);
+            return getSelf(self.pid);
+        }
+
+
+        function getAllParent(id) {
+            let parent = getParent(id);
+            let allParent = [];
+            while (parent) {
+                allParent.unshift(parent);
+                parent = getParent(parent.id);
+            }
+            return allParent;
+        }
+
+        let nowId = 1;
+        let topPid = -1;
+        let oTree = document.getElementById("tree");
+        let oNav = document.getElementById("nav");
+        let oContent = document.getElementById("content");
+        let oBtnGroup = document.getElementById("ope-btn-group");
+        let oContextMenu = document.getElementById("context-menu");
+
+        let renderNav = () => {
+            let inner = "";
+            let self = getSelf(nowId);
+            let parents = getAllParent(nowId);
+            parents.forEach(item => {
+                inner += `<span data-id="${item.id}">${item.name} > </span>`
+            });
+            inner += `<span class="active" data-id="${self.id}">${self.name}</span>`;
+            return inner;
+        };
+
+        let renderContent = () => {
+            let inner = "";
+            let children = getChildren(nowId);
+            children.forEach(item => {
+                inner += `<input type="checkbox" id="${item.id}"/><label for="${item.id}" data-id="${item.id}">${item.name}</label>`
+            });
+            return inner;
+        };
+
+        let renderTree = (pid, level = 0) => {
+            let allParent = getAllParent(nowId);
+            allParent.push(getSelf(nowId));
+            let inner = `<ul>
+                            ${getChildren(pid).map(item => {
+                let children = getChildren(item.id);
+                return `<li class="${allParent.includes(item) ? 'open' : 'none'} ">
+                                            <p data-id="${item.id}" style="margin-left: ${2 * (level) + 2.6}rem" class="${children.length ? 'has-children' : ''} ${item.id == nowId ? 'active' : ''}"><span>${item.name}</span></p>
+                                        </li>
+                                        ${children.length ? renderTree(item.id, level + 1) : ''}`
+            }).join("")}
+                        </ul>`;
+            return inner;
+        };
+
+        let render = () => {
+            oNav.innerHTML = renderNav();
+            oContent.innerHTML = renderContent();
+            oTree.innerHTML = renderTree(topPid);
+        };
+
+        render();
+
+        oTree.addEventListener("click", (e) => {
+            let item = e.target.tagName === "SPAN" ? e.target.parentNode : e.target;
+            if (item.tagName === "P") {
+                nowId = item.dataset.id;
+            }
+            render();
+        });
+
+        oNav.addEventListener("click", (e) => {
+            if (e.target.tagName === "SPAN") {
+                nowId = e.target.dataset.id;
+            }
+            render();
+        });
+
+        oContent.addEventListener("dblclick", (e) => {
+            if (e.target.tagName === "LABEL") {
+                nowId = e.target.dataset.id;
+            }
+            render();
+        });
+
+        oBtnGroup.addEventListener("click", (e) => {
+            if (e.target.tagName === "BUTTON") {
+                let className = e.target.className;
+                switch (className) {
+                    case "add-btn":
+                        data.push({
+                            id: Date.now(),
+                            pid: nowId,
+                            name: "新建文件夹"
+                        });
+                        render();
+                        break;
+                    case "del-btn":
+                        let aLabel = document.querySelectorAll("input:checked + label");
+                        let aLabelIds = [...aLabel].map(item => item.dataset.id * 1);
+                        if (!aLabelIds.length) {
+                            alert("请选中后再删");
+                            return;
+                        }
+                        let sureDelete = window.confirm("确认删除选中的吗?");
+                        if (sureDelete) {
+                            let deleteIds = [].concat(aLabelIds);
+                            aLabelIds.forEach(item => {
+                                deleteIds = deleteIds.concat(getAllChildren(item).map(item => item.id));
+                            });
+                            data = data.filter(item => !deleteIds.includes(item.id));
+                            render();
+                        }
+                        break;
+                }
+            }
+        });
+
+        document.addEventListener("contextmenu", (e) => {
+            e.preventDefault();
+        });
+
+        oContent.addEventListener("contextmenu", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (e.target.tagName === "LABEL") {
+                oContextMenu.dataId = e.target.dataset.id;
+                oContextMenu.style.display = "block";
+                oContextMenu.style.left = `${e.clientX}px`;
+                oContextMenu.style.top = `${e.clientY}px`;
+            }
+        });
+
+        document.addEventListener("click", (e) => {
+            oContextMenu.style.display = "none";
+        });
+
+        oContextMenu.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (e.target.tagName === "LI") {
+                if (e.target.classList.contains("del")) {
+                    let sureDelete = window.confirm("确认删除选中的吗?");
+                    if (sureDelete) {
+                        data = data.filter(item => {
+                            return item.id != oContextMenu.dataId
+                        });
+                        render();
+                    }
+                } else if (e.target.classList.contains("rename")) {
+                    let newName = prompt("请输入新名字", data.find(item => item.id == oContextMenu.dataId).name);
+                    if (!newName.trim()) {
+                        oContextMenu.style.display = "none";
+                        return;
+                    }
+                    data.find(item => item.id == oContextMenu.dataId).name = newName;
+                    render();
+                }
+            }
+            oContextMenu.style.display = "none";
+        })
+
+    }
+</script>
+</body>
+</html>
