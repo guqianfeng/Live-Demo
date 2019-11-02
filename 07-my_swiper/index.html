@@ -16,6 +16,7 @@
             height: 100vh;
             justify-content: center;
             align-items: center;
+            user-select: none;
         }
 
         #wrap {
@@ -36,7 +37,7 @@
             text-align: center;
             cursor: pointer;
             z-index: 999;
-            color: #fff;
+            color: skyblue;
         }
 
         #left {
@@ -71,8 +72,8 @@
 </head>
 <body>
 <div id="wrap">
-    <div id="left"></div>
-    <div id="right"></div>
+    <div id="left" class="btn"></div>
+    <div id="right" class="btn"></div>
     <div id="img-list">
         <img src="./images/boy1.jpg" alt="" style="z-index: 4">
         <img src="./images/boy2.jpg" alt="" style="z-index: 3">
@@ -113,6 +114,7 @@
                 if (abs(dis) < 2 && abs(speed) < 2){
                     aImg[now].style[attrObj[dir]] = target + "px";
                     cancelAnimationFrame(timer);
+                    timer = 0;
                     aImg[now].style.left = 0 + "px";
                     aImg[now].style.top = 0 + "px";
                     zIndexArr.unshift(zIndexArr.pop());
@@ -126,10 +128,39 @@
             });
         };
 
-        move("down");
-        setInterval(()=>{
-            move("down")
-        }, 2000);
+        document.addEventListener("keydown", ({keyCode}) => {
+            if(timer){
+                return false;
+            }
+            switch(keyCode){
+                case 37:
+                    move("left");
+                    break;
+                case 38:
+                    move("up");
+                    break;
+                case 39:
+                    move("right");
+                    break;
+                case 40:
+                    move("down");
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        oWrap.addEventListener("click", ({target}) => {
+            if(timer){
+                return false;
+            }
+            if(target.classList.contains("btn")){
+                let dir = target.id;
+                move(dir);
+            }
+        })
+
+
     }
 </script>
 </body>
