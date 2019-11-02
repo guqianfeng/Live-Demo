@@ -92,92 +92,44 @@
         let now = 0;
         let timer = 0;
 
-        let moveUp = () => {
-            let target = -imgH;
-            let nowY = parseFloat(getComputedStyle(aImg[now]).top);
-            let dis = target - nowY;
+        let move = (dir) => {
+            let targetObj = {
+                "up": -imgH,
+                "right": imgW,
+                "down": imgH,
+                "left": -imgW,
+            };
+            let attrObj = {
+                "up": "top",
+                "right": "left",
+                "down": "top",
+                "left": "left",
+            };
+            let target = targetObj[dir];
+            let nowAttr = parseFloat(getComputedStyle(aImg[now])[attrObj[dir]]);
+            let dis = target - nowAttr;
             let speed = dis / 10;
             timer = requestAnimationFrame(() => {
                 if (abs(dis) < 2 && abs(speed) < 2){
-                    aImg[now].style.top = target + "px";
+                    aImg[now].style[attrObj[dir]] = target + "px";
                     cancelAnimationFrame(timer);
+                    aImg[now].style.left = 0 + "px";
                     aImg[now].style.top = 0 + "px";
                     zIndexArr.unshift(zIndexArr.pop());
                     aImg.forEach((item,index) => item.style.zIndex = zIndexArr[index] + "");
                     now ++;
                     now %= zIndexArr.length;
                 }else{
-                    aImg[now].style.top = nowY + speed + "px";
-                    moveUp();
+                    aImg[now].style[attrObj[dir]] = nowAttr + speed + "px";
+                    move(dir);
                 }
             });
         };
 
-        let moveRight = () => {
-            let target = imgW;
-            let nowY = parseFloat(getComputedStyle(aImg[now]).left);
-            let dis = target - nowY;
-            let speed = dis / 10;
-            timer = requestAnimationFrame(() => {
-                if (abs(dis) < 2 && abs(speed) < 2){
-                    aImg[now].style.left = target + "px";
-                    cancelAnimationFrame(timer);
-                    aImg[now].style.left = 0 + "px";
-                    zIndexArr.unshift(zIndexArr.pop());
-                    aImg.forEach((item,index) => item.style.zIndex = zIndexArr[index] + "");
-                    now ++;
-                    now %= zIndexArr.length;
-                }else{
-                    aImg[now].style.left = nowY + speed + "px";
-                    moveRight();
-                }
-            });
-        };
-
-        let moveDown = () => {
-            let target = imgH;
-            let nowY = parseFloat(getComputedStyle(aImg[now]).top);
-            let dis = target - nowY;
-            let speed = dis / 10;
-            timer = requestAnimationFrame(() => {
-                if (abs(dis) < 2 && abs(speed) < 2){
-                    aImg[now].style.top = target + "px";
-                    cancelAnimationFrame(timer);
-                    aImg[now].style.top = 0 + "px";
-                    zIndexArr.unshift(zIndexArr.pop());
-                    aImg.forEach((item,index) => item.style.zIndex = zIndexArr[index] + "");
-                    now ++;
-                    now %= zIndexArr.length;
-                }else{
-                    aImg[now].style.top = nowY + speed + "px";
-                    moveDown();
-                }
-            });
-        };
-
-        let moveLeft = () => {
-            let target = -imgW;
-            let nowY = parseFloat(getComputedStyle(aImg[now]).left);
-            let dis = target - nowY;
-            let speed = dis / 10;
-            timer = requestAnimationFrame(() => {
-                if (abs(dis) < 2 && abs(speed) < 2){
-                    aImg[now].style.left = target + "px";
-                    cancelAnimationFrame(timer);
-                    aImg[now].style.left = 0 + "px";
-                    zIndexArr.unshift(zIndexArr.pop());
-                    aImg.forEach((item,index) => item.style.zIndex = zIndexArr[index] + "");
-                    now ++;
-                    now %= zIndexArr.length;
-                }else{
-                    aImg[now].style.left = nowY + speed + "px";
-                    moveLeft();
-                }
-            });
-        };
-
-        moveLeft();
-        setInterval(moveLeft, 2000);
+        move("down");
+        setInterval(()=>{
+            move("down")
+        }, 2000);
     }
 </script>
 </body>
