@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            --wrapWidth: 800px;
+            --wrapHeight: 500px;
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #wrap {
+            position: relative;
+            width: var(--wrapWidth);
+            height: var(--wrapHeight);
+            border-style: solid;
+        }
+
+        #left, #right {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: calc(var(--wrapWidth) / 10);
+            height: calc(var(--wrapHeight) / 5);
+            margin: auto;
+            font: calc(var(--wrapHeight) / 5) / calc(var(--wrapHeight) / 5) "微软雅黑";
+            text-align: center;
+            cursor: pointer;
+            z-index: 999;
+            color: #fff;
+        }
+
+        #left {
+            left: 0;
+        }
+
+        #right {
+            right: 0;
+        }
+
+        #left:before {
+            content: "<";
+        }
+
+        #right:before {
+            content: ">";
+        }
+
+        #img-list {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #img-list > img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <div id="left"></div>
+    <div id="right"></div>
+    <div id="img-list">
+        <img src="./images/boy1.jpg" alt="" style="z-index: 4">
+        <img src="./images/boy2.jpg" alt="" style="z-index: 3">
+        <img src="./images/boy3.jpg" alt="" style="z-index: 2">
+        <img src="./images/boy4.jpg" alt="" style="z-index: 1">
+    </div>
+</div>
+
+<script>
+    const {abs} = Math;
+    {
+        let oWrap = document.querySelector("#wrap");
+        let aImg = document.querySelectorAll("#img-list img");
+        let zIndexArr = [...aImg].map(item => getComputedStyle(item).zIndex * 1);
+        let imgW = parseFloat(getComputedStyle(oWrap).width);
+        let imgH = parseFloat(getComputedStyle(oWrap).height);
+        let now = 0;
+        let timer = 0;
+
+        let moveUp = () => {
+            let target = -imgH;
+            let nowY = parseFloat(getComputedStyle(aImg[now]).top);
+            let dis = target - nowY;
+            let speed = dis / 10;
+            timer = requestAnimationFrame(() => {
+                if (abs(dis) < 2 && abs(speed) < 2){
+                    aImg[now].style.top = target + "px";
+                    cancelAnimationFrame(timer);
+                    aImg[now].style.top = 0 + "px";
+                    zIndexArr.unshift(zIndexArr.pop());
+                    aImg.forEach((item,index) => item.style.zIndex = zIndexArr[index] + "");
+                    now ++;
+                    now %= zIndexArr.length;
+                }else{
+                    aImg[now].style.top = nowY + speed + "px";
+                    moveUp();
+                }
+            });
+        };
+
+        let moveRight = () => {
+            let target = imgW;
+            let nowY = parseFloat(getComputedStyle(aImg[now]).left);
+            let dis = target - nowY;
+            let speed = dis / 10;
+            timer = requestAnimationFrame(() => {
+                if (abs(dis) < 2 && abs(speed) < 2){
+                    aImg[now].style.left = target + "px";
+                    cancelAnimationFrame(timer);
+                    aImg[now].style.left = 0 + "px";
+                    zIndexArr.unshift(zIndexArr.pop());
+                    aImg.forEach((item,index) => item.style.zIndex = zIndexArr[index] + "");
+                    now ++;
+                    now %= zIndexArr.length;
+                }else{
+                    aImg[now].style.left = nowY + speed + "px";
+                    moveRight();
+                }
+            });
+        };
+
+        let moveDown = () => {
+            let target = imgH;
+            let nowY = parseFloat(getComputedStyle(aImg[now]).top);
+            let dis = target - nowY;
+            let speed = dis / 10;
+            timer = requestAnimationFrame(() => {
+                if (abs(dis) < 2 && abs(speed) < 2){
+                    aImg[now].style.top = target + "px";
+                    cancelAnimationFrame(timer);
+                    aImg[now].style.top = 0 + "px";
+                    zIndexArr.unshift(zIndexArr.pop());
+                    aImg.forEach((item,index) => item.style.zIndex = zIndexArr[index] + "");
+                    now ++;
+                    now %= zIndexArr.length;
+                }else{
+                    aImg[now].style.top = nowY + speed + "px";
+                    moveDown();
+                }
+            });
+        };
+
+        let moveLeft = () => {
+            let target = -imgW;
+            let nowY = parseFloat(getComputedStyle(aImg[now]).left);
+            let dis = target - nowY;
+            let speed = dis / 10;
+            timer = requestAnimationFrame(() => {
+                if (abs(dis) < 2 && abs(speed) < 2){
+                    aImg[now].style.left = target + "px";
+                    cancelAnimationFrame(timer);
+                    aImg[now].style.left = 0 + "px";
+                    zIndexArr.unshift(zIndexArr.pop());
+                    aImg.forEach((item,index) => item.style.zIndex = zIndexArr[index] + "");
+                    now ++;
+                    now %= zIndexArr.length;
+                }else{
+                    aImg[now].style.left = nowY + speed + "px";
+                    moveLeft();
+                }
+            });
+        };
+
+        moveLeft();
+        setInterval(moveLeft, 2000);
+    }
+</script>
+</body>
+</html>
