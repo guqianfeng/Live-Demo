@@ -84,6 +84,41 @@
 
 <script>
     const {abs} = Math;
+    const setSwipeEl = (el) => {
+        let swipeUp = new Event("swipeup");
+        let swipeRight = new Event("swiperight");
+        let swipeDown = new Event("swipedown");
+        let swipeLeft = new Event("swipeleft");
+
+        let start = {
+            x: 0,
+            y: 0
+        };
+
+        el.addEventListener("mousedown", (e) => {
+            e.preventDefault();
+            start.x = e.clientX;
+            start.y = e.clientY;
+        });
+
+        document.addEventListener("mouseup", ({clientX, clientY}) => {
+            let now = {
+                x: clientX,
+                y: clientY
+            };
+            let dis = {
+                x: now.x - start.x,
+                y: now.y - start.y
+            };
+            if(abs(dis.x) > 10 || abs(dis.y) > 10){
+                if(abs(dis.x) > abs(dis.y)){
+                    el.dispatchEvent(dis.x > 0 ? swipeRight : swipeLeft);
+                }else{
+                    el.dispatchEvent(dis.y > 0 ? swipeDown : swipeUp);
+                }
+            }
+        });
+    };
     {
         let oWrap = document.querySelector("#wrap");
         let aImg = document.querySelectorAll("#img-list img");
@@ -158,9 +193,34 @@
                 let dir = target.id;
                 move(dir);
             }
-        })
+        });
 
+        setSwipeEl(oWrap);
 
+        oWrap.addEventListener("swipeup", () => {
+            if(timer){
+                return false;
+            }
+            move("up");
+        });
+        oWrap.addEventListener("swiperight", () => {
+            if(timer){
+                return false;
+            }
+            move("right");
+        });
+        oWrap.addEventListener("swipedown", () => {
+            if(timer){
+                return false;
+            }
+            move("down");
+        });
+        oWrap.addEventListener("swipeleft", () => {
+            if(timer){
+                return false;
+            }
+            move("left");
+        });
     }
 </script>
 </body>
