@@ -18,10 +18,20 @@
             width: 30%;
             height: 30%;
             background-color: #f00;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
     <div id="wrap"></div>
+    <script>
+        {
+            let oWrap = document.getElementById("wrap");
+            function move(e){
+                console.log(e, this);
+            }
+            oWrap.addEventListener("mousemove", move)
+        }
+    </script>
 </body>
 </html>
