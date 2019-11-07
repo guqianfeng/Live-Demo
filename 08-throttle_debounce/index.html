@@ -4,17 +4,19 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
-        *{
+        * {
             padding: 0;
             margin: 0;
         }
-        body{
+
+        body {
             display: flex;
             height: 100vh;
             justify-content: center;
             align-items: center;
         }
-        #wrap{
+
+        #wrap {
             width: 30%;
             height: 30%;
             background-color: #f00;
@@ -23,15 +25,45 @@
     </style>
 </head>
 <body>
-    <div id="wrap"></div>
-    <script>
-        {
-            let oWrap = document.getElementById("wrap");
-            function move(e){
-                console.log(e, this);
+<div id="wrap"></div>
+<script>
+    {
+        let oWrap = document.getElementById("wrap");
+
+        function throttle(fn, duration = 1000) {
+            let timer = 0;
+            return function (...args) {
+                let _self = this;
+                if (timer) {
+                    return;
+                }
+                fn.apply(_self, args);
+                timer = setTimeout(() => {
+                    clearTimeout(timer);
+                    timer = 0;
+                }, duration)
             }
-            oWrap.addEventListener("mousemove", move)
         }
-    </script>
+
+        function debounce(fn, duration = 1000) {
+            let timer = 0;
+            return function (...args) {
+                let _self = this;
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                    fn.apply(_self, args);
+                }, duration);
+            }
+        }
+
+        function move(e) {
+            console.log(e, this);
+        }
+
+        // oWrap.addEventListener("mousemove", move);
+        // oWrap.addEventListener("mousemove", throttle(move, 500));
+        oWrap.addEventListener("mousemove", debounce(move, 500));
+    }
+</script>
 </body>
 </html>

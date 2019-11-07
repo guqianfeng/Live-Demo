@@ -3,8 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        body{
+            height: 3000px;
+        }
+    </style>
 </head>
 <body>
+<script>
+    {
+        function move(){
+            console.log(window.scrollY);
+        }
 
+        function throttle(fn, duration = 1000) {
+            let timer = 0;
+            return function (...args) {
+                let _self = this;
+                if (timer) {
+                    return;
+                }
+                fn.apply(_self, args);
+                timer = setTimeout(() => {
+                    clearTimeout(timer);
+                    timer = 0;
+                }, duration)
+            }
+        }
+
+        function debounce(fn, duration = 500) {
+            let timer = 0;
+            return function (...args) {
+                let _self = this;
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                    fn.apply(_self, args);
+                }, duration);
+            }
+        }
+
+        // window.addEventListener("scroll", throttle(move));
+        window.addEventListener("scroll", debounce(move));
+        // window.addEventListener("scroll", move);
+    }
+</script>
 </body>
 </html>
