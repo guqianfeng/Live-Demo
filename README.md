@@ -23,3 +23,4 @@
 * [flex_game](https://flexboxfroggy.com/), [录制视频](https://www.bilibili.com/video/av70801303)
 * [star_scoring](https://qianfengg.github.io/Live-Demo/03-star_scoring/index), [录制视频](https://www.bilibili.com/video/av71020298)  
 * [magnifier](https://qianfengg.github.io/Live-Demo/05-magnifier/index), 录制视频暂无 
+* [throttle_debounce](https://qianfengg.github.io/Live-Demo/08-throttle_debounce/index), [录制视频](https://www.bilibili.com/video/av74880153)
