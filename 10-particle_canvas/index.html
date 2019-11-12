@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        canvas{
+            float: left;
+            border-style: solid;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+<script src="./particle.js"></script>
+<script>
+    {
+        /**
+            cW: 300, canvas的宽度
+            cH: 150, canvas的高度
+            r: 8, 粒子半径
+            speedX: 4, //速度x,y可设置区间如[1, 3]，如果设置单个数字，则区间为[-数字, +数字]
+            speedY: 4, /速度x,y可设置区间如[1, 3]，如果设置单个数字，则区间为[-数字, +数字]
+            speedR: 0.02, //半径变小速度，请设置个正数小数，当半径小于半径变小速度时，则删除粒子元素, 当然设置负数也可以就是半径越来越大，没有删除元素的操作自行修改源码
+            type: 0, //0中心点 1随机 2中心底部
+         */
+        new ParticleCanvas().run();
+        new ParticleCanvas({
+            cW: 500,
+            cH: 500,
+            r: 3,
+            speedX: 2,
+            speedY: 2,
+            type: 1,
+        }).run();
+        new ParticleCanvas({
+            cW: 500,
+            cH: 500,
+            r: 3,
+            speedX: 2,
+            speedY: [-1, -10],
+            type: 2,
+        }).run();
+    }
+</script>
+</body>
+</html>
