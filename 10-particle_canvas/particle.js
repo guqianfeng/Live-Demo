@@ -18,14 +18,14 @@ class Particle {
         this.x = x;
         this.y = y;
         this.r = r;
-        if(!Array.isArray(speedX)){
+        if (!Array.isArray(speedX)) {
             this.vx = randomRange(speedX, -speedX);
-        }else{
+        } else {
             this.vx = randomRange(speedX[0], speedX[1]);
         }
-        if(!Array.isArray(speedY)){
+        if (!Array.isArray(speedY)) {
             this.vy = randomRange(speedY, -speedY);
-        }else{
+        } else {
             this.vy = randomRange(speedY[0], speedY[1]);
         }
         this.vr = this.targetR = speedR;
@@ -45,10 +45,10 @@ class ParticleCanvas {
             cW: 300,
             cH: 150,
             r: 8,
-            speedX: 4,//速度x,y可设置区间如[1, 3]，如果设置单个数字，则区间为[-数字, +数字]
+            speedX: 4,
             speedY: 4,
             speedR: 0.02,
-            type: 0, //0中心点 1随机 2中心底部
+            type: 0,
         };
         this.opts = {...defaultOpts, ...options};
         this.particles = [];
@@ -71,7 +71,10 @@ class ParticleCanvas {
     }
 
     spawnParticles() {
-        let types = [{x: this.opts.cW / 2, y: this.opts.cH / 2}, {x: randomRange(this.cW), y: randomRange(this.cH)}, {x: this.cW / 2, y: this.cH}];
+        let types = [{x: this.opts.cW / 2, y: this.opts.cH / 2}, {
+            x: randomRange(this.cW),
+            y: randomRange(this.cH)
+        }, {x: this.cW / 2, y: this.cH}];
         this.particles.push(new Particle({
             x: types[this.opts.type].x,
             y: types[this.opts.type].y,
