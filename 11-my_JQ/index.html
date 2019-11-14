@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        div{
+            width: 100px;
+            height: 100px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="box" style="background: red"></div>
+<div class="box" style="background: green"></div>
+<script src="myJQ.js"></script>
+<script>
+    {
+        // console.log($(".box"));
+        // $(function(){
+        //     console.log("after load");
+        // });
+        // console.log($(document.querySelector(".box")));
+        // console.log($(document.querySelectorAll(".box")));
+        // $(".box").click(function(){
+        //     console.log(1);
+        // })
+        // $(".box").eq(0).end().on("mousemove click", function(){
+        //     console.log(2);
+        // })
+
+        // console.log($(".box").eq(1).css("backgroundColor"));
+        // $(".box").css("backgroundColor", "black");
+        $(".box").css({
+            width: 300,
+            height: 400,
+            backgroundColor: "skyblue"
+        })
+    }
+</script>
+</body>
+</html>
+

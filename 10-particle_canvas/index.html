@@ -15,22 +15,34 @@
 <script src="./particle.js"></script>
 <script>
     {
+        // 默认配置
+        /*let defaultOpts = {
+            cW: 300, //canvas宽度
+            cH: 150, //canvas高度
+            bornX: "center", //x轴出生位置 left 左 center 中间 right 右 random 随机
+            bornY: "middle", //y轴出生位置 top 上 middle 中间 bottom 下 random 随机
+            r: 3, //粒子初始半径
+            speedX: [-4, 4], //粒子x方向速度范围，数组2个元素，速度可以随意换，也可以写成[4, -4]，但必须写2个值且传入的是数组
+            speedY: [-4, 4], //粒子y方向速度范围，数组2个元素，速度可以随意换，也可以写成[4, -4]，但必须写2个值且传入的是数组
+            speedR: -0.02, //半径速度，负数为半径变小， 正数为半径变大
+            targetR: 0.02 //目标半径，当半径一直减小，有个目标点，不能减到负数吧。从数组中删除，当半径增大，也能设置目标点，不能一直变大吧
+        };*/
         new ParticleCanvas().run();
         new ParticleCanvas({
             cW: 500,
             cH: 500,
-            r: 3,
-            speedX: 2,
-            speedY: 2,
-            type: 1,
+            bornX: "center",
+            bornY: "bottom",
+            speedX: [-3, 3],
+            speedY: [-1, -5],
+            speedR: 0.1,
+            targetR: 10,
         }).run();
         new ParticleCanvas({
-            cW: 500,
-            cH: 500,
-            r: 3,
-            speedX: 2,
-            speedY: [-1, -10],
-            type: 2,
+            cW: 300,
+            cH: 300,
+            bornX: "random",
+            bornY: "random",
         }).run();
     }
 </script>
