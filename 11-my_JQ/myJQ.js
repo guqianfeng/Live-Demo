@@ -75,6 +75,7 @@ class JQ{
                 this.setStyle(this[i], args[0], args[1]);
             }
         }
+        return this;
     }
 
     getStyle(el, attr){
@@ -111,3 +112,5 @@ function $(arg){
     return new JQ(arg);
 }
 //需要扩展加px的属性可以这样添加 JQ.needAddPx.push("xxxxx")
+//扩展修改，cssNumber cssHooks
+
