@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        div {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            left: 0;
+            top: 0;
+        }
+
+    </style>
+</head>
+<body>
+<div class="box"></div>
+<script>
+    {
+        const {abs} = Math;
+        let oBox = document.querySelector(".box");
+
+        function anim(el, attr, target){
+            return new Promise((resolve) => {
+                move(el, attr, target);
+                function move(el, attr, target){
+                    let now = parseFloat(getComputedStyle(oBox)[attr]);
+                    let dis = target - now;
+                    let speed = dis / 10;
+                    if(abs(dis) < 1 && abs(speed) < 1){
+                        //到达目标值
+                        el.style[attr] = target + "px";
+                        cancelAnimationFrame(el.timer);
+                        el.timer = 0;
+                        resolve("this move end");
+                    }else{
+                        //动画
+                        el.style[attr] = (now + speed) + "px";
+                        el.timer = requestAnimationFrame(() => {
+                            move(el, attr, target);
+                        });
+                    }
+                }
+            });
+
+        }
+
+        anim(oBox, "left", 500)
+            .then((res) => {
+                console.log(res);
+                return anim(oBox, "top", 500)
+            })
+            .then((res) => {
+                console.log(res);
+                return anim(oBox, "left", 0)
+            })
+            .then((res) => {
+                console.log(res);
+                return anim(oBox, "top", 0)
+            })
+
+    }
+</script>
+</body>
+</html>
