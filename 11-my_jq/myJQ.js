@@ -1,7 +1,7 @@
-class JQ {
+class Jq {
     constructor(arg, root) {
         if (typeof root === "undefined") {
-            this.prevObject = new JQ(document, null);
+            this.prevObject = new Jq(document, null);
         }
         if (root) {
             this.prevObject = root;
@@ -94,7 +94,7 @@ class JQ {
 }
 
 function $(arg) {
-    return new JQ(arg);
+    return new Jq(arg);
 }
 
 $.cssNumber = {
