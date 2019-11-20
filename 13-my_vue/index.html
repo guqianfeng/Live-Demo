@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    {{title}} - {{msg}}
+    <div>
+        <span>
+            11 {{msg}} 22
+        </span>
+    </div>
+    <p>33 {{msg}} 44</p>
+    55 {{msg}} 66
+</div>
+<script src="./myVue.js"></script>
+<script>
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            title: "自己写的一个简单的Vue案例",
+            msg: "原始的msg"
+        }
+    });
+    // console.log(vm);
+</script>
+</body>
+</html>
