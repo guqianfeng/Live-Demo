@@ -20,9 +20,9 @@
 
 > 菜单   
 
-* [hover_demo](https://qianfengg.github.io/Live-Demo/01-hover_demo/index), [录制视频](https://www.bilibili.com/video/av72032058)
+* [hover_demo](https://qianfengg.github.io/Live-Demo/01-hover_demo), [录制视频](https://www.bilibili.com/video/av72032058)
 * [flex_game](https://flexboxfroggy.com/), [录制视频](https://www.bilibili.com/video/av70801303)
-* [star_scoring](https://qianfengg.github.io/Live-Demo/03-star_scoring/index), [录制视频](https://www.bilibili.com/video/av71020298)  
-* [magnifier](https://qianfengg.github.io/Live-Demo/05-magnifier/index), 录制视频暂无 
-* [throttle_debounce](https://qianfengg.github.io/Live-Demo/08-throttle_debounce/index), [录制视频](https://www.bilibili.com/video/av74880153)
-* [guess_your_number](https://qianfengg.github.io/Live-Demo/14-guess_your_number/index), 录制视频暂无 
+* [star_scoring](https://qianfengg.github.io/Live-Demo/03-star_scoring), [录制视频](https://www.bilibili.com/video/av71020298)  
+* [magnifier](https://qianfengg.github.io/Live-Demo/05-magnifier), 录制视频暂无 
+* [throttle_debounce](https://qianfengg.github.io/Live-Demo/08-throttle_debounce), [录制视频](https://www.bilibili.com/video/av74880153)
+* [guess_your_number](https://qianfengg.github.io/Live-Demo/14-guess_your_number), 录制视频暂无 
