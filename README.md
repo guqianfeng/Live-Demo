@@ -18,6 +18,15 @@
 * 这里再无脑吹下自己编程的领域，[js赛高!!阿特伍德定律赛高!!](http://baijiahao.baidu.com/s?id=1568282895946368&wfr=spider&for=pc)
 * [直播地址](https://live.bilibili.com/11287766)
 
+> 最近刚入坑VSCode 推荐几个插件(持续更新)
+* CSS Peek - html与css关联
+* Prettier - 代码格式化
+* Icon Fonts - 图标集
+* Auto Rename Tag - 自动重命名标签
+* HTML Boilerplate - HTML模板
+* Color Info - 颜色提示
+* Auto Close Tag - 自动闭合标签
+* HTML CSS Support - html中css class的智能提示
 > 菜单   
 
 * [hover_demo](https://qianfengg.github.io/Live-Demo/01-hover_demo), [录制视频](https://www.bilibili.com/video/av72032058)
