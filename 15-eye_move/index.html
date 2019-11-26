@@ -75,6 +75,14 @@
         background-color: #000;
         border-radius: 50%;
       }
+      @keyframes eyemove {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
     </style>
   </head>
 
@@ -87,20 +95,48 @@
     </div>
     <script>
       {
-        const { atan2, PI } = Math;
-        const rad2Deg = rad => (rad * 180) / PI;
-        let eyeMove = e => {
-          let aEye = document.querySelectorAll(".eye");
-          aEye.forEach(eye => {
-            let x = eye.getBoundingClientRect().left + eye.clientWidth / 2;
-            let y = eye.getBoundingClientRect().top + eye.clientHeight / 2;
-            let radian = atan2(e.pageY - y, e.pageX - x);
-            let deg = rad2Deg(radian) + 180;
-            eye.style.transform = `rotate(${deg}deg)`;
-          });
+        const IsPC = () => {
+          var userAgentInfo = navigator.userAgent;
+          var Agents = new Array(
+            "Android",
+            "iPhone",
+            "SymbianOS",
+            "Windows Phone",
+            "iPad",
+            "iPod"
+          );
+          var flag = true;
+          for (var v = 0; v < Agents.length; v++) {
+            if (userAgentInfo.indexOf(Agents[v]) > 0) {
+              flag = false;
+              break;
+            }
+          }
+          return flag;
         };
+        window.onload = function() {
+          let isPC = IsPC();
+          let aEye = document.querySelectorAll(".eye");
+          if (isPC) {
+            const { atan2, PI } = Math;
+            const rad2Deg = rad => (rad * 180) / PI;
+            let eyeMove = e => {
+              aEye.forEach(eye => {
+                let x = eye.getBoundingClientRect().left + eye.clientWidth / 2;
+                let y = eye.getBoundingClientRect().top + eye.clientHeight / 2;
+                let radian = atan2(e.pageY - y, e.pageX - x);
+                let deg = rad2Deg(radian) + 180;
+                eye.style.transform = `rotate(${deg}deg)`;
+              });
+            };
 
-        document.body.addEventListener("mousemove", eyeMove);
+            document.body.addEventListener("mousemove", eyeMove);
+          } else {
+            aEye.forEach(eye => {
+              eye.style.animation = "2s eyemove ease-in-out infinite alternate";
+            });
+          }
+        };
       }
     </script>
   </body>
