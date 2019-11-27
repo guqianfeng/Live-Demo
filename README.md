@@ -30,6 +30,12 @@
 * Open In Browser - 用浏览器打开页面
 * GitLens - git源代码管理插件 
 * Markdown Preview Enhanced - 愉快地写md
+* Bracket Pair Colorizer 2 - 突出显示成对的括号
+* highlight-icemode - 选中相同的代码时，让高亮显示更加明显
+* Copy Relative Path - 复制文件的相对路径
+* Path Intellisense - 自动提示文件路径，支持各种快速引入文件
+* Color Manager - 一个很酷炫的颜色管理插件，很强大
+* Live Share - 实时编码分享
 > 菜单   
 
 * [hover_demo](https://qianfengg.github.io/Live-Demo/01-hover_demo/), [录制视频](https://www.bilibili.com/video/av72032058)
