@@ -28,7 +28,8 @@
 * Auto Close Tag - 自动闭合标签
 * HTML CSS Support - html中css class的智能提示
 * Open In Browser - 用浏览器打开页面
-* GitLens - git源代码管理插件
+* GitLens - git源代码管理插件 
+* Markdown Preview Enhanced - 愉快地写md
 > 菜单   
 
 * [hover_demo](https://qianfengg.github.io/Live-Demo/01-hover_demo/), [录制视频](https://www.bilibili.com/video/av72032058)
