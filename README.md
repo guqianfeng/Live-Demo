@@ -19,6 +19,7 @@
 * [直播地址](https://live.bilibili.com/11287766)
 
 > 最近刚入坑VSCode 推荐几个插件(持续更新)
+
 * CSS Peek - html与css关联
 * Prettier - 代码格式化
 * Icon Fonts - 图标集
@@ -36,6 +37,12 @@
 * Path Intellisense - 自动提示文件路径，支持各种快速引入文件
 * Color Manager - 一个很酷炫的颜色管理插件，很强大
 * Live Share - 实时编码分享
+
+> 推荐几个学习的网站
+
+* [freecodecamp](https://learn.freecodecamp.one/)
+* [codepen](https://codepen.io/)
+
 > 菜单   
 
 * [hover_demo](https://qianfengg.github.io/Live-Demo/01-hover_demo/), [录制视频](https://www.bilibili.com/video/av72032058)
