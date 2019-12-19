@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script src="./js/redux.js"></script>
+    <script>
+        {
+            let data = [
+                {
+                    id: 1,
+                    age: 4,
+                    name: "gqf"
+                },
+                {
+                    id: 2,
+                    age: 3,
+                    name: "cfz"
+                }
+            ]
+
+            /* let store = Redux.createStore(function(state,action){
+                // console.log(state, action);
+                return state;
+            }, data) */
+
+            // console.log(store.getState())
+
+            function reducer(state=data, action){
+                switch(action.type){
+                    case 'ADD_USER':
+                        //记住不能使用push，改变原始数据
+                        // state.push(action.payload);
+                        // return state;
+                        return [...state, action.payload];
+                    default: 
+                        return state;    
+                }
+               
+            }
+
+            let store = Redux.createStore(reducer);
+            console.log(store.getState())
+
+            // store.dispatch({
+            //     type: "ADD_USER",
+            //     payload: {
+            //         id: 3,
+            //         age: 20,
+            //         name: "gql"
+            //     }
+            // })
+            // console.log(store.getState())
+
+            function addUser(payload){
+                return {
+                    type: "ADD_USER",
+                    payload
+                }
+            }
+
+            store.dispatch(addUser({id: 3, age: 20, name: 'gql'}));
+            store.dispatch(addUser({id: 4, age: 50, name: 'gyz'}));
+            console.log(store.getState());
+
+        }
+    </script>
+</body>
+</html>
