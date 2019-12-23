@@ -7,7 +7,7 @@
 
 > 练习
 
-1. src下新建的store，里面的index.js
+1. src下新建的store,index.js为redux最后合并的js,reducer文件夹下的每个文件，都是独立开来的数据，以及处理action
     * 需要安装`yarn add redux-devtools-extension -D`,这个是使用redux开发工具，在f12种可以调试使用
     * 需要安装`yarn add redux-thunk -S`,这是一个把同步dispatch变成异步dispatch的中间件
     * store下reducer文件夹下user的代码
