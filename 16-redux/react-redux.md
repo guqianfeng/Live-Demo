@@ -69,64 +69,63 @@
     };
     ```
 3. 前端User组件，主要看下connect怎么使用，connect后，state的数据和dispatch都会挂在this.props上
-    * 具体代码如下
-        ```js
-        import React from 'react'
+    ```js
+    import React from 'react'
 
-        import {connect} from 'react-redux'
+    import {connect} from 'react-redux'
 
-        import axios from 'axios'
+    import axios from 'axios'
 
-        class User extends React.Component{
-            constructor(props){
-                super(props);
-                this.inputEl = null;
-                this.addUser = this.addUser.bind(this);
-            }
-
-            async componentDidMount(){
-                async function updateAction(dispatch){
-                    let res = await axios({
-                        url: "/api/users"
-                    })
-                    dispatch({
-                        type: "UPDATE_USER",
-                        payload: res.data
-                    })
-                }
-                this.props.dispatch(updateAction)
-            }
-
-            addUser(){
-                let name = this.inputEl.value;
-                this.props.dispatch({
-                    type: "ADD_USER",
-                    payload: {
-                        name
-                    }
-                })
-                this.inputEl.value = "";
-            }
-            render(){
-                let {user} = this.props;
-                return (
-                    <div>
-                        <h1>User</h1>
-                        <input type="text" ref={el => this.inputEl = el}/> <button onClick={this.addUser}>add</button>
-                        <ul>
-                            {user.map(item => (<li key={item.id}>{item.name} - {item.age}</li>))}
-                        </ul>
-                    </div>
-                )
-            }
+    class User extends React.Component{
+        constructor(props){
+            super(props);
+            this.inputEl = null;
+            this.addUser = this.addUser.bind(this);
         }
 
-        export default connect(state => {
-            return {
-                user: state.user,
+        async componentDidMount(){
+            async function updateAction(dispatch){
+                let res = await axios({
+                    url: "/api/users"
+                })
+                dispatch({
+                    type: "UPDATE_USER",
+                    payload: res.data
+                })
             }
-        })(User);        
-        ```    
+            this.props.dispatch(updateAction)
+        }
+
+        addUser(){
+            let name = this.inputEl.value;
+            this.props.dispatch({
+                type: "ADD_USER",
+                payload: {
+                    name
+                }
+            })
+            this.inputEl.value = "";
+        }
+        render(){
+            let {user} = this.props;
+            return (
+                <div>
+                    <h1>User</h1>
+                    <input type="text" ref={el => this.inputEl = el}/> <button onClick={this.addUser}>add</button>
+                    <ul>
+                        {user.map(item => (<li key={item.id}>{item.name} - {item.age}</li>))}
+                    </ul>
+                </div>
+            )
+        }
+    }
+
+    export default connect(state => {
+        return {
+            user: state.user,
+        }
+    })(User);        
+    ```    
 
 4. 这里还是在贴下react前端项目中，src下的index.js里的一些代码，来看下react-redux第一步该怎么用
     ```js
