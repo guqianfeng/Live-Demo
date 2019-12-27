@@ -3,7 +3,7 @@
 > 直播的背景
 
 * 直播编程,打游戏，萌新间的知识交流，或是菜逼主播直播打游戏被打的嗷嗷叫的过程
-* 先介绍个大佬的博客，该大佬叫[阮一峰](http://www.ruanyifeng.com/home.html)
+* 先介绍个大佬的[博客](http://www.ruanyifeng.com/home.html)，该大佬叫阮一峰
 * 其中有一期[科技爱好者周刊：第 76 期](http://www.ruanyifeng.com/blog/2019/10/weekly-issue-76.html),有这么一段话
 
     ![](./images/直播的开始.jpg)
