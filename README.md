@@ -3,7 +3,7 @@
 > 直播的背景
 
 * 直播编程,打游戏，萌新间的知识交流，或是菜逼主播直播打游戏被打的嗷嗷叫的过程
-* 先介绍个大佬的博客，该大佬叫[阮一峰](http://www.ruanyifeng.com/home.html)
+* 先介绍个大佬的[博客](http://www.ruanyifeng.com/home.html)，该大佬叫阮一峰
 * 其中有一期[科技爱好者周刊：第 76 期](http://www.ruanyifeng.com/blog/2019/10/weekly-issue-76.html),有这么一段话
 
     ![](./images/直播的开始.jpg)
@@ -16,6 +16,7 @@
     会在菜单中更新
 * 望游戏大佬，编程大佬轻喷，愿和一切萌新小伙伴一起成长
 * 这里再无脑吹下自己编程的领域，[js赛高!!阿特伍德定律赛高!!](http://baijiahao.baidu.com/s?id=1568282895946368&wfr=spider&for=pc)
+* 项目根目录下，有个images的文件夹，里面会放些好玩的或者有价值的截图，大家无聊可以看下~
 * [直播地址](https://live.bilibili.com/11287766)
 
 > 最近刚入坑VSCode 推荐几个插件(持续更新)
