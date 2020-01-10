@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        {
+            console.log(1);
+
+            setTimeout(function(){
+                console.log(2);
+            })
+
+            setTimeout(function(){
+                console.log(3);
+            })
+
+            let p1 = new Promise(res => {
+                res(4)
+            })
+
+            let p2 = new Promise(res => {
+                res(5)
+            })
+
+            let p3 = new Promise(res => {
+                res(6)
+            })
+
+            let p4 = new Promise(res => {
+                res(7)
+            })
+
+            p1.then(res => console.log(res))
+            p2.then(res => console.log(res))
+
+            fn();
+
+            async function fn(){
+                let res3 = await p3;
+                console.log(res3)
+                let res4 = await p4;
+                console.log(res4)
+            }
+
+            console.log(8);
+
+
+        }
+    </script>
+</body>
+</html>
