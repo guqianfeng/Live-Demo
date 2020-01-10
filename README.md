@@ -53,4 +53,4 @@
 * [throttle_debounce](https://qianfengg.github.io/Live-Demo/08-throttle_debounce/), [录制视频](https://www.bilibili.com/video/av74880153)
 * [guess_your_number](https://qianfengg.github.io/Live-Demo/14-guess_your_number/), 录制视频暂无 
 * [eye_move](https://qianfengg.github.io/Live-Demo/15-eye_move/), 录制视频暂无 
-* [div_move](https://qianfengg.github.io/Live-Demo/12-div_move/),[录制视频](https://www.bilibili.com/video/av82881560)
+* [div_move](https://qianfengg.github.io/Live-Demo/12-move_div/),[录制视频](https://www.bilibili.com/video/av82881560)
