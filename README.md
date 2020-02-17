@@ -31,6 +31,7 @@
 * HTML CSS Support - html中css class的智能提示
 * Open In Browser - 用浏览器打开页面
 * GitLens - git源代码管理插件 
+* gitflow - gitflow
 * Markdown Preview Enhanced - 愉快地写md
 * Bracket Pair Colorizer 2 - 突出显示成对的括号
 * highlight-icemode - 选中相同的代码时，让高亮显示更加明显
