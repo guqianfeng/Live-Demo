@@ -40,10 +40,11 @@
 * Color Manager - 一个很酷炫的颜色管理插件，很强大
 * Live Share - 实时编码分享
 
-> 推荐几个学习的网站
+> 推荐几个网站
 
 * [freecodecamp](https://learn.freecodecamp.one/)
 * [codepen](https://codepen.io/)
+* [picsumPhotos](https://picsum.photos/)
 
 > 菜单   
 
