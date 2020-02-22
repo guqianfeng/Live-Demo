@@ -39,6 +39,8 @@
 * Path Intellisense - 自动提示文件路径，支持各种快速引入文件
 * Color Manager - 一个很酷炫的颜色管理插件，很强大
 * Live Share - 实时编码分享
+* Live Server + Browser Preview - vscode里打开浏览器，保存即更新，Live Server需要更改设置liveServer.settings.useBrowserPreview
+
 
 > 推荐几个网站
 
