@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="./MyPromise/MyPromise.js"></script>
+    <script>
+        // console.log("start");
+        // new MyPromise(resolve => {
+        //     console.log("promise")
+        //     setTimeout(_ => {
+        //         console.log("setTimeout")
+        //         resolve("how to make promise")
+        //     })
+        // }).then(val => {
+        //     console.log(val);
+        // })
+        // console.log("end");
+
+        // let p = new MyPromise(resolve => {
+        //     // setTimeout(_ => {
+        //     //     resolve();
+        //     // })
+        //     resolve();
+        // });
+        // p.then(_ => {
+        //     console.log(1);
+        // })
+        // p.then(_ => {
+        //     console.log(2);
+        // })
+        // p.then(_ => {
+        //     console.log(3);
+        // })
+        setTimeout(_ => {
+            console.log("setTimeout")
+        })
+        let p = new MyPromise(resolve => {
+            resolve();
+            console.log("promise")
+        }).then(_ => {
+            console.log("then")
+        })
+    </script>
+</body>
+</html>
