@@ -8,14 +8,20 @@
 <body>
     <script>
         console.log("start");
+        setTimeout(() => {
+            console.log("setTimeout not in Promise -- 1")
+        }, 2000)
         new Promise(resolve => {
             console.log("promise")
             setTimeout(_ => {
-                console.log("setTimeout")
                 resolve("how to make promise")
-            })
+                console.log("setTimeout -- 2")
+            }, 1000)
         }).then(val => {
-            console.log(val);
+            setTimeout(() => {
+                console.log(val);
+                console.log("setTimeout in then -- 3")
+            }, 0)
         })
         console.log("end");
     </script>
