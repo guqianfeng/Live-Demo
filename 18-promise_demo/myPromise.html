@@ -20,6 +20,10 @@
         // })
         // console.log("end");
 
+
+
+
+
         // let p = new MyPromise(resolve => {
         //     // setTimeout(_ => {
         //     //     resolve();
@@ -35,14 +39,65 @@
         // p.then(_ => {
         //     console.log(3);
         // })
-        setTimeout(_ => {
-            console.log("setTimeout")
+
+
+
+
+        // setTimeout(_ => {
+        //     console.log("setTimeout")
+        // })
+        // let p = new MyPromise(resolve => {
+        //     resolve("test");
+        //     console.log("promise")
+        // }).then(val => {
+        //     console.log(val)
+        //     // return "gqf is 梅利奥猪猪";
+        //     // return new MyPromise(resolve => {
+        //     //     resolve("haha")
+        //     // })
+        //     return {
+        //         then(){
+        //             console.log("test then function")
+        //             return 'gqf'
+        //         }
+        //     }
+        // }).then(val => {
+        //     console.log(val)
+        // })
+
+
+
+
+
+        // MyPromise.resolve("gqf test").then(val => {
+        //     console.log(val);
+        // })
+
+
+
+        let p1 = new Promise(resolve => {
+            setTimeout(() => {
+                resolve(1);
+            }, 3000)
         })
-        let p = new MyPromise(resolve => {
-            resolve();
-            console.log("promise")
-        }).then(_ => {
-            console.log("then")
+
+        let p2 = new Promise(resolve => {
+            setTimeout(() => {
+                resolve(2);
+            }, 2000)
+        })
+
+        let p3 = new Promise(resolve => {
+            setTimeout(() => {
+                resolve(3);
+            }, 1000)
+        })
+        MyPromise.all([
+            p1,
+            p2,
+            p3
+        ]).then(vals => {
+            console.log(vals);
         })
     </script>
 </body>

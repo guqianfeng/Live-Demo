@@ -242,5 +242,63 @@
             document.body.setAttribute("gqf", "gqf");
         }
         ```
-    * 这样我们打印的顺序就和原生的一样了    
+    * 这样我们打印的顺序就和原生的一样了 
+    * 链式调用特别的处理下
+        ```js
+        then(resolvedHandler){
+            return new MyPromise((resolve, reject) => {
+
+                function newResolvedHandler(value){
+                    let result = resolvedHandler(value);
+                    if(result instanceof MyPromise){
+                        result.then(resolve);
+                    }else if(typeof result === "object"){
+                        resolve(result.then());
+                    }else{
+                        resolve(result);
+                    }
+                    
+                }
+
+                switch(this.status){
+                    case "PENDING":
+                        this.resolvedQueues.push(newResolvedHandler);
+                        break;
+                    case "RESOLVED":
+                        resolvedHandler();
+                        break;
+                    case "REJECTED":
+                        break;
+                }
+            })
+            
+        }              
+        ``` 
+    * 接着来简单实现静态方法，resolve 
+        ```js
+        static resolve(val){
+            return new MyPromise(resolve => {
+                resolve(val);
+            })
+        }        
+        ```  
+    * Promise.all 
+        ```js
+        static all(iterator){
+            let len = iterator.length;
+            let values = [];
+            let i = 0;
+            return new MyPromise(resolve => {
+                iterator.forEach((item,index) => {
+                    item.then(val => {
+                        i++;
+                        values[index] = val;
+                        if(i === len){
+                            resolve(values);
+                        }
+                    })
+                })
+            })
+        }        
+        ```      
                       
