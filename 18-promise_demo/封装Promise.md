@@ -220,4 +220,27 @@
         }).then(_ => {
             console.log("then")
         })        
-        ```           
+        ```
+    * 因为我们封装的MyPromise在resolve中使用的是setTimeout，导致宏任务平级， 所以才会打印promise，setTimeout，then
+    * 如何解决这个问题，可以使用MutationObserver，这个属于微任务，可以参考mdn的案例，我们可以这么改写我们的myPromise
+        ```js
+        _resolve(){
+            let config = { attributes: true};
+
+            let observer = new MutationObserver(() => {
+                if(this.status !== "PENDING") return;
+                this.status = "RESOLVED";
+        
+                let handler;
+                while(handler = this.resolvedQueues.shift()){
+                    handler();
+                }
+            });
+    
+            observer.observe(document.body, config);
+
+            document.body.setAttribute("gqf", "gqf");
+        }
+        ```
+    * 这样我们打印的顺序就和原生的一样了    
+                      

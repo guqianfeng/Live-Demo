@@ -6,7 +6,9 @@ class MyPromise {
     }
 
     _resolve(){
-        setTimeout(() => {
+        let config = { attributes: true};
+
+        let observer = new MutationObserver(() => {
             if(this.status !== "PENDING") return;
             this.status = "RESOLVED";
     
@@ -14,7 +16,12 @@ class MyPromise {
             while(handler = this.resolvedQueues.shift()){
                 handler();
             }
-        }, 0)
+        });
+  
+        observer.observe(document.body, config);
+
+        document.body.setAttribute("gqf", "gqf");
+  
     }
 
     then(resolvedHandler){
