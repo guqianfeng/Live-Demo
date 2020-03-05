@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #myCanvas{
+            display: block;
+            margin: 100px auto;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="500" height="500"></canvas>
+    <script>
+        {
+            const {atan2, cos, sin} = Math;
+
+            let oCvs = document.getElementById("myCanvas");
+            let ctx = oCvs.getContext("2d");
+            let cW = oCvs.width;
+            let cH = oCvs.height;
+            let v = 2;
+
+            class Arrow{
+                constructor(){
+                    this.x = 0;
+                    this.y = 0;
+                    this.angle = 0;
+                }
+                draw(ctx){
+                    ctx.save();
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate(this.angle);
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.lineTo(-40, 15);
+                    ctx.lineTo(-40, -15);
+                    ctx.closePath();
+                    ctx.fillStyle = "red";
+                    ctx.fill();
+                    ctx.restore();
+                }
+            }
+
+            let arrow = new Arrow();
+            arrow.x = cW / 2;
+            arrow.y = cH / 2;
+            arrow.draw(ctx);
+            // console.log(arrow);
+
+            ~function(){
+                ctx.clearRect(0, 0, cW, cH);
+                // arrow.angle++;
+                arrow.draw(ctx);
+                requestAnimationFrame(arguments.callee)
+            }()
+
+            oCvs.addEventListener("mousemove", e => {
+                let x = e.clientX - oCvs.offsetLeft;
+                let y = e.clientY - oCvs.offsetTop;
+                let dx = x - arrow.x;
+                let dy = y - arrow.y;
+                let angle = atan2(dy, dx);
+                arrow.angle = angle;
+                let vx = 0;
+                let vy = 0;
+                if(dx * dx + dy * dy > v * v){
+                    vx = v * cos(angle);
+                    vy = v * sin(angle);
+                }
+                arrow.x += vx;
+                arrow.y += vy;
+            })
+        }
+    </script>
+</body>
+</html>
