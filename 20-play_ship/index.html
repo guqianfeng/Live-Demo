@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>play ship</title>
     <style>
         * {
             padding: 0;
@@ -18,7 +18,7 @@
     <canvas id="myCanvas"></canvas>
     <script>
         {
-            const {PI, cos, sin, atan2, hypot} = Math;
+            const {PI, cos, sin, atan2, hypot, min, max} = Math;
 
             let oCvs = document.getElementById("myCanvas");
             let ctx = oCvs.getContext("2d");
@@ -62,18 +62,8 @@
 
                 draw(ctx){
                     ctx.save();
-                    if(this.x > cW){
-                        this.x = cW;
-                    }
-                    if(this.y > cH){
-                        this.y = cH;
-                    }
-                    if(this.y < 0){
-                        this.y = 0;
-                    }
-                    if(this.x < 0){
-                        this.x = 0;
-                    }
+                    this.x = min(max(this.x, 0), cW);
+                    this.y = min(max(this.y, 0), cH);
                     ctx.translate(this.x, this.y);
                     ctx.rotate(this.angle);
                     ctx.strokeStyle = "#fff";
@@ -131,6 +121,30 @@
             })
 
             oCvs.addEventListener("mouseup", e => {
+                control.show = false;
+                ship.v = 0;
+            })
+
+            oCvs.addEventListener("touchstart", e => {
+                control.show = true;
+                control.headX = control.tailX = e.touches[0].clientX;
+                control.headY = control.tailY = e.touches[0].clientY;
+            })
+
+            oCvs.addEventListener("touchmove", e => {
+                if(control.show){
+                    control.headX = e.touches[0].clientX;
+                    control.headY = e.touches[0].clientY;
+                    let dx = control.headX - control.tailX;
+                    let dy = control.headY - control.tailY;
+                    let distance = hypot(dx, dy);
+                    let angle = atan2(dy, dx);
+                    ship.v = distance * 0.1;
+                    ship.angle = angle;
+                }
+            })
+
+            oCvs.addEventListener("touchend", e => {
                 control.show = false;
                 ship.v = 0;
             })
