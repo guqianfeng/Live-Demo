@@ -62,17 +62,17 @@
 
                 draw(ctx){
                     ctx.save();
-                    if(this.y > cH - 15){
-                        this. y = cH - 15;
-                    }
                     if(this.x > cW){
                         this.x = cW;
                     }
-                    if(this.x < 0){
-                        this.x = 0;
+                    if(this.y > cH){
+                        this.y = cH;
                     }
                     if(this.y < 0){
                         this.y = 0;
+                    }
+                    if(this.x < 0){
+                        this.x = 0;
                     }
                     ctx.translate(this.x, this.y);
                     ctx.rotate(this.angle);
@@ -106,9 +106,9 @@
             let control = new Control();
             // console.log(control)
             let ship = new Ship();
-            ship.angle = PI;
             ship.x = cW / 2;
             ship.y = cH / 2;
+
             // console.log(ship);
 
             oCvs.addEventListener("mousedown", e => {
