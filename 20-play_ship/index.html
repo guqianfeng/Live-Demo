@@ -20,12 +20,15 @@
         {
             const {PI, cos, sin, atan2, hypot, min, max} = Math;
 
-            let oCvs = document.getElementById("myCanvas");
-            let ctx = oCvs.getContext("2d");
-            let cW = oCvs.width = window.innerWidth;
-            let cH = oCvs.height = window.innerHeight;
-
-            renderBg();
+            const oCvs = document.getElementById("myCanvas");
+            const ctx = oCvs.getContext("2d");
+            const cW = oCvs.width = window.innerWidth;
+            const cH = oCvs.height = window.innerHeight;
+            let startEvent = "mousedown";
+            let moveEvent = "mousemove";
+            let endEvent = "mouseup";
+            let control = null;
+            let ship = null;
 
             class Control{
                 constructor(){
@@ -93,77 +96,66 @@
                 }
             }
 
-            let control = new Control();
-            // console.log(control)
-            let ship = new Ship();
-            ship.x = cW / 2;
-            ship.y = cH / 2;
-
-            // console.log(ship);
-
-            oCvs.addEventListener("mousedown", e => {
-                control.show = true;
-                control.headX = control.tailX = e.clientX;
-                control.headY = control.tailY = e.clientY;
-            })
-
-            oCvs.addEventListener("mousemove", e => {
-                if(control.show){
-                    control.headX = e.clientX;
-                    control.headY = e.clientY;
-                    let dx = control.headX - control.tailX;
-                    let dy = control.headY - control.tailY;
-                    let distance = hypot(dx, dy);
-                    let angle = atan2(dy, dx);
-                    ship.v = distance * 0.1;
-                    ship.angle = angle;
-                }
-            })
-
-            oCvs.addEventListener("mouseup", e => {
-                control.show = false;
-                ship.v = 0;
-            })
-
-            oCvs.addEventListener("touchstart", e => {
-                control.show = true;
-                control.headX = control.tailX = e.touches[0].clientX;
-                control.headY = control.tailY = e.touches[0].clientY;
-            })
-
-            oCvs.addEventListener("touchmove", e => {
-                if(control.show){
-                    control.headX = e.touches[0].clientX;
-                    control.headY = e.touches[0].clientY;
-                    let dx = control.headX - control.tailX;
-                    let dy = control.headY - control.tailY;
-                    let distance = hypot(dx, dy);
-                    let angle = atan2(dy, dx);
-                    ship.v = distance * 0.1;
-                    ship.angle = angle;
-                }
-            })
-
-            oCvs.addEventListener("touchend", e => {
-                control.show = false;
-                ship.v = 0;
-            })
-
             function renderBg(){
                 ctx.fillStyle = "#000";
                 ctx.fillRect(0, 0, cW, cH);
             }
 
-            ~function(){
-                // ctx.fillStyle = "rgba(0, 0, 0, .2)";
-                // ctx.fillRect(0, 0, cW, cH);
+            function init(){
                 renderBg();
-                control.draw(ctx);
-                ship.draw(ctx);
-                requestAnimationFrame(arguments.callee)
-            }()
+                control = new Control();
+                ship = new Ship();
+                ship.x = cW / 2;
+                ship.y = cH / 2;
 
-           
+                addEvent();
+            }
+
+            function addEvent(){
+                if('ontouchstart' in window){
+                    startEvent = "touchstart";
+                    moveEvent = "touchmove";
+                    endEvent = "touchend";
+                }
+                oCvs.addEventListener(startEvent, e => {
+                    control.show = true;
+                    control.headX = control.tailX = e.clientX || e.touches[0].clientX;
+                    control.headY = control.tailY = e.clientY || e.touches[0].clientY;
+                })
+
+                oCvs.addEventListener(moveEvent, e => {
+                    if(control.show){
+                        control.headX = e.clientX || e.touches[0].clientX;
+                        control.headY = e.clientY || e.touches[0].clientY;
+                        let dx = control.headX - control.tailX;
+                        let dy = control.headY - control.tailY;
+                        let distance = hypot(dx, dy);
+                        let angle = atan2(dy, dx);
+                        ship.v = distance * 0.1;
+                        ship.angle = angle;
+                    }
+                })
+
+                oCvs.addEventListener(endEvent, e => {
+                    control.show = false;
+                    ship.v = 0;
+                })
+            }
+
+            window.onload = function(){
+                init();
+
+                ~function(){
+                    // ctx.fillStyle = "rgba(0, 0, 0, .2)";
+                    // ctx.fillRect(0, 0, cW, cH);
+                    renderBg();
+                    control.draw(ctx);
+                    ship.draw(ctx);
+                    requestAnimationFrame(arguments.callee)
+                }()
+
+            }
+
         }
     </script>
 </body>
