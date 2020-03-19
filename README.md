@@ -47,6 +47,7 @@
 * [freecodecamp](https://learn.freecodecamp.one/)
 * [codepen](https://codepen.io/)
 * [picsumPhotos](https://picsum.photos/)
+* [字符画](http://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20)
 
 > 菜单   
 
