@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const getSum = (...args) => args.reduce((a, b) => a + b);
+
+    function curry (fn, ...args) {
+      let _args = [].concat(args);
+      // console.log(_args)
+      return function cb(...nextArgs){
+        // console.log(nextArgs);
+        if(nextArgs.length){
+          _args = _args.concat(nextArgs)
+          return cb;
+        }else{
+          return fn.apply(null, _args)
+        }
+      }
+    }
+
+    const add = curry(getSum, 1, 2, 3);
+    console.log(add(1, 2)(3)(4)(5, 6)());
+  </script>
+</body>
+</html>
