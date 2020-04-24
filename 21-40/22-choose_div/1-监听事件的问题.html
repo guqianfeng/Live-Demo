@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const move = () => {
+      console.log('鼠标移动了')
+    }
+    document.addEventListener('mousedown', () => {
+      console.log("鼠标按下了")
+      document.addEventListener('mousemove', move)
+      document.addEventListener('mouseup', () => {
+        console.log('鼠标抬起了')
+        document.removeEventListener('mousemove', move)
+      }, {
+        once: true
+      })
+    })
+  </script>
+</body>
+</html>

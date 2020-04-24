@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      div.target {
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        float: left;
+        margin: 5px;
+      }
+      #wrap {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 0;
+        height: 0;
+        background-color: rgba(0, 0, 0, 0.3);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrap"></div>
+    <script>
+      {
+        const render = (num) => {
+          const inner = [...".".repeat(num)]
+            .map((item) => "<div class='target'></div>")
+            .join("");
+          // console.log(inner);
+          document.body.innerHTML += inner;
+        };
+
+        render(200);
+        const { min, abs } = Math;
+        const wrap = document.querySelector("#wrap");
+        const start = {
+          x: 0,
+          y: 0,
+        };
+        const now = {
+          x: 0,
+          y: 0,
+        };
+        const move = (e) => {
+          e.preventDefault();
+          // console.log('鼠标移动了')
+          now.x = e.clientX;
+          now.y = e.clientY;
+          const dist = {
+            x: now.x - start.x,
+            y: now.y - start.y,
+          };
+          const wrapLeft = min(start.x, now.x);
+          const wrapTop = min(start.y, now.y);
+          // console.log(wrapLeft, wrapTop)
+          wrap.style.display = "block";
+          wrap.style.left = wrapLeft + "px";
+          wrap.style.top = wrapTop + "px";
+          wrap.style.width = abs(dist.x) + "px";
+          wrap.style.height = abs(dist.y) + "px";
+          const divs = document.querySelectorAll(".target");
+          divs.forEach((target) => {
+            if (coll(wrap, target)) {
+              target.style.backgroundColor = "blue";
+            } else {
+              target.style.backgroundColor = "red";
+            }
+          });
+        };
+        document.addEventListener("mousedown", (e) => {
+          e.preventDefault();
+          start.x = e.clientX;
+          start.y = e.clientY;
+          // console.log("鼠标按下了", start)
+          document.addEventListener("mousemove", move);
+          document.addEventListener(
+            "mouseup",
+            (e) => {
+              // console.log('鼠标抬起了')
+              e.preventDefault();
+              wrap.style.display = "none";
+              document.removeEventListener("mousemove", move);
+            },
+            {
+              once: true,
+            }
+          );
+        });
+        function coll(a, b) {
+          // console.log(a, b)
+          const {
+            left: aLeft,
+            top: aTop,
+            right: aRight,
+            bottom: aBottom,
+          } = a.getBoundingClientRect();
+          const {
+            left: bLeft,
+            top: bTop,
+            right: bRight,
+            bottom: bBottom,
+          } = b.getBoundingClientRect();
+          // console.log(aLeft, aTop, aRight, aBottom)
+          // console.log(bLeft, bTop, bRight, bBottom)
+          return !(
+            aRight < bLeft ||
+            aBottom < bTop ||
+            aLeft > bRight ||
+            aTop > bBottom
+          );
+        }
+      }
+    </script>
+  </body>
+</html>

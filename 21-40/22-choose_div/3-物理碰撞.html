@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    #target{
+      position: fixed;
+      width: 200px;
+      height: 200px;
+      left: 50%;
+      top: 50%;
+      background-color: red;
+      transform: translate(-50%, -50%);
+    }
+    #box{
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100px;
+      height: 100px;
+      background-color: green;
+    }
+  </style>
+</head>
+<body>
+  <div id="target"></div>
+  <div id="box"></div>
+  <script>
+    const start = {
+      x: 0,
+      y: 0,
+    }
+    const now = {
+      x: 0,
+      y: 0,
+    }
+    const box = document.querySelector('#box')
+    const target = document.querySelector('#target')
+    const move = e => {
+      e.preventDefault();
+      now.x = e.clientX - start.x;
+      now.y = e.clientY - start.y;
+      box.style.left = now.x + 'px'
+      box.style.top = now.y + 'px'
+      if (coll(box, target)) {
+        target.style.backgroundColor = 'blue'
+      } else {
+        target.style.backgroundColor = 'red'
+      }
+    }
+    box.addEventListener('mousedown', function(e){
+      e.preventDefault();
+      // console.log("鼠标按下了")
+      start.x = e.clientX - this.offsetLeft;
+      start.y = e.clientY - this.offsetTop;
+      document.addEventListener('mousemove', move)
+      document.addEventListener('mouseup', () => {
+        // console.log('鼠标抬起了')
+        e.preventDefault();
+        document.removeEventListener('mousemove', move)
+      }, {
+        once: true
+      })
+    })
+
+    function coll (a, b) {
+      // console.log(a, b)
+      const { left: aLeft, top: aTop, right: aRight, bottom: aBottom } = a.getBoundingClientRect();
+      const { left: bLeft, top: bTop, right: bRight, bottom: bBottom  } = b.getBoundingClientRect();
+      // console.log(aLeft, aTop, aRight, aBottom)
+      // console.log(bLeft, bTop, bRight, bBottom)
+      return !(aRight < bLeft || aBottom < bTop || aLeft > bRight || aTop > bBottom)
+    }
+  </script>
+</body>
+</html>

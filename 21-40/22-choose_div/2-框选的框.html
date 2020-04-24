@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #wrap{
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 0;
+      height: 0;
+      background-color: rgba(0, 0, 0, .3);
+    }
+  </style>
+</head>
+<body>
+  <div id="wrap"></div>
+  <script>
+    const { min, abs } = Math
+    const wrap = document.querySelector('#wrap')
+    const start = {
+      x: 0,
+      y: 0,
+    }
+    const now = {
+      x: 0,
+      y: 0,
+    }
+    const move = e => {
+      // console.log('鼠标移动了')
+      now.x = e.clientX;
+      now.y = e.clientY;
+      const dist = {
+        x: now.x - start.x,
+        y: now.y - start.y
+      }
+      const wrapLeft = min(start.x, now.x)
+      const wrapTop = min(start.y, now.y)
+      // console.log(wrapLeft, wrapTop)
+      wrap.style.display = 'block'
+      wrap.style.left = wrapLeft + 'px'
+      wrap.style.top = wrapTop + 'px'
+      wrap.style.width = abs(dist.x) + 'px'
+      wrap.style.height = abs(dist.y) + 'px'
+    }
+    document.addEventListener('mousedown', e => {
+      start.x = e.clientX;
+      start.y = e.clientY;
+      // console.log("鼠标按下了", start)
+      document.addEventListener('mousemove', move)
+      document.addEventListener('mouseup', () => {
+        // console.log('鼠标抬起了')
+        wrap.style.display = 'none'
+        document.removeEventListener('mousemove', move)
+      }, {
+        once: true
+      })
+    })
+  </script>
+</body>
+</html>

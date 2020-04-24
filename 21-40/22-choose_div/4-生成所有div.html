@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    div {
+      width: 100px;
+      height: 100px;
+      background-color: red;
+      float: left;
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    {
+      const render = num => {
+        const inner = [...'.'.repeat(num)].map(item => '<div></div>').join('')
+        console.log(inner)
+        document.body.innerHTML = inner;
+      }
+
+      render(200)
+    }
+  </script>
+</body>
+</html>
