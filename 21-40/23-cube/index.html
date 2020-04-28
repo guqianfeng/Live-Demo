@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    body{
+      --cubeSize: 200px;
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+      perspective: 800px;
+      flex-direction: column;
+    }
+    div.cube {
+      position: relative;
+      width: var(--cubeSize);
+      height: var(--cubeSize);
+      /* border: 1px solid black; */
+      transform-style: preserve-3d;
+      transform: rotateY(45deg);
+      /* margin: 20px 0; */
+    }
+    div.cube > div{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      /* border: 1px solid black; */
+      background-color: rgba(0, 0, 0, 1);
+      color: #fff;
+      text-align: center;
+      line-height: var(--cubeSize);
+      transition: .5s;
+    }
+    div.cube > div:nth-child(1){
+      transform: translateZ(calc(var(--cubeSize) / 2));
+    }
+    div.cube > div:nth-child(2){
+      transform:  rotateY(90deg) translateZ(calc(var(--cubeSize) / 2));
+    }
+    div.cube > div:nth-child(3){
+      transform:  rotateY(180deg) translateZ(calc(var(--cubeSize) / 2));
+    }
+    div.cube > div:nth-child(4){
+      transform:  rotateY(270deg) translateZ(calc(var(--cubeSize) / 2));
+    }
+    div.cube > div:nth-child(5){
+      transform:  rotateX(90deg) translateZ(calc(var(--cubeSize) / 2));
+    }
+    div.cube > div:nth-child(6){
+      transform:  rotateX(-90deg) translateZ(calc(var(--cubeSize) / 2));
+    }
+  </style>
+</head>
+<body>
+  <div class="cube">
+    <div>test1</div>
+    <div></div>
+    <div></div>
+    <div>1H</div>
+    <div></div>
+    <div></div>
+  </div>
+  <div class="cube">
+    <div>test2</div>
+    <div></div>
+    <div></div>
+    <div>2H</div>
+    <div></div>
+    <div></div>
+  </div>
+  <div class="cube">
+    <div>test3</div>
+    <div></div>
+    <div></div>
+    <div>3H</div>
+    <div></div>
+    <div></div>
+  </div>
+  <div class="cube">
+    <div>test4</div>
+    <div></div>
+    <div></div>
+    <div>4H</div>
+    <div></div>
+    <div></div>
+  </div>
+  <div class="cube">
+    <div>test5</div>
+    <div></div>
+    <div></div>
+    <div>5H</div>
+    <div></div>
+    <div></div>
+  </div>
+</body>
+</html>
