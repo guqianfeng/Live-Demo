@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    body{
+      --cubeWidth: 400px;
+      --cubeHeight: 400px;
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+      perspective: 800px;
+    }
+    .cube {
+      position: relative;
+      width: var(--cubeWidth);
+      height: var(--cubeHeight);
+      transform-style: preserve-3d;
+      transform: rotateX(-45deg);
+      transition: 5s;
+    }
+    .cube:hover {
+      transform: rotateX(-45deg) rotateY(360deg);
+    }
+    .cube > div{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 1px solid black;
+      transition: .5s;
+    }
+    .cube > div:nth-child(1) {
+      transform: translateZ(calc(var(--cubeWidth) / 2));
+    }
+    .cube > div:nth-child(2) {
+      transform: rotateY(90deg) translateZ(calc(var(--cubeWidth) / 2));
+    }
+    .cube > div:nth-child(3) {
+      transform: rotateY(180deg) translateZ(calc(var(--cubeWidth) / 2));
+    }
+    .cube > div:nth-child(4) {
+      transform: rotateY(270deg) translateZ(calc(var(--cubeWidth) / 2));
+    }
+  </style>
+</head>
+<body>
+  <div class="cube">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</body>
+</html>
