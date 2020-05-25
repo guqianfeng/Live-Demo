@@ -21,6 +21,7 @@
 
 > 最近刚入坑VSCode 推荐几个插件(持续更新)
 
+* vscode-icons - 文件夹显示特殊图标 
 * CSS Peek - html与css关联
 * Prettier - 代码格式化
 * Icon Fonts - 图标集
