@@ -39,6 +39,7 @@
 * Copy Relative Path - 复制文件的相对路径
 * Path Intellisense - 自动提示文件路径，支持各种快速引入文件
 * Color Manager - 一个很酷炫的颜色管理插件，很强大
+* px to rem - px转rem，可以在设置中配置基准值，默认是16，写好的px后选中快捷键ALT+Z转换rem
 * Live Share - 实时编码分享
 * Live Server + Browser Preview - vscode里打开浏览器，保存即更新，Live Server需要更改设置liveServer.settings.useBrowserPreview
 
