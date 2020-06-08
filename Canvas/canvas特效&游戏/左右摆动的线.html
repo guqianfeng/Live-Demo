@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			body{
+				overflow: hidden;
+				background-color: #000;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas"></canvas>
+		<script>
+			let app = (() => {
+				
+				let random = (min, max) => {
+					if(max == undefined){
+						max = min;
+						min = 0;
+					}
+					if(min > max){
+						[min, max] = [max, min];
+					}
+					return Math.random() * (max - min) + min;
+				}
+				
+				let randomColor = () => "#" + (Math.random() * 0xffffff | 0).toString(16);
+				
+				let oCvs = document.getElementById("myCanvas"),
+					ctx = oCvs.getContext("2d"),
+					W = oCvs.width = window.innerWidth,
+					H = oCvs.height = window.innerHeight,
+					num = 50,
+					particles = [];
+					
+				class Particle{
+					constructor() {
+						this.init();
+					}
+					
+					init(){
+						this.r = random(1, 10);
+						this.x = random(W);
+						this.y = H - this.r;
+						this.vy = random(-10, -2);
+						this.vx = random(4, -4);
+						this.color = randomColor();
+						this.step = random(1, 10);
+						this.deg = random(0, 360);
+					}
+					
+					draw(){
+						ctx.beginPath();
+						ctx.fillStyle = this.color;
+						ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+						ctx.fill();
+					}
+					
+					update(){
+						this.deg++;
+						this.x += this.vx * Math.sin(this.step * this.deg * Math.PI / 180);
+						this.y += this.vy;
+						if(this.y < 0){
+							this.init();
+						}
+					}
+				}	
+				
+				function init(){
+					for (var i = 0; i < num; i++) {
+						particles.push(new Particle());
+					}
+				}
+				
+				function render(){
+					ctx.fillStyle = `rgba(0, 0, 0, .2)`;
+					ctx.fillRect(0, 0, W, H);
+					for (var i = 0; i < num; i++) {
+						particles[i].draw();
+						particles[i].update();
+					}
+				}
+				
+				function loop(){
+					// ctx.clearRect(0, 0, W, H);
+					render();
+					requestAnimationFrame(loop);
+				}
+				
+				return {
+					run(){
+						init();
+						loop();
+					}
+				}
+			})();
+			
+			app.run();
+		</script>
+	</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			body{
+				overflow: hidden;
+				background-color: #000;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas"></canvas>
+		<script type="text/javascript">
+			let app = (function(){
+				
+				let canvas = document.getElementById("myCanvas"),
+					ctx = canvas.getContext("2d"),
+					w,
+					h,
+					rectW = 30,
+					rectH = 200,
+					angle = 0;
+					
+				window.addEventListener("resize",resizeHandle())
+				
+				function resizeHandle(){
+					w = canvas.width = window.innerWidth;
+					h = canvas.height = window.innerHeight;
+					ctx.translate(w/2,h/2);
+					return resizeHandle;
+				}
+				
+				function init(){
+					// console.log("init");
+					drawRect();
+				}
+				
+				function drawRect(){
+					ctx.fillStyle = "#fff";
+					let offset = 0;
+					for (var x = 0; x < w; x+=40) {
+						ctx.fillRect(x-w/2,-(Math.sin(angle+offset)+1)*rectH/2,rectW,(Math.sin(angle+offset)+1)*rectH);
+						ctx.fill();
+						offset += 0.1;
+					}
+					
+				}
+				
+				function loop(){
+					// console.log("loop");
+					ctx.clearRect(-w/2,-h/2,w,h);
+					angle += 0.05;
+					drawRect();
+					requestAnimationFrame(loop);
+				}
+				
+				return {
+					run(){
+						init();
+						loop();
+					}
+				}
+			})()
+			
+			app.run();
+		</script>
+	</body>
+</html>

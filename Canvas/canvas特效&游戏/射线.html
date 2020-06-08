@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			*{
+				margin: 0;
+				padding: 0;
+			}
+			body{
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas"></canvas>
+		<script>
+			let app = (function(){
+				
+				let canvas = document.getElementById("myCanvas"),
+					ctx = canvas.getContext("2d"),
+					cW,
+					cH,
+					length = 300,
+					rects = [];
+					
+				function init(){
+					window.addEventListener("resize", resizeHandle())
+					spawn();
+					// console.log(rects);
+				}
+				
+				function resizeHandle(){
+					cW = canvas.width = window.innerWidth;
+					cH = canvas.height = window.innerHeight;
+					return resizeHandle;
+				}
+				
+				function spawn(){
+					for (var i = 0; i < length; i++) {
+						rects.push(new Rect(cW / 2, cH / 2, Math.random() * 50, 2));
+					}
+				}
+				
+				class Rect{
+					constructor(x, y, w, h) {
+					    this.x = x;
+						this.y = y;
+						this.w = w;
+						this.h = h;
+						
+						this.angle = Math.random() * 2 * Math.PI;
+						this.radius = Math.random() * 10;
+						this.alpha = 1;
+						this.hue = 0;
+					}
+					
+					update(){
+						this.x += Math.cos(this.angle) * this.radius;
+						this.y += Math.sin(this.angle) * this.radius;
+						this.hue += 0.5;
+						this.alpha -= 0.01;
+						if(this.x < 0 || this.x > cW || this.y < 0 || this.y > cH || this.alpha <= 0){
+							this.x = cW / 2;
+							this.y = cH / 2;
+							this.angle = Math.random() * 2 * Math.PI;
+							this.radius = Math.random() * 10;
+							this.alpha = 1;
+						}
+					}
+					
+					draw(){
+						ctx.save();
+						ctx.beginPath();
+						ctx.fillStyle = `hsla(${this.hue}, 100%, 50%, ${this.alpha})`;
+						// ctx.fillStyle = "red";
+						ctx.transform(
+							Math.cos(this.angle),
+							Math.sin(this.angle),
+							-Math.sin(this.angle),
+							Math.cos(this.angle),
+							this.x,
+							this.y
+						);
+						ctx.fillRect(-this.w / 2, -this.h / 2, this.w, this.h);
+						ctx.restore();
+					}
+				}
+				
+				function loop(){
+					ctx.fillStyle = "rgba(0, 0, 0, .2)";
+					ctx.fillRect(0, 0, cW, cH);
+					// ctx.clearRect(0,0,cW,cH);
+					ctx.globalAlpha = 0.2;
+					// ctx.globalCompositeOperation = "source-over";
+					for (var i = 0; i < length; i++) {
+						rects[i].draw();
+						rects[i].update();
+					}
+					// ctx.globalCompositeOperation = "lighter";
+					requestAnimationFrame(loop);
+				}
+				
+				return {
+					run(){
+						init();
+						loop();
+					}
+				}
+			})()
+			
+			app.run();
+		</script>
+	</body>
+</html>

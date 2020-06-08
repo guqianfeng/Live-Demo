@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			#myCanvas{
+				display: block;
+				margin: 100px auto;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas"></canvas>
+		<script>
+			let game = (function(){
+				
+				let canvas = document.getElementById("myCanvas"),
+					ctx = canvas.getContext("2d"),
+					w = canvas.width = 360,
+					h = canvas.height = 360,
+					size = 40,
+					rows = h/size,
+					cols = w/size,
+					grid = [],
+					beeSum = 10,
+					timer;
+				
+				class Cell{
+					constructor(row,col) {
+					    this.row = row;
+						this.col = col;
+						this.bee = false;
+						this.show = false;
+						this.beeCount = 0;
+					}
+					draw(){
+						ctx.beginPath();
+						ctx.font = "20px 微软雅黑";
+						ctx.textAlign = "center";
+						ctx.textBaseline = "middle";
+						ctx.strokeRect(this.col*size,this.row*size,size,size);
+						ctx.stroke();
+						if(this.show){
+							ctx.fillStyle = "#ccc";
+							ctx.fillRect(this.col*size,this.row*size,size,size)
+							ctx.fillStyle = "#000";
+							if(this.bee){
+								ctx.arc(this.col*size+size/2,this.row*size+size/2,5,0,2*Math.PI);
+								ctx.fill();
+							}else{
+								if(this.beeCount){
+									ctx.fillText(this.beeCount,this.col*size+size/2,this.row*size+size/2);
+								}
+							}
+						}
+					}
+					isClick(x,y){
+						return x > this.col*size && x < this.col*size + size && y > this.row*size && y < this.row*size + size;
+					}
+					change2Show(){
+						this.show = true;
+						if(!this.beeCount){
+							for (var xoff = -1; xoff <= 1; xoff++) {
+								for (var yoff = -1; yoff <= 1; yoff++) {
+									var i = this.row + xoff;
+									var j = this.col + yoff;
+									if(i>-1 && i<rows && j>-1 && j<cols){
+										if(!grid[i][j].bee && !grid[i][j].show){
+											grid[i][j].change2Show();
+										}
+									}
+								}
+							}
+						}
+					}
+					getBeeCount(){
+						let total = 0;
+						if(this.bee){
+							this.beeCount = -1;
+							return;
+						}
+						for (var xoff = -1; xoff <= 1; xoff++) {
+							for (var yoff = -1; yoff <= 1; yoff++) {
+								var i = this.row + xoff;
+								var j = this.col + yoff;
+								if(i>-1 && i<rows && j>-1 && j<cols){
+									if(grid[i][j].bee){
+										total++;
+									}
+								}
+							}
+						}
+						this.beeCount = total;
+					}
+				}
+				
+				function init(){
+					initGrid();
+					drawGrid();
+				}
+				
+				function loop(){
+					ctx.clearRect(0,0,w,h);
+					drawGrid();
+					isGameOver();
+					timer = requestAnimationFrame(loop);
+				}
+				
+				function initGrid(){
+					let options = [];
+					for (var i = 0; i < rows; i++) {
+						grid[i] = [];
+						for (var j = 0; j < cols; j++) {
+							grid[i][j] = new Cell(i,j);
+							options.push([i,j])
+						}
+					}
+					
+					for (var i = 0; i < beeSum; i++) {
+						let index = Math.random()*options.length | 0;
+						grid[options[index][0]][options[index][1]].bee = true;
+						options.splice(index,1);
+					}
+					
+					for (var i = 0; i < rows; i++) {
+						for (var j = 0; j < cols; j++) {
+							grid[i][j].getBeeCount();
+						}
+					}
+				}
+				
+				function drawGrid(){
+					for (var i = 0; i < rows; i++) {
+						for (var j = 0; j < cols; j++) {
+							grid[i][j].draw();
+						}
+					}
+				}
+				
+				canvas.addEventListener("click",mousePressHandle);
+				
+				function mousePressHandle(e){
+					let bcr = canvas.getBoundingClientRect();
+					let left = bcr.left;
+					let top = bcr.top;
+					// console.log(left,top);
+					let x = e.clientX - left;
+					let y = e.clientY - top;
+					for (var i = 0; i < rows; i++) {
+						for (var j = 0; j < cols; j++) {
+							// console.log(grid[i][j].isClick(x,y));
+							if(grid[i][j].isClick(x,y)){
+								grid[i][j].change2Show();
+							}
+						}
+					}
+					if(isGameOver()){
+						canvas.removeEventListener("click",mousePressHandle);
+						for (var i = 0; i < rows; i++) {
+							for (var j = 0; j < cols; j++) {
+								let cell = grid[i][j];
+								cell.change2Show();
+							}
+						}
+						setTimeout(function(){
+							alert("game over");
+							window.location.reload();
+						},500)
+					}
+				}
+				
+				function isGameOver(){
+					let flag = false;
+					for (var i = 0; i < rows; i++) {
+						for (var j = 0; j < cols; j++) {
+							let cell = grid[i][j];
+							if(cell.show && cell.bee){
+								flag = true;
+								break;
+							}
+						}
+					}
+					return flag;
+				}
+				
+				return {
+					run(){
+						init();
+						loop();
+					}
+				}
+			})()
+			
+			game.run();
+		</script>
+	</body>
+</html>

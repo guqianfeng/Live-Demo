@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<style>
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		body{
+			background-color: #000000;
+			overflow: hidden;
+		}
+	</style>
+</head>
+
+<body>
+	<canvas id="myCanvas" width="" height=""></canvas>
+	<script type="text/javascript">
+		let random = (min,max) => Math.random()*(max-min)+min;
+		let canvas = document.getElementById("myCanvas"),
+			ctx = canvas.getContext("2d"),
+			w = canvas.width = window.innerWidth,
+			h = canvas.height = window.innerHeight,
+			arr = [];
+		
+		class Particle{
+			constructor() {
+			    this.x = random(0,w);
+				this.y = 0;
+				this.width = 2;
+				this.height = 20;
+				this.vy = random(2,6);
+				this.d = random(0.7*h,0.9*h);
+				this.a = 1;
+				this.r = 1;
+			}
+			draw(){
+				ctx.beginPath();
+				if(this.y<this.d){
+					ctx.fillStyle = "rgb(255,255,255)";
+					ctx.fillRect(this.x,this.y,this.width,this.height);
+				}else{
+					ctx.strokeStyle = `rgba(255,255,255,${this.a})`;
+					ctx.arc(this.x,this.y,this.r,0,2*Math.PI);
+					ctx.stroke();
+				}
+				ctx.closePath();
+			}
+			update(){
+				if(this.y<this.d){
+					this.y += this.vy;
+				}else{
+					this.a *= 0.98;
+					this.r += 0.5;
+				}
+			}
+		}
+		
+		function spawn(){
+			let p = new Particle();
+			arr.push(p);
+		}
+		
+		function render(){
+			ctx.fillStyle = "rgba(0,0,0,.2)";
+			ctx.fillRect(0,0,w,h);
+			for (let i = arr.length-1; i >= 0; i--) {
+				let item = arr[i];
+				item.draw();
+				item.update();
+				arr[i].a <= 0.01 && arr.splice(i,1);
+			}
+		}
+		
+		~function(){
+			spawn();
+			render();
+			requestAnimationFrame(arguments.callee)
+		}()	
+	</script>
+</body>
+
+</html>

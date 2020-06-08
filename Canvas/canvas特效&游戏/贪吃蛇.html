@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			#myCanvas{
+				display: block;
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				margin: auto;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="500" height="500"></canvas>
+		<script>
+			let random = (min,max) => (Math.random()*(max-min)+min) | 0;
+			let canvas = document.getElementById("myCanvas"),
+				ctx = canvas.getContext("2d"),
+				snakeArr = [{x:10,y:9},{x:10,y:10},{x:10,y:11},{x:10,y:12},{x:10,y:13},
+							{x:10,y:14},{x:10,y:15},{x:10,y:16},{x:10,y:17},{x:10,y:18}],
+				DIR = {
+					LEFT: 37,
+					UP: 38,
+					RIGHT: 39,
+					DOWN: 40
+				},
+				dir = DIR.RIGHT,
+				food = null,
+				initLength = snakeArr.length;
+				
+			init()
+			
+			function init(){
+				ctx.fillStyle = "#ccc";
+				ctx.fillRect(0,0,500,500);
+				
+				drawSnake();
+			}
+			
+			function drawSnake(){
+				ctx.shadowBlur = 10;
+				ctx.shadowColor = "#000000";
+				ctx.fillStyle = "#000000";
+				for (let i = 0; i < snakeArr.length; i++) {
+					ctx.beginPath();
+					let body = snakeArr[i];
+					ctx.fillRect(body.x*10,body.y*10,10,10);
+				}
+			}
+			
+			function move(){
+				if(food){
+					if((dir==DIR.LEFT && snakeArr[0].x-1==food.x && snakeArr[0].y==food.y)||
+						(dir==DIR.UP && snakeArr[0].x==food.x && snakeArr[0].y-1==food.y)||
+						(dir==DIR.RIGHT && snakeArr[0].x+1==food.x && snakeArr[0].y==food.y)||
+						(dir==DIR.DOWN && snakeArr[0].x==food.x && snakeArr[0].y+1==food.y)){
+						//吃到食物
+						snakeArr.unshift(food);
+						food = null;
+					}
+				}
+				snakeArr.pop();
+				switch (dir){
+					case DIR.LEFT:
+						snakeArr.unshift({x:snakeArr[0].x-1,y:snakeArr[0].y});
+						break;
+					case DIR.UP:
+						snakeArr.unshift({x:snakeArr[0].x,y:snakeArr[0].y-1});
+						break;
+					case DIR.RIGHT:
+						snakeArr.unshift({x:snakeArr[0].x+1,y:snakeArr[0].y});
+						break;
+					default:
+						snakeArr.unshift({x:snakeArr[0].x,y:snakeArr[0].y+1});
+						break;
+				}
+			}
+			
+			function coll(){
+				let collFlag = false;
+				if(snakeArr[0].x<0 || snakeArr[0].x>=50 || snakeArr[0].y<0 || snakeArr[0].y>=50){
+					collFlag = true;
+				}
+				for (var i = 1; i < snakeArr.length; i++) {
+					var body = snakeArr[i];
+					if(snakeArr[0].x==body.x && snakeArr[0].y==body.y){
+						collFlag = true;
+					}
+				}
+				return collFlag;
+			}
+			
+			function createFood(){
+				if(!food){
+					food = {};
+					food.x = random(0,50);
+					food.y = random(0,50);
+				}else{
+					ctx.shadowBlur = 10;
+					ctx.shadowColor = "#000000";
+					ctx.fillStyle = "#000000";
+					ctx.fillRect(food.x*10,food.y*10,10,10);
+				}
+			}
+			
+			function render(){
+				ctx.fillStyle = "#ccc";
+				ctx.fillRect(0,0,500,500);
+				
+				move();
+				let flag = coll();
+				if(flag){
+					alert("游戏结束,您的得分为"+(snakeArr.length-initLength));
+					window.location.reload();
+				}else{
+					drawSnake();
+				}
+				
+				createFood();
+				
+			}
+			
+			setInterval(render,100);
+			
+			document.onkeydown = function(e){
+				if(Math.abs(e.keyCode-dir)!=2&&e.keyCode>=DIR.LEFT&&e.keyCode<=DIR.DOWN){
+					dir = e.keyCode;
+				}
+			}
+		</script>
+	</body>
+</html>

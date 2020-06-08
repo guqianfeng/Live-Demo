@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			body{
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas"></canvas>
+		<script type="text/javascript">
+			let app = (function(){
+				
+				let random = (min,max) => Math.random()*(max-min)+min;
+				
+				let randomColor = () => {
+					let r = random(0,256) | 0;
+					let g = random(0,256) | 0;
+					let b = random(0,256) | 0;
+					return `rgb(${r},${g},${b})`;
+				}
+				
+				let canvas = document.getElementById("myCanvas"),
+					ctx = canvas.getContext("2d"),
+					cW,
+					cH,
+					num = 7,
+					r = 50,
+					balls = [];
+					
+				window.addEventListener("resize", resizeHandle())
+				window.addEventListener("keydown", keydownHandle)
+				
+				function resizeHandle(){
+					cW = canvas.width = window.innerWidth;
+					cH = canvas.height = window.innerHeight;
+					ctx.translate(cW/2,cH/2);
+					return resizeHandle;
+				}
+
+				function keydownHandle(e){
+					switch (e.keyCode) {
+						case 37:
+							console.log("左");
+							break;
+						case 38:
+							console.log("上");
+							break;
+						case 39:
+							console.log("右");
+							break;
+						case 40:
+							console.log("下");
+							break;
+					}
+				}
+				
+				class Ball{
+					constructor(index,x,y,r) {
+						this.index = index;
+					    this.x = x;
+						this.y = y;
+						this.r = r;
+						this.color1 = randomColor();
+						this.color2 = randomColor();
+						this.color3 = randomColor();
+						this.color4 = randomColor();
+						this.grd = ctx.createRadialGradient(this.x,this.y,random(0,this.r),this.x,this.y,this.r);
+						this.grd.addColorStop(0.3,this.color1);
+						this.grd.addColorStop(0.5,this.color2);
+						this.grd.addColorStop(0.7,this.color3);
+						this.grd.addColorStop(1,this.color4);
+						this.color = this.grd;
+						this.speed = random(40,1000);
+					}
+					
+					draw(){
+						ctx.save()
+						ctx.beginPath();
+						ctx.fillStyle = this.color;
+						ctx.arc(this.x,this.y,this.r,0,2*Math.PI);
+						ctx.fill();
+						ctx.restore();
+					}
+					
+					update(){
+						this.speed ++;
+						this.x = Math.cos(this.speed*Math.PI/180)*r*this.index;
+						this.y = Math.sin(this.speed*Math.PI/180)*r*this.index;
+						this.grd = ctx.createRadialGradient(this.x,this.y,this.r/2,this.x,this.y,this.r);
+						this.grd.addColorStop(0.3,this.color1);
+						this.grd.addColorStop(0.5,this.color2);
+						this.grd.addColorStop(0.7,this.color3);
+						this.grd.addColorStop(1,this.color4);
+						this.color = this.grd;
+					}
+				}
+				
+				function init(){
+					addBalls();
+				}
+				
+				function loop(){
+					clearCanvas();
+					drawBg();
+					drawBalls();
+					requestAnimationFrame(loop);
+				}
+
+				function clearCanvas(){
+					ctx.clearRect(-cW/2,-cH/2,cW,cH);
+				}
+
+				function drawBg(color){
+					ctx.fillStyle = color;
+					ctx.fillRect(-cW/2,-cH/2,cW,cH);
+					ctx.strokeStyle = "#fff";
+					for (var i = 1; i <= num; i++) {
+						ctx.beginPath();
+						ctx.arc(0,0,r*i,0,Math.PI*2);
+						ctx.closePath();
+						ctx.stroke();
+					}
+				}
+				
+				function addBalls(){
+					let r_ = 5;
+					for (var i = 1; i <= num; i++) {
+						let ball = new Ball(i,r*i,0,r_*i);
+						balls.push(ball);
+					}
+				}
+				
+				function drawBalls(){
+					for (var i = 0; i < balls.length; i++) {
+						balls[i].draw();
+						balls[i].update();
+					}
+				}
+				
+				return {
+					run(){
+						init();
+						loop();
+					}
+				}
+			})()
+			
+			app.run();
+		</script>
+	</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			body{
+				overflow: hidden;
+				background-color: #000;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas"></canvas>
+		<script type="text/javascript">
+			let app = (function(){
+				
+				let canvas = document.getElementById("myCanvas"),
+					ctx = canvas.getContext("2d"),
+					w,
+					h,
+					x = 0,
+					y = 0,
+					timer;
+					
+				window.addEventListener("resize",resizeHandle())
+				
+				function resizeHandle(){
+					w = canvas.width = window.innerWidth;
+					h = canvas.height = window.innerHeight;
+					return resizeHandle;
+				}
+				
+				function init(){
+					ctx.lineWidth = 5;
+					ctx.strokeStyle = "#fff"; 
+					ctx.lineCap = "round";
+				}
+				
+				function loop(){
+					console.log("loop");
+					Math.random()>0.5 ? drawLine(x,y,x+50,y+50) : drawLine(x,y+50,x+50,y);
+					x += 50;
+					if(x > w){
+						x = 0;
+						y += 50;
+					}
+					if(y > h){
+						y = 0;
+						ctx.clearRect(0,0,w,h);
+					}
+					timer = requestAnimationFrame(loop);
+				}
+				
+				function drawLine(x1,y1,x2,y2){
+					ctx.beginPath();
+					ctx.moveTo(x1,y1);
+					ctx.lineTo(x2,y2);
+					ctx.stroke();
+				}
+				
+				return {
+					run(){
+						init();
+						loop();
+					}
+				}
+			})()
+			
+			app.run();
+		</script>
+	</body>
+</html>

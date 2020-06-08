@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			body{
+				overflow: hidden;
+				background-color: #000;
+				cursor: crosshair;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas"></canvas>
+		<script>
+			let app = (()=>{
+				
+				let random = (min, max) => Math.random() * (max - min) + min;
+				
+				let getDistance = (x1, y1, x2, y2) => Math.hypot(x1 - x2, y1 - y2);
+				
+				let oCvs = document.getElementById("myCanvas"),
+					ctx = oCvs.getContext("2d"),
+					W = oCvs.width = window.innerWidth,
+					H = oCvs.height = window.innerHeight,
+					fireworks = [],
+					particles = [],
+					autoCount = 0,
+					autoTotal = 80,
+					manualCount = 0,
+					manualTotal = 5,
+					mousedown = false,
+					pos = {x: 0, y: 0},
+					hue = 120;
+			
+				class Firework{
+					constructor(sx, sy, tx, ty) {
+					    this.x = this.sx = sx;
+						this.y = this.sy = sy;
+						this.tx = tx;
+						this.ty = ty;
+						this.total_d = getDistance(sx, sy, tx, ty); //总距离
+						this.traveled_d = 0;
+						this.angle = Math.atan2(ty - sy, tx - sx); // 角度
+						this.speed = 2; //速度
+						this.a = 1.05; //加速度
+						this.lightness = random(30, 80); //hsl种的l 亮度
+						this.r = 1;
+						this.points = [];
+						this.pointsCount = 3;
+						for (let i = 0; i < this.pointsCount; i++) {
+							this.points.push([this.x, this.y]);
+						}
+					}
+					
+					update(index){
+						this.points.pop();
+						this.points.unshift([this.x, this.y]);
+						this.speed *= this.a;
+						let vx = this.speed * Math.cos(this.angle);
+						let vy = this.speed * Math.sin(this.angle);
+						this.traveled_d = getDistance(this.sx, this.sy, this.x + vx, this.y + vy);
+						if(this.traveled_d < this.total_d){
+							//没超过总距离
+							this.x += vx;
+							this.y += vy;
+						}else{
+							//放烟火
+							fireworks.splice(index, 1);
+							// console.log(this.tx, this.ty);
+							createParticles(this.tx, this.ty);
+						}
+						if(this.r < 8){
+							this.r += 0.3;
+						}else{
+							this.r = 1;
+						}
+					}
+					
+					draw(){
+						ctx.strokeStyle = `hsl(${hue}, 100%, ${this.lightness}%)`;
+						ctx.beginPath();
+						ctx.moveTo(this.points[this.points.length-1][0], this.points[this.points.length-1][1]);
+						ctx.lineTo(this.x, this.y);
+						ctx.stroke();
+						
+						ctx.beginPath();
+						ctx.arc(this.tx, this.ty, this.r, 0, 2 * Math.PI);
+						ctx.stroke();
+					}
+				}
+				
+				function Particle(x, y) {
+					this.x = x;
+					this.y = y;
+					this.speed = random(0, 10);
+					this.a = 0.98;
+					this.angle = random(0, 2 * Math.PI);
+					this.brightness = random(30, 80);
+					this.points = [];
+					this.pointsCount = 5;
+					for (var i = 0; i < this.pointsCount; i++) {
+						this.points.push([this.x, this.y]);
+					}
+					this.alpha = 1;
+					this.t_alpha = random(0.013, 0.03);
+					this.hue = random(hue - 20, hue + 20)
+				}
+
+				Particle.prototype.update = function (index) {
+					this.points.pop();
+					this.points.unshift([this.x, this.y]);
+					this.speed *= this.a;
+					var vx = this.speed * Math.cos(this.angle);
+					var vy = this.speed * Math.sin(this.angle);
+					this.alpha -= this.t_alpha;
+					if (this.alpha <= this.t_alpha) {
+						particles.splice(index, 1)
+					} else {
+						this.x += vx;
+						this.y += vy;
+					}
+				};
+
+				Particle.prototype.draw = function () {
+					// ctx.lineWidth = 5;
+					ctx.strokeStyle = `hsla(${this.hue},100%,${this.brightness}%,${this.alpha})`;
+					ctx.beginPath();
+					ctx.moveTo(this.points[this.points.length - 1][0], this.points[this.points.length - 1][1]);
+					ctx.lineTo(this.x, this.y);
+					ctx.stroke();
+				};
+
+				function createParticles(x, y) {
+					var num = ~~(random(20, 100));
+					for (var i = 0; i < num; i++) {
+						particles.push(new Particle(x, y))
+					}
+				}
+				
+				oCvs.addEventListener("mousedown", function(e){
+					e.preventDefault();
+					mousedown = true;
+				}, false);
+				
+				oCvs.addEventListener("mousemove", function(e){
+					e.preventDefault();
+					pos.x = e.pageX;
+					pos.y = e.pageY;
+				}, false);
+				
+				oCvs.addEventListener("mouseup", function(e){
+					e.preventDefault();
+					mousedown = false;
+				}, false);
+				
+				function loop(){
+					ctx.fillStyle = `rgba(0, 0, 0, .2)`;
+					ctx.fillRect(0, 0, W, H);
+					hue += 0.2;
+					
+					for (var i = 0; i < fireworks.length; i++) {
+						fireworks[i].draw();
+						fireworks[i].update(i);
+					}
+					
+					for (var i = 0; i < particles.length; i++) {
+						particles[i].draw();
+						particles[i].update(i);
+					}
+					
+					if(autoCount >= autoTotal){
+						if(!mousedown){
+							fireworks.push(new Firework(W / 2, H, random(0, W), random(0, H)));
+							autoCount = 0;
+						}
+					}else{
+						autoCount ++;
+					}
+					
+					if(manualCount >= manualTotal){
+						if(mousedown){
+							fireworks.push(new Firework(W / 2, H, pos.x, pos.y));
+							manualCount = 0;
+						}
+					}else{
+						manualCount ++;
+					}
+					
+					requestAnimationFrame(loop);
+				}
+				
+				return {
+					run(){
+						loop();
+					}
+				}
+			})()
+			
+			app.run();
+		</script>
+	</body>
+</html>

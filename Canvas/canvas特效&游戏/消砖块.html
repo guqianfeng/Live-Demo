@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			body{
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas"></canvas>
+		<script type="text/javascript">
+			let app = (function(){
+				
+				let random = (min,max) => Math.random()*(max-min)+min;
+				
+				let distance = (x1,y1,x2,y2) => Math.hypot(x2-x1,y2-y1);
+				
+				let canvas = document.getElementById("myCanvas"),
+					ctx = canvas.getContext("2d"),
+					w,
+					h,
+					paddle,
+					step = 5,
+					ball,
+					blocks = [],
+					blocksLength = 20;
+					
+				window.addEventListener("resize",resizeHandle())
+				document.addEventListener("keydown",keydownHandle);
+				document.addEventListener("keyup",keyupHandle);
+				
+				function resizeHandle(){
+					w = canvas.width = window.innerWidth;
+					h = canvas.height = window.innerHeight;
+					return resizeHandle;
+				}
+				
+				function keydownHandle(e){
+					// console.log("按下",e.keyCode);
+					switch(e.keyCode){
+						case 37: paddle.moveLeft = true;
+								break;
+						case 39: paddle.moveRight = true;
+								break;
+					}
+					
+				}
+				
+				function keyupHandle(){
+					// console.log("松开");
+					paddle.moveLeft = false;
+					paddle.moveRight = false;
+				}
+				
+				class Paddle{
+					constructor() {
+					    this.w = 160;
+						this.h = 20;
+						this.x = w/2;
+						this.y = h-40;
+						this.moveLeft = false;
+						this.moveRight = false;
+					}
+					
+					draw(){
+						ctx.beginPath();
+						ctx.rect(this.x,this.y,this.w,this.h);
+						ctx.stroke();
+					}
+					
+					move(step){
+						this.x += step;
+					}
+					
+					update(){
+						if(this.moveLeft){
+							this.move(-step);
+						}else if(this.moveRight){
+							this.move(step);
+						}
+					}
+					checkHitWall(){
+						if(this.x<0){
+							this.x = 0;
+						}
+						if(this.x > w - this.w){
+							this.x = w - this.w;
+						}
+					}
+				}
+				
+				class Ball{
+					constructor() {
+					    this.x = w/2;
+						this.y = h/2;
+						this.r = 15;
+						this.vx = 4;
+						this.vy = 4;
+					}
+					
+					draw(){
+						ctx.beginPath();
+						ctx.arc(this.x,this.y,this.r,0,2*Math.PI);
+						ctx.stroke();
+					}
+					
+					update(){
+						this.x += this.vx;
+						this.y += this.vy;
+					}
+					
+					checkHitWall(){
+						if(this.x <= this.r || this.x >= w - this.r){
+							this.vx *= -1;
+						}
+						if(this.y <= this.r){
+							this.vy *= -1;
+						}
+					}
+					
+					checkHitPaddle(paddle){
+						if(this.y > paddle.y - this.r && this.y < paddle.y &&
+							this.x > paddle.x - this.r && this.x < paddle.x + paddle.w + this.r && this.vy > 0){
+							this.vy *= -1;	
+						}
+					}
+					
+					checkHitBlocks(blocks){
+						for (var i = 0; i < blocks.length; i++) {
+							var block = blocks[i];
+							var dis = distance(this.x,this.y,block.x,block.y);
+							if(dis <= this.r + block.r){
+								blocks.splice(i,1);
+								this.vy *= -1;
+							}
+						}
+					}
+				}
+				
+				class Block{
+					constructor() {
+					    this.x = random(0,w);
+						this.y = random(0,0.5*h);
+						this.type = Math.floor(random(3,7));
+						this.points = [];
+						this.deg = 0;
+						this.r = random(20,80);
+						for (var i = 0; i < this.type; i++) {
+							let px = this.x + Math.cos(this.deg*Math.PI/180)*this.r;
+							let py = this.y + Math.sin(this.deg*Math.PI/180)*this.r;
+							this.points.push([px,py])
+							this.deg += 360/this.type;
+						}
+					}
+					
+					draw(){
+						ctx.beginPath();
+						ctx.moveTo(this.points[0][0],this.points[0][1]);
+						for (var i = 1; i < this.points.length; i++) {
+							ctx.lineTo(this.points[i][0],this.points[i][1])
+						}
+						ctx.closePath();
+						ctx.stroke();
+					}
+					
+					changeSmall(){
+						this.r /= 2;
+					}
+				}
+				
+				function init(){
+					paddle = new Paddle();
+					ball = new Ball();
+					spawnBlocks();
+				}
+				
+				function spawnBlocks(){
+					for (var i = 0; i < blocksLength; i++) {
+						blocks.push(new Block());
+					}
+				}
+				
+				function drawBlocks(){
+					for (var i = 0; i < blocks.length; i++) {
+						blocks[i].draw();
+					}
+				}
+				
+				function loop(){
+					ctx.clearRect(0,0,w,h);
+					paddle.draw();
+					paddle.update();
+					paddle.checkHitWall();
+					ball.draw();
+					ball.update();
+					ball.checkHitWall();
+					ball.checkHitPaddle(paddle);
+					ball.checkHitBlocks(blocks);
+					drawBlocks();
+					requestAnimationFrame(loop);
+				}
+				
+				return {
+					run(){
+						init();
+						loop();
+					}
+				}
+			})()
+			
+			app.run();
+		</script>
+	</body>
+</html>

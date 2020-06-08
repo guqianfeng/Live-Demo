@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			body{
+				background-color: #ddd;
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas"></canvas>
+		<script>
+			let random = (min, max) => Math.random() * (max - min) + min;
+			
+			let canvas = document.getElementById("myCanvas"),
+				ctx = canvas.getContext("2d"),
+				cW = canvas.width = window.innerWidth,
+				cH = canvas.height = window.innerHeight,
+				building1 = [],
+				building2 = [],
+				building3 = [],
+				speed = -5,
+				length = 25;
+			
+			class Building{
+				constructor(x,y,vx,color) {
+				    this.x = x;
+					this.y = y;
+					this.vx = vx;
+					this.color = color;
+					
+					this.w = random(10,60);
+					this.h = random(5, 500);
+				}
+				
+				draw(){
+					ctx.save();
+					ctx.translate(this.x, this.y);
+					ctx.beginPath();
+					ctx.fillStyle = this.color;
+					ctx.fillRect(-this.w / 2, -this.h, this.w, this.h);
+					ctx.restore();
+					this.update();
+				}
+				
+				update(){
+					this.x += this.vx;
+					if(this.x < 0){
+						this.x = cW;
+					}
+				}
+			}
+			
+			// console.log(new Building(random(0,cW),cH,-5,"red").draw())
+			for (var i = 0; i < length; i++) {
+				building1.push(new Building(random(0,cW), cH, -5 * 0.9, "red"));
+				building2.push(new Building(random(0,cW), cH, -5 * 0.7, "green"));
+				building3.push(new Building(random(0,cW), cH, -5 * 0.5, "blue"));
+			}
+			
+			~function(){
+				ctx.clearRect(0, 0, cW, cH);
+				ctx.globalAlpha = 0.5;
+				ctx.globalCompositeOperation = "lighter";
+				for (var i = 0; i < length; i++) {
+					building1[i].draw();
+					building2[i].draw();
+					building3[i].draw();
+				}
+				requestAnimationFrame(arguments.callee);
+			}()
+		</script>
+	</body>
+</html>

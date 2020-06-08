@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			body{
+				overflow: hidden;
+				background-color: #000;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas"></canvas>
+		<script>
+			let app = (function(){
+				
+				let random = (min, max) => Math.random() * (max - min) + min;
+				
+				let randomColor = () => "#" + (Math.random() * 0xffffff | 0).toString(16);
+				
+				let canvas = document.getElementById("myCanvas"),
+					ctx = canvas.getContext("2d"),
+					cW,
+					cH,
+					n = 2,
+					points = [],
+					colorArr = [],
+					R,
+					r = 3,
+					current = null,
+					count = 0;
+					
+				function resizeHandle(){
+					cW = canvas.width = window.innerWidth;
+					cH = canvas.height = window.innerHeight;
+					reset();
+					return resizeHandle;
+				}	
+				
+				window.addEventListener("resize",resizeHandle());
+				
+				function init(){
+					let deg = 360 / n;
+					for (var i = 0; i < n; i++) {
+						let x = cW / 2 + R * Math.cos(deg * (i + 1) * Math.PI / 180);
+						let y = cH / 2 + R * Math.sin(deg * (i + 1) * Math.PI / 180);
+						points.push({
+							x,
+							y
+						})
+						colorArr.push(randomColor());
+					}
+// 					console.log(points);
+					// console.log(colorArr);
+					drawInitPoints();
+				}
+				
+				function drawInitPoints(){
+					ctx.fillStyle = "#fff";
+					for (var i = 0; i < n; i++) {
+						ctx.beginPath();
+						ctx.arc(points[i].x, points[i].y, r, 0, 2 * Math.PI);
+						ctx.fill();
+						ctx.closePath();
+					}
+				}
+				
+				function spawnRandomPoint(){
+					if(!current){
+						current = {
+							x: random(0, cW),
+							y: random(0, cH)
+						}
+					}
+					let index = random(0, n) | 0;
+					// console.log(index);
+					let cX = (current.x + points[index].x) / 2
+					let cY = (current.y + points[index].y) / 2
+					ctx.fillStyle = colorArr[index];
+					ctx.beginPath();
+					ctx.arc(cX, cY, r, 0, 2 * Math.PI);
+					ctx.fill();
+					ctx.closePath();
+					current = {
+						x: cX,
+						y: cY
+					}
+				}
+				
+				function loop(){
+					count++; 
+					// ctx.clearRect(0, 0, cW, cH);
+					if(count > 5000){
+						reset()
+					}else{
+						spawnRandomPoint();
+						requestAnimationFrame(loop);
+					}
+					
+				}
+				
+				function reset(){
+					ctx.clearRect(0, 0, cW, cH);
+					R = Math.min(cW, cH) * 0.7 / 2;
+					count = 0;
+					n++;
+					points = [];
+					colorArr = [];
+					init();
+					loop();
+				}
+				
+				return {
+					run(){
+						init();
+						loop();
+					}
+				}
+			})()
+			
+			app.run();
+		</script>
+	</body>
+</html>

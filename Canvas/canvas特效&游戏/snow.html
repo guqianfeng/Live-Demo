@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			body{
+				overflow: hidden;
+				background-color: #000;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas"></canvas>
+		<script type="text/javascript">
+			let app = (function(){
+				
+				let random = (min,max) => Math.random()*(max-min)+min;
+				
+				let canvas = document.getElementById("myCanvas"),
+					ctx = canvas.getContext("2d"),
+					w,
+					h,
+					arr = [];
+					
+				window.addEventListener("resize",resizeHandle())
+				
+				function resizeHandle(){
+					w = canvas.width = window.innerWidth;
+					h = canvas.height = window.innerHeight;
+					// ctx.translate(w/2,h/2);
+					return resizeHandle;
+				}
+				
+				class Snow{
+					constructor() {
+					    this.x = random(0,w);
+						this.y = random(-100,-10);
+						this.r = random(2,4);
+						this.vx = random(-2,2);
+						this.vy = random(1,3);
+					}
+					
+					draw(){
+						ctx.fillStyle = "#fff";
+						ctx.beginPath();
+						ctx.arc(this.x,this.y,this.r,0,2*Math.PI);
+						ctx.fill();
+					}
+					
+					update(){
+						this.x += this.vx;
+						this.y += this.vy;
+						this.r -= 0.0003;
+					}
+				}
+				
+				function init(){
+					
+				}
+				
+				function loop(){
+					ctx.clearRect(0,0,w,h);
+					arr.push(new Snow());
+					for (var i = 0; i < arr.length; i++) {
+						let s = arr[i];
+						s.draw();
+						s.update();
+						s.r <= 0.1 && arr.splice(i,1);
+					}
+					requestAnimationFrame(loop);
+				}
+				
+				return {
+					run(){
+						// init();
+						loop();
+					}
+				}
+			})()
+			
+			app.run();
+		</script>
+	</body>
+</html>

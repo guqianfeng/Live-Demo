@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			body{
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas"></canvas>
+		<script>
+			let oCvs = document.getElementById("myCanvas"),
+				ctx = oCvs.getContext("2d"),
+				W = oCvs.width = window.innerWidth,
+				H = oCvs.height = window.innerHeight,
+				p = {};
+				
+			function getPosition(w, h){
+				let L, T, R, B, M;
+				L = - w / 2,
+				T = - h / 2,
+				R = w / 2,
+				B = h / 2,
+				M = 0;
+				
+				p = {
+					LT: {x: L, y: T},
+					MT: {x: M, y: T},
+					RT: {x: R, y: T},
+					
+					LM: {x: L, y: M},
+					MM: {x: M, y: M},
+					RM: {x: R, y: M},
+					
+					LB: {x: L, y: B},
+					MB: {x: M, y: B},
+					RB: {x: R, y: B}
+				}
+			}
+				
+			function path(n1, n2){
+				let n1x = p[n1].x;
+				let n1y = p[n1].y;
+				if(n2 == undefined){
+					ctx.lineTo(n1x, n1y);
+				}else{
+					let n2x = p[n2].x;
+					let n2y = p[n2].y;
+					ctx.quadraticCurveTo(n1x, n1y, n2x, n2y);
+				}
+			}
+			
+// 			ctx.save();
+// 			ctx.translate(W/2, H/2 - 100);
+// 			getPosition(500, 300);
+// 			path("LM");
+// 			path("LT","MT");
+// 			path("RT","RM");
+// 			path("RB","MB");
+// 			path("LB","LM")
+// 			ctx.stroke();
+// 			ctx.restore()
+
+			ctx.save();
+			ctx.translate(W / 2 - 200, H / 2);
+			getPosition(200, 200);
+			ctx.beginPath();
+			path("LM");
+			path("MT");
+			path("RM");
+			path("MB");
+			path("LM")
+			ctx.stroke();
+			ctx.restore();
+			
+			ctx.save();
+			ctx.translate(W / 2 - 200, H / 2 - 160);
+			ctx.beginPath();
+			ctx.arc(0, 0, 50, 0, 2 * Math.PI);
+			ctx.stroke();
+			ctx.restore();
+			
+			ctx.save();
+			ctx.translate(W / 2 + 200, H / 2);
+			getPosition(200, 200);
+			ctx.beginPath();
+			path("MT");
+			path("LB");
+			path("RB");
+			path("MT");
+			ctx.stroke();
+			ctx.restore();
+			
+			ctx.save();
+			ctx.translate(W / 2 + 200, H / 2 - 160);
+			ctx.beginPath();
+			ctx.arc(0, 0, 50, 0, 2 * Math.PI);
+			ctx.stroke();
+			ctx.restore();
+		</script>
+	</body>
+</html>

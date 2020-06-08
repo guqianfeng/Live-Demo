@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			body{
+				overflow: hidden;
+			}
+			#myCanvas{
+				display: block;
+				margin: 50px auto;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="550" height="550"></canvas>
+		<script type="text/javascript">
+			let app = (function(){
+				
+				let random = (min,max) => Math.random()*(max-min)+min; 
+				
+				//全局变量
+				let canvas = document.getElementById("myCanvas"),
+					ctx = canvas.getContext("2d"),
+					cW = canvas.width,
+					cH = canvas.height,
+					grid = 50,
+					player,
+					cars = []
+					logs = [],
+					index = 0;
+					
+				window.addEventListener("keydown", keydownHandle)
+				
+				//键盘监听
+				function keydownHandle(e){
+					switch (e.keyCode) {
+						case 37:
+							// console.log("左");
+							player.move(-1,0);
+							break;
+						case 38:
+							// console.log("上");
+							player.move(0,-1);
+							break;
+						case 39:
+							// console.log("右");
+							player.move(1,0);
+							break;
+						case 40:
+							// console.log("下");
+							player.move(0,1);
+							break;
+					}
+				}
+				
+				//最大的父类,一切都由小方块组成
+				class Rectangle{
+					constructor(x,y,w,h) {
+					    this.x = x;
+						this.y = y;
+						this.w = w;
+						this.h = h;
+					}
+					draw(){
+						ctx.beginPath();
+						ctx.fillRect(this.x,this.y,this.w,this.h);
+					}
+					checkHitRect(rect){
+						let left = this.x,
+							top = this.y,
+							right = this.x + this.w,
+							bottom = this.y + this.h;
+							
+						let oLeft = rect.x,
+							oTop = rect.y,
+							oRight = rect.x + rect.w,
+							oBottom = rect.y + rect.h;
+							
+						return !(left >= oRight || right <= oLeft || 
+								top >= oBottom || bottom <= oTop)
+					}
+				}
+				
+				//玩家
+				class Player extends Rectangle{
+					constructor(x,y,size) {
+					    super(x,y,size,size);
+						this.attached = null;
+					}
+					draw(){
+						ctx.fillStyle = "#ccc";
+						super.draw();
+					}
+					move(xDir,yDir){
+						this.x += xDir * grid;
+						this.y += yDir * grid;
+					}
+					checkHitWall(){
+						if(this.x < 0){
+							this.x = 0;
+						}
+						if(this.x > cW - grid){
+							this.x = cW - grid;
+						}
+						if(this.y < 0){
+							this.y = 0;
+						}
+						if(this.y > cH - grid){
+							this.y = cH - grid;
+						}
+						//测试进入log区域
+// 						if(this.y < cH/2 - grid){
+// 							clearCanvas();
+// 						}
+					}
+					attach(log){
+						this.attached = log;
+					}
+					update(){
+						if(this.attached){
+							this.x += this.attached.speed;
+						}
+					}
+					checkWin(){
+						return this.y == 0;
+					}
+				}
+				
+				//自动移动的方块
+				class Block extends Rectangle{
+					constructor(x,y,w,h,speed){
+						super(x,y,w,h);
+						this.speed = speed;
+					}
+					update(){
+						this.x += this.speed;
+					}
+					checkHitWall(){
+						if(this.speed > 0 && this.x > cW){
+							this.x = -this.w;
+						}
+						if(this.speed < 0 && this.x < -this.w){
+							this.x = cW;
+						}
+					}
+				}
+				
+				class Car extends Block{
+					constructor(x,y,w,h,speed){
+						super(x,y,w,h,speed);
+					}
+					draw(){
+						ctx.fillStyle = "darkred";
+						super.draw();
+					}
+				}
+				
+				class Log extends Block{
+					constructor(x,y,w,h,speed){
+						super(x,y,w,h,speed);
+					}
+					draw(){
+						ctx.fillStyle = "limegreen";
+						super.draw();
+					}
+				}
+				
+				function init(){
+					resetPlayer();
+					addCars();
+					addLogs();
+				}
+				
+				function loop(){
+					clearCanvas();
+					drawBg("#000");
+					
+					drawCars();
+					drawLogs();
+					
+					player.draw();
+					player.checkHitWall();
+					player.update();
+					if(player.checkWin()){
+						console.log("win");
+						window.removeEventListener("keydown",keydownHandle);
+					}
+					requestAnimationFrame(loop);
+				}
+
+				function clearCanvas(){
+					ctx.clearRect(0,0,cW,cH);
+				}
+
+				function drawBg(color){
+					//绘制背景颜色
+					ctx.fillStyle = color;
+					ctx.fillRect(0,0,cW,cH);
+					
+					//绘制安全区域
+					ctx.fillStyle = "skyblue";
+					ctx.fillRect(0,cH-grid,cW,grid);
+					ctx.fillRect(0,0,cW,grid);
+					ctx.fillRect(0,cH/2-grid/2,cW,grid);
+					
+					//绘制文字
+					ctx.font = "30px 微软雅黑";
+					ctx.textBaseline = "middle";
+					ctx.fillStyle = "white";
+					ctx.fillText("起点(安全区域)",0,cH-grid/2);
+					ctx.fillText("终点(安全区域)",0,grid/2);
+					ctx.fillText("安全区域",0,cH/2);
+				}
+				
+				function resetPlayer(){
+					player = new Player(cW/2-grid/2,cH-grid,grid);
+					// player = new Player(cW/2-grid/2,cH/2-grid/2,grid);
+					player.attach(null);
+				}
+				
+				function addCars(){
+					index = 0;
+					cars[index] = new Car(random(0,cW),cH-grid*2,grid*4,grid,random(-8,8));
+					index++;
+					cars[index] = new Car(random(0,cW),cH-grid*3,grid*3,grid,random(-8,8));
+					index++;
+					cars[index] = new Car(random(0,cW),cH-grid*4,grid*2,grid,random(-8,8));
+					index++;
+					cars[index] = new Car(random(0,cW),cH-grid*5,grid,grid,random(-8,8));
+				}
+				
+				function drawCars(){
+					for (var i = 0; i < cars.length; i++) {
+						cars[i].draw();
+						cars[i].update();
+						cars[i].checkHitWall();
+						if(cars[i].checkHitRect(player)){
+							resetPlayer();
+						}
+					}
+				}
+				
+				function addLogs(){
+					index = 0;
+					logs[index] = new Log(random(0,cW),cH-grid*7,grid*2,grid,random(-4,4));
+					index++;
+					logs[index] = new Log(random(0,cW),cH-grid*8,grid*3,grid,random(-4,4));
+					index++;
+					logs[index] = new Log(random(0,cW),cH-grid*9,grid*4,grid,random(-4,4));
+					index++;
+					logs[index] = new Log(random(0,cW),cH-grid*10,grid*5,grid,random(-4,4));
+				}
+				
+				function drawLogs(){
+					for (var i = 0; i < logs.length; i++) {
+						logs[i].draw();
+						logs[i].update();
+						logs[i].checkHitWall();
+					}
+					if(player.y < cH/2 - grid && player.y > 0){
+						let attachFlag = false;
+						for (var i = 0; i < logs.length; i++) {
+							if(logs[i].checkHitRect(player)){
+								attachFlag = true;
+								player.attach(logs[i]);
+							}
+						}
+						if(!attachFlag){
+							resetPlayer();
+						}
+					}else{
+						player.attach(null);
+					}
+				}
+				
+				return {
+					run(){
+						init();
+						loop();
+					}
+				}
+			})()
+			
+			app.run();
+		</script>
+	</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			body{
+				overflow: hidden;
+				background-color: pink;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas"></canvas>
+		<script>
+			let canvas = document.getElementById("myCanvas"),
+				ctx = canvas.getContext("2d"),
+				w = canvas.width = window.innerWidth,
+				h = canvas.height = window.innerHeight,
+				t = 0,
+				maxt = 2*Math.PI,
+				vt = 0.01,
+				length = maxt/vt,
+				size = 20,
+				x = 0,
+				y = 0,
+				arr = [];
+			
+			init();
+			
+			draw();
+			
+			function init(){
+				ctx.translate(w/2,h/2);
+				
+				for (let i = 0; i < length; i++) {
+					x = 16 * Math.pow(Math.sin(t),3);
+					y = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t);
+					t += vt;
+					arr.push([x*size,-y*size])
+				}
+			}
+			
+			function draw(){
+				ctx.fillStyle = 'red';
+				ctx.moveTo(arr[0][0],arr[0][1]);
+				for (let i = 1; i < arr.length; i++) {
+					let item = arr[i];
+					ctx.lineTo(arr[i][0],arr[i][1]);
+				}
+				ctx.fill();
+			}
+			
+			
+			
+		</script>
+	</body>
+</html>

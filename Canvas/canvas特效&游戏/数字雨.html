@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			body{
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas"></canvas>
+		<script>
+			let canvas = document.getElementById("myCanvas"),
+				ctx = canvas.getContext("2d"),
+				cW = canvas.width = window.innerWidth,
+				cH = canvas.height = window.innerHeight,
+				size = 16,
+				cols = cW / size | 0,
+				heightArr = new Array(cols).fill(0),
+				date = new Date();
+			
+			~function loop(){
+				if(new Date() - date > 20){
+					ctx.fillStyle = "rgba(0,0,0,.2)";
+					ctx.fillRect(0,0,cW,cH);
+					for (let i = 0; i < cols; i++) {
+						let num = Math.floor(Math.random()*10);
+						ctx.font = 'bold '+size+'px Microsoft yahei';
+						ctx.fillStyle = "#f30";
+						ctx.fillText(num,i * size, heightArr[i]);
+						heightArr[i] += size;
+						if(heightArr[i] > cH && Math.random() > 0.8){
+							heightArr[i] = 0;
+						}
+					}
+					date = new Date();
+				}
+				requestAnimationFrame(loop);
+			}()
+		</script>
+	</body>
+</html>

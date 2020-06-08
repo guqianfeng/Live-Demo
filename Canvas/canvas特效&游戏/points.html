@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			body{
+				overflow: hidden;
+				background-color: #000;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas"></canvas>
+		<script>
+			let random = (min, max) => Math.random() * (max - min) + min;
+			
+			let oCvs = document.getElementById("myCanvas"),
+				ctx = oCvs.getContext("2d"),
+				W = oCvs.width = window.innerWidth,
+				H = oCvs.height = window.innerHeight;
+				ctx.translate(W / 2, H / 2);
+			
+			function render(){
+				ctx.clearRect(-W / 2, -H / 2, W, H);
+				ctx.beginPath();
+				for (var i = 0; i < 2 * Math.PI; i += 0.1) {
+					let R = random(150, 300);
+					let x = R * Math.cos(i);
+					let y = R * Math.sin(i);
+					// ctx.beginPath();
+// 					ctx.fillStyle = "#fff";
+// 					ctx.arc(x, y, 1, 0, 2 * Math.PI);
+// 					ctx.fill();
+					ctx.strokeStyle = "#fff";
+					ctx.lineTo(x, y);
+				}
+				ctx.closePath();
+				ctx.stroke();
+			}	
+			
+			~function(){
+				render();
+				// requestAnimationFrame(arguments.callee);
+				setTimeout(arguments.callee, 500)
+			}()
+		</script>
+	</body>
+</html>

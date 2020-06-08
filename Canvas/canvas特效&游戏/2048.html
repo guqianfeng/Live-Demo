@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>2048</title>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			#myCanvas{
+				display: block;
+				margin: 50px auto;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="400" height="400"></canvas>
+		<script>
+			let game = (function(){
+				
+				let canvas = document.getElementById("myCanvas"),
+					ctx = canvas.getContext("2d"),
+					grid,
+					size = 100;
+				
+				/**
+				 * 创建个空的grid
+				 */
+				function blankGrid(){
+					return [
+						[0,0,0,0],
+						[0,0,0,0],
+						[0,0,0,0],
+						[0,0,0,0]
+					]
+				}
+				
+				function init(){
+					grid = blankGrid();
+					// console.table(grid);
+					addNum();
+					addNum();
+					// console.table(grid);
+				}
+				
+				function loop(){
+					document.addEventListener("keydown",keyDownHandle);
+				}
+				
+				function keyDownHandle(e){
+					let winFlag = gameWin();
+					if(winFlag){
+						alert("你获胜了");
+						return;
+					}
+					let overFlag = gameOver();
+					if(overFlag){
+						alert("你输了");
+						return;
+					}
+					let past = copyGrid(grid);
+					let flipped = false;
+					let rotated = false;
+					if(e.keyCode >= 37 && e.keyCode <= 40){
+						switch(e.keyCode){
+							case 37:
+									grid = flipGrid(grid);
+									flipped = true;
+									break;
+							case 38: 
+									grid = rotateGrid(grid);
+									grid = flipGrid(grid);
+									flipped = true;
+									rotated = true;
+									break;
+							case 39:
+									//do nothing
+									break;
+							case 40:
+									grid = rotateGrid(grid);
+									rotated = true;
+									break;
+						}
+						for (let i = 0; i < 4; i++) {
+							grid[i] = operate(grid[i]);
+						}
+						
+						if(flipped){
+							grid = flipGrid(grid);
+						}
+						if(rotated){
+							grid = rotateGrid(grid);
+							grid = rotateGrid(grid);
+							grid = rotateGrid(grid);
+						}
+						if(compare(past,grid)){
+							addNum();
+						}
+					}
+					
+				}
+				
+				function addNum(){
+					let options = [];
+					for (let i = 0; i < 4; i++) {
+						for (let j = 0; j < 4; j++) {
+							if(grid[i][j]==0){
+								options.push({
+									x: i,
+									y: j
+								})
+							}
+						}
+					}
+					if(options.length){
+						let randomPos = options[Math.random()*options.length | 0];
+						// console.log(randomPos);
+						grid[randomPos.x][randomPos.y] = Math.random()>0.1 ? 2 : 4;
+					}
+					draw();
+				}
+				
+				function draw(){
+					ctx.clearRect(0,0,400,400);
+					drawBg();
+					drawNum();
+				}
+				
+				function drawBg(){
+					for (let i = 0; i < 5; i++) {
+						ctx.beginPath();
+						ctx.moveTo(i*size,0);
+						ctx.lineTo(i*size,400);
+						ctx.moveTo(0,i*size);
+						ctx.lineTo(400,i*size);
+						ctx.stroke();
+					}
+				}
+				
+				function drawNum(){
+					ctx.font = "32px 微软雅黑";
+					ctx.textAlign = "center";
+					ctx.textBaseline = "middle";
+					for (let i = 0; i < 4; i++) {
+						for (let j = 0; j < 4; j++) {
+							let val = grid[i][j];
+							if(val!=0){
+								ctx.fillText(val,j*size+size/2,i*size+size/2)
+							}
+						}
+					}
+				}
+				
+				function slide(row){
+					let arr = row.filter(item => item);
+					let missing = 4 - arr.length;
+					let newArray = Array(missing).fill(0).concat(arr);
+					return newArray;
+				}
+				
+				function combine(row){
+					for (let i = 3; i >= 1; i--) {
+						let a = row[i];
+						let b = row[i-1];
+						if(a==b){
+							row[i] = a + b;
+							row[i-1] = 0;
+						}
+					}
+					return row;
+				}
+				
+				function operate(row){
+					row = slide(row);
+					row = combine(row);
+					row = slide(row);
+					return row;
+				}
+				
+				function copyGrid(grid){
+					let past = blankGrid();
+					for (let i = 0; i < 4; i++) {
+						for (let j = 0; j < 4; j++) {
+							past[i][j] = grid[i][j];
+						}
+					}
+					return past;
+				}
+				
+				function compare(past,now){
+					for (let i = 0; i < 4; i++) {
+						for (let j = 0; j < 4; j++) {
+							if(past[i][j] != now[i][j]){
+								return true;
+							}
+						}
+					}
+					return false;
+				}
+				
+				function flipGrid(grid){
+					for (let i = 0; i < 4; i++) {
+						grid[i] = grid[i].reverse();
+					}
+					return grid;
+				}
+				
+				function rotateGrid(grid){
+					let newGrid = blankGrid();
+					for (let i = 0; i < 4; i++) {
+						for (let j = 0; j < 4; j++) {
+							newGrid[j][i] = grid[i][j];
+						}
+					}
+					return newGrid;
+				}
+				
+				function gameWin(){
+					for (let i = 0; i < 4; i++) {
+						for (let j = 0; j < 4; j++) {
+							if(grid[i][j] == 2048){
+								return true;
+							}
+						}
+					}
+					return false;
+				}
+				
+				function gameOver(){
+					let flag = true;
+					for (let i = 0; i < 4; i++) {
+						for (let j = 0; j < 4; j++) {
+							if(grid[i][j] == 0){
+								return false;
+							}
+						}
+					}
+					for (let i = 0; i < 4; i++) {
+						for (let j = 0; j < 4; j++) {
+							if(i != 3 && grid[i][j] == grid[i+1][j]){
+								return false;
+							}
+							if(j != 3 && grid[i][j]==grid[i][j+1]){
+								return false;
+							}
+						}
+					}
+					return flag;
+				}
+				
+				return {
+					run(){
+						init();
+						loop();
+					}
+				}
+			})()
+			
+			game.run();
+		</script>
+	</body>
+</html>

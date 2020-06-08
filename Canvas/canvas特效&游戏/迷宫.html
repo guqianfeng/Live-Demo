@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			body{
+				overflow: hidden;
+			}
+			#myCanvas{
+				display: block;
+				margin: 50px auto;
+				border: 1px solid black;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas" width="400" height="400"></canvas>
+		<script type="text/javascript">
+			let app = (function(){
+				
+				let randomColor = () => "#" + (Math.random()*0xfffff | 0).toString(16);
+				
+				let canvas = document.getElementById("myCanvas"),
+					ctx = canvas.getContext("2d"),
+					cW = canvas.width,
+					cH = canvas.height,
+					grid = [],
+					size = 40,
+					rows = cH/size,
+					cols = cW/size,
+					currentCell = null,
+					stack = [];
+				
+				class Cell{
+					constructor(i,j) {
+					    this.i = i;
+						this.j = j;
+						this.walls = [true,true,true,true];
+						this.visited = false;
+					}
+					draw(){
+						if(this.walls[0]){
+							ctx.beginPath();
+							ctx.moveTo(this.j*size,this.i*size)
+							ctx.lineTo(this.j*size+size,this.i*size);
+							ctx.stroke();
+						}
+						
+						if(this.walls[1]){
+							ctx.beginPath();
+							ctx.moveTo(this.j*size+size,this.i*size);
+							ctx.lineTo(this.j*size+size,this.i*size+size);
+							ctx.stroke();
+						}
+						
+						if(this.walls[2]){
+							ctx.beginPath();
+							ctx.moveTo(this.j*size+size,this.i*size+size);
+							ctx.lineTo(this.j*size,this.i*size+size);
+							ctx.stroke();
+						}
+						
+						if(this.walls[3]){
+							ctx.beginPath();
+							ctx.moveTo(this.j*size,this.i*size+size);
+							ctx.lineTo(this.j*size,this.i*size)
+							ctx.stroke();
+						}
+						if(this.visited){
+							ctx.beginPath();
+							ctx.fillStyle = "red";
+							if(currentCell == this){
+								ctx.fillStyle = "blue";
+							}
+							ctx.fillRect(this.j*size,this.i*size,size,size);
+						}
+					}
+					move(){
+						let canMove = [];
+						let left,top,right,bottom;
+						if(this.i>-1 && this.j-1>-1 && this.i<rows && this.j-1<cols){
+							left = grid[this.i][this.j-1];
+						}
+						if(this.i-1>-1 && this.j>-1 && this.i-1<rows && this.j<cols){
+							top = grid[this.i-1][this.j];
+						}
+						if(this.i>-1 && this.j+1>-1 && this.i<rows && this.j+1<cols){
+							right = grid[this.i][this.j+1];
+						}
+						if(this.i+1>-1 && this.j>-1 && this.i+1<rows && this.j<cols){
+							bottom = grid[this.i+1][this.j];
+						}
+						if(left && !left.visited){
+							canMove.push(left);
+						}
+						if(top && !top.visited){
+							canMove.push(top);
+						}
+						if(right && !right.visited){
+							canMove.push(right);
+						}
+						if(bottom && !bottom.visited){
+							canMove.push(bottom);
+						}
+						let random = Math.random() * canMove.length | 0;
+						if(canMove.length>0){
+							let next = canMove[random];
+							// console.log(this.i,this.j,next.i,next.j);
+							if(this.i < next.i){
+								//往下
+								this.walls[2] = false;
+								next.walls[0] = false;
+							}
+							if(this.i > next.i){
+								//往上
+								this.walls[0] = false;
+								next.walls[2] = false;
+							}
+							if(this.j < next.j){
+								//往右
+								this.walls[1] = false;
+								next.walls[3] = false;
+							}
+							if(this.j > next.j){
+								//往左
+								this.walls[3] = false;
+								next.walls[1] = false;
+							}
+							next.visited = true;
+							
+							stack.push(this);
+							
+							currentCell = next;
+						}else{
+							if(stack.length>0){
+								let cell = stack.pop();
+								currentCell = cell;
+							}
+						}
+					}
+				}
+				
+				function init(){
+					initGrid();
+				}
+				
+				function loop(){
+					clearCanvas();
+					drawGrid();
+					currentCell.move();
+					setTimeout(loop,100);
+				}
+				
+				function initGrid(){
+					for (var i = 0; i < rows; i++) {
+						grid[i] = [];
+						for (var j = 0; j < cols; j++) {
+							grid[i][j] = new Cell(i,j);
+						}
+					}
+					currentCell = grid[0][0];
+					currentCell.visited = true;
+				}
+				
+				function drawGrid(){
+					for (var i = 0; i < grid.length; i++) {
+						for (var j = 0; j < grid[i].length; j++) {
+							grid[i][j].draw();
+						}
+					}
+				}
+
+				function clearCanvas(){
+					ctx.clearRect(0,0,cW,cH);
+				}
+
+				function drawBg(color){
+					ctx.fillStyle = color;
+					ctx.fillRect(0,0,cW,cH);
+				}
+				
+				return {
+					run(){
+						init();
+						loop();
+					}
+				}
+			})()
+			
+			app.run();
+		</script>
+	</body>
+</html>

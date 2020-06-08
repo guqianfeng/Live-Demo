@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			body{
+				background-color: black;
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body>
+			<canvas id="myCanvas"></canvas>
+			<script type="text/javascript">
+				let randomColor = () => "#"+(Math.random()*0xffffff | 0).toString(16);
+				let random = (min,max) => Math.random()*(max-min)+min;
+				let canvas = document.getElementById("myCanvas"),
+					ctx = canvas.getContext("2d"),
+					w = canvas.width = window.innerWidth,
+					h = canvas.height = window.innerHeight,
+					R = 300,
+					deg = 0,
+					arr = [];
+					
+				class Particle{
+					constructor(x,y) {
+					    this.x = x;
+						this.y = y;
+						this.r = 8;
+						this.color = randomColor();
+						this.vx = random(-2,2);
+						this.vy = random(-2,2);
+					}
+					draw(){
+						ctx.fillStyle = this.color;
+						// ctx.fillStyle = randomColor();
+						ctx.beginPath();
+						ctx.arc(this.x,this.y,this.r,0,2*Math.PI);
+						ctx.fill();
+						ctx.closePath();
+					}
+					update(){
+						this.x += this.vx;
+						this.y += this.vy;
+						this.r -= 0.02;
+					}
+				}
+					
+// 				let p = new Particle(w/2,h/2);
+// 				p.draw();
+				function spawn(){
+					let p = new Particle(w/2+R*Math.cos(Math.PI*deg/180),h/2+R*Math.sin(Math.PI*deg/180));
+					// let p = new Particle(w/2,h/2);
+					arr.push(p);
+					deg++;
+				}
+				
+				function render(){
+					ctx.clearRect(0,0,w,h);
+					for (var i = 0; i < arr.length; i++) {
+						var item = arr[i];
+						item.draw();
+						item.update();
+						item.r < 0.5 && arr.splice(i,1);
+					}
+				}
+				
+				~function(){
+					spawn();
+					render();
+					requestAnimationFrame(arguments.callee)
+				}()
+			</script>
+	</body>
+</html>

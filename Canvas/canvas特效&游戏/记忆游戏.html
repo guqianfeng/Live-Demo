@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			body{
+				overflow: hidden;
+			}
+			#myCanvas{
+				display: block;
+				margin: auto;
+			}
+			p{
+				margin: 20px auto;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<p id="info">已使用步数 : <span id="score">0</span></p>
+		<canvas id="myCanvas" width="400" height="400"></canvas>
+		<script type="text/javascript">
+			let app = (function(){
+				
+				let canvas = document.getElementById("myCanvas"),
+					ctx = canvas.getContext("2d"),
+					cW = canvas.width,
+					cH = canvas.height,
+					size = 100,
+					rows = cH/size,
+					cols = cW/size,
+					grid = [],
+					arr = [],
+					count = 0,//点击次数
+					showCount = 0,//已匹配数量
+					matchFlag = false,//是否在匹配中
+					result = [],
+					timer,
+					cheat = [];
+					
+				class Cell{
+					constructor(i,j,num) {
+						this.i = i;
+						this.j = j;
+						this.num = num;
+						this.show = false;
+						this.open = false;
+					}
+					draw(){
+						ctx.beginPath();
+						ctx.strokeRect(this.j*size,this.i*size,size,size);
+						if(this.show || this.open){
+							ctx.font = "20px 微软雅黑";
+							ctx.textAlign = "center";
+							ctx.textBaseline = "middle";
+							ctx.beginPath();
+							ctx.fillText(this.num,this.j*size+size/2,this.i*size+size/2);
+						}
+					}
+					isClick(x,y){
+						return x > this.j * size && x < (this.j + 1) * size &&
+								y > this.i * size && y < (this.i + 1) * size
+					}
+				}
+						
+				canvas.addEventListener("click",clickHandle);
+				
+				function clickHandle(e){
+					let bcr = canvas.getBoundingClientRect();
+					let cLeft = e.clientX - bcr.left;
+					let cTop = e.clientY - bcr.top;
+					for (var i = 0; i < rows; i++) {
+						for (var j = 0; j < cols; j++) {
+							let flag = grid[i][j].isClick(cLeft,cTop);
+							if(flag){
+								if(grid[i][j].show || grid[i][j].open){
+									//显示和打开的不能点击
+									return;
+								}
+								if(matchFlag){
+									//匹配中不能点击
+									return;
+								}
+								grid[i][j].show = true;
+								result.push({i:i,j:j,num:grid[i][j].num})
+								redrawCanvas();
+								count++;
+								// console.log(count);
+								if(count%2==0){
+									matchFlag = true;
+									if(result[0].num == result[1].num){
+										// console.log(1);
+										grid[result[0].i][result[0].j].open = true;
+										grid[result[1].i][result[1].j].open = true;
+										matchFlag = false;
+										showCount += 2;
+										redrawCanvas();
+									}else{
+										// console.log(2);
+										grid[result[0].i][result[0].j].show = false;
+										grid[result[1].i][result[1].j].show = false;
+										setTimeout(function(){
+											matchFlag = false;
+											redrawCanvas();
+										},500)
+									}
+									result = [];
+								}
+							}
+						}
+					}
+				}
+					
+				
+				
+				function init(){
+					initGrid();
+					drawGrid();
+					// console.log(arr);
+				}
+
+				function clearCanvas(){
+					ctx.clearRect(0,0,cW,cH);
+				}
+				
+				function initGrid(){
+					let initNum = 1;
+					for (var i = 0; i < rows*cols; i+=2) {
+						arr[i] = initNum;
+						arr[i+1] = initNum;
+						initNum ++;
+					}
+					arr = arr.sort(function(){
+						return Math.random()-0.5;
+					})
+					// console.log(arr);
+					for (var i = 0; i < rows; i++) {
+						grid[i] = [];
+						for (var j = 0; j < cols; j++) {
+							grid[i][j] = null;
+						}
+					}
+					for (var i = 0; i < arr.length; i++) {
+						grid[Math.floor(i/rows)][i%rows] = new Cell(Math.floor(i/rows),i%rows,arr[i]);
+					}
+					// console.table(grid);
+					for (var i = 0; i < rows; i++) {
+						cheat[i] = [];
+						for (var j = 0; j < cols; j++) {
+							cheat[i][j] = grid[i][j].num;
+						}
+					}
+					console.table(cheat);
+				}
+				
+				function drawGrid(){
+					for (var i = 0; i < rows; i++) {
+						for (var j = 0; j < cols; j++) {
+							grid[i][j].draw();
+						}
+					}
+				}
+				
+				function redrawCanvas(){
+					clearCanvas();
+					drawGrid();
+				}
+				
+				function loop(){
+					// console.log(showCount)
+					if(showCount == rows*cols){
+						cancelAnimationFrame(timer);
+						setTimeout(function(){
+							console.log("游戏胜利 你一共使用了"+count+"步");
+							document.getElementById("info").innerHTML = "游戏胜利 你一共使用了"+count+"步";
+						},500)
+					}else{
+						document.getElementById("score").innerHTML = count;
+						timer = requestAnimationFrame(loop)
+					}
+				}
+				
+				return {
+					run(){
+						init();
+						loop();
+					}
+				}
+			})()
+			
+			app.run();
+		</script>
+	</body>
+</html>

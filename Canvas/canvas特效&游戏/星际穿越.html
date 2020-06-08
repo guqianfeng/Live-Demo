@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title></title>
+		<style>
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			body{
+				overflow: hidden;
+				background-color: #000000;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="myCanvas"></canvas>
+		<script>
+			let app = (function(){
+				
+				let random = (min,max) => Math.random()*(max-min)+min;
+				
+				let canvas = document.getElementById("myCanvas"),
+					ctx = canvas.getContext("2d"),
+					w,
+					h,
+					length = 400,
+					stars = [];
+					
+				window.addEventListener("resize",resizeHandle());
+				
+				function resizeHandle(){
+					w = canvas.width = window.innerWidth;
+					h = canvas.height = window.innerHeight;
+					ctx.translate(w/2,h/2)
+					return resizeHandle;
+				}
+				
+				class Star{
+					constructor() {
+					    this.x = random(-w/2,w/2);
+						this.y = random(-h/2,h/2);
+						this.z = random(0,w);
+						this.r = 1;
+						// this.pz = this.z;
+					}
+					draw(){
+						ctx.beginPath();
+						
+						let sx = this.x / this.z * w;
+						let sy = this.y / this.z * h;
+						ctx.fillStyle = "#FFFFFF";
+						ctx.arc(sx,sy,this.r,0,2*Math.PI);
+						ctx.fill();
+						
+// 						this.pz = this.z;
+// 						
+// 						ctx.strokeStyle = "#FFFFFF";
+// 						let px = this.x / this.pz * w;
+// 						let py = this.y / this.pz * h;
+// 						ctx.moveTo(px,py);
+// 						ctx.lineTo(sx,sy);
+// 						ctx.stroke();
+					}
+					update(){
+						this.r += 0.05;
+						this.z -= 10;
+						if(this.z < 1){
+							this.z = w;
+							this.r = 1;
+							this.x = random(-w/2,w/2);
+							this.y = random(-h/2,h/2);
+							// this.pz = this.z;
+						}
+					}
+				}
+				
+// 				let star = new Star();
+// 				console.log(star);
+
+				function init(){
+					for (let i = 0; i < length; i++) {
+						let star = new Star();
+						stars.push(star);
+					}
+				}
+				
+				function loop(){
+					ctx.clearRect(-w/2,-h/2,w,h);
+					for (let i = 0; i < length; i++) {
+						stars[i].draw();
+						stars[i].update();
+					}
+					requestAnimationFrame(loop)
+				}
+				
+				return {
+					run(){
+						init();
+						loop();
+					}
+				}
+			})()
+			
+			app.run();
+		</script>
+	</body>
+</html>
