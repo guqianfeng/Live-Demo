@@ -53,6 +53,7 @@
 * [codepen](https://codepen.io/)
 * [picsumPhotos](https://picsum.photos/)
 * [字符画](http://patorjk.com/software/taag)
+* [截图工具](https://sspai.com/post/43937)
 
 > 菜单   
 
