@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loop</title>
+  </head>
+  <body>
+    <h1>这是我们测试的页面，用于测试请求轮询</h1>
+    <h2>请打开控制台看</h2>
+    <script>
+      // fetch('/number').then(res => res.json()).then(result => console.log(result))
+
+      function loop(url, delay = 1000) {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            fetch(url)
+              .then((res) => res.json())
+              .then((result) => {
+                console.log(result)
+                if (result.code == 10000) {
+                  resolve(result)
+                } else {
+                  resolve(loop(url, delay))
+                }
+              });
+          }, delay);
+        });
+      }
+
+      // loop('/number', 500)
+      async function getResult () {
+        let res = await loop('/number', 500);
+        console.log('最终结果是', res);
+      }
+
+      getResult();
+    </script>
+  </body>
+</html>
