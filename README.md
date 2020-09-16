@@ -55,6 +55,7 @@
 * [字符画](http://patorjk.com/software/taag)
 * [截图工具](https://sspai.com/post/43937)
 * [运算符优先级](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Operator_Precedence)
+* [轮询接口](https://www.cnblogs.com/slongs/p/11559527.html)
 
 > 菜单   
 
