@@ -47,13 +47,14 @@
 * wxml - 微信小程序wxml格式化以及高亮组件(高度自定义)
 
 
-> 推荐几个网站
+> Tips
 
 * [freecodecamp](https://learn.freecodecamp.one/)
 * [codepen](https://codepen.io/)
 * [picsumPhotos](https://picsum.photos/)
 * [字符画](http://patorjk.com/software/taag)
 * [截图工具](https://sspai.com/post/43937)
+* [运算符优先级](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Operator_Precedence)
 
 > 菜单   
 
