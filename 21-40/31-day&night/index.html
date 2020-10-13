@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>~~</title>
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+    }
+    #sun, #moon {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: #ffeea2;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #sun:after, #moon:after {
+      content: '';
+      width: 600px;
+      height: 600px;
+      background-color: orange;
+      border-radius: 50%;
+    }
+    #sun {
+      z-index: 20;
+      clip-path: polygon(50% 0, 50% 100%, 0 100%, 0 0);
+      /* animation: move 2s linear infinite alternate; */
+    }
+    #sea {
+      position: absolute;
+      width: 100%;
+      height: 30%;
+      bottom: 0;
+      backdrop-filter: blur(100px);
+      z-index: 30;
+    }
+    #moon {
+      background-color: #040720;
+    }
+    #moon:after {
+      background-color: transparent;
+      box-shadow: 160px 180px 0 cyan;
+      transform: translate(-160px, -180px);
+    }
+    @keyframes move{
+      0% {
+        clip-path: polygon(100% 0, 100% 100%, 0 100%, 0 0);
+      }
+      50% {
+        clip-path: polygon(50% 0, 50% 100%, 0 100%, 0 0);
+      }
+      100% {
+        clip-path: polygon(0 0, 0 100%, 0 100%, 0 0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="sun"></div>
+  <div id="moon"></div>
+  <div id="sea"></div>
+  <script>
+    document.addEventListener('mousemove', e => {
+      // console.log(Math.floor(e.clientX / window.innerWidth * 100))
+      let percent = Math.floor(e.clientX / window.innerWidth * 100);
+      // console.log(percent)
+      document.querySelector('#sun').style.clipPath = `polygon(${percent}% 0, ${percent}% 100%, 0 100%, 0 0)`
+    })
+  </script>
+</body>
+</html>
