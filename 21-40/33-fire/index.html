@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>纪念炎柱大哥</title>
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+      overflow: hidden;
+      background-color: #000;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="myCanvas"></canvas>
+  <script>
+    const {random, PI, floor} = Math;
+    const randomRange = (min, max) => floor(random() * (max - min) + min)
+    let oCvs = document.querySelector("#myCanvas");
+    let ctx = oCvs.getContext("2d");
+    let cW = oCvs.width = window.innerWidth;
+    let cH = oCvs.height = window.innerHeight;
+    let num = 1000;
+    let particles = [];
+
+    class FireParticle {
+      constructor () {
+        this.reset()
+      }
+
+      draw () {
+        ctx.beginPath();
+        ctx.fillStyle = this.color;
+        ctx.arc(this.x, this.y, this.r, 0, 2 * PI);
+        ctx.fill();
+        this.update();
+      }
+
+      reset () {
+        this.x = cW / 2;
+        this.y = cH / 2;
+        this.color = 'rgba(255, 5, 0, .2)';
+        this.r = randomRange(5, 25);
+      }
+
+      update () {
+        if (this.r > 0) {
+          this.y -= randomRange(3, 4)
+          this.x -= randomRange(-3, 3);
+          this.r -= 0.5;
+        } else {
+          this.reset();
+        }
+      }
+    }
+
+    // let fireParticle = new FireParticle();
+    // fireParticle.draw();
+    function generate () {
+      for (let i = 0; i < num; i++) {
+        particles.push(new FireParticle())
+      }
+    }
+
+    generate();
+    // console.log(particles);
+
+    ~function () {
+      ctx.globalCompositeOperation="destination-out";
+      ctx.fillStyle = 'rgba(0, 0, 0, .2)';
+      ctx.fillRect(0, 0, cW, cH);
+      ctx.globalCompositeOperation="lighter";
+      particles.forEach(p => {
+        p.draw();
+      })
+      requestAnimationFrame(arguments.callee)
+    } ()
+  </script>
+</body>
+</html>
