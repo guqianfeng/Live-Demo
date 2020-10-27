@@ -68,4 +68,4 @@
 * [eye_move](https://qianfengg.github.io/Live-Demo/01-20/15-eye_move/), [录制视频](https://www.bilibili.com/video/av89274915) 
 * [div_move](https://qianfengg.github.io/Live-Demo/01-20/12-move_div/),[录制视频](https://www.bilibili.com/video/av82881560)
 * [play_ship](https://qianfengg.github.io/Live-Demo/01-20/20-play_ship/),[录制视频](https://www.bilibili.com/video/BV1eE411p7ga)
-* [fire](https://qianfengg.github.io/Live-Demo/21-40/38-fire/),录制视频暂无
+* [fire](https://qianfengg.github.io/Live-Demo/21-40/34-fire/),录制视频暂无
