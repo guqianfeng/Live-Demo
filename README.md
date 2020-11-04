@@ -56,9 +56,10 @@
 * [截图工具](https://sspai.com/post/43937)
 * [运算符优先级](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Operator_Precedence)
 * [轮询接口](https://www.cnblogs.com/slongs/p/11559527.html)
-* 懒加载可以使用IntersectionObserver
+* 懒加载可以使用[IntersectionObserver](http://www.ruanyifeng.com/blog/2016/11/intersectionobserver_api.html)
 * [如何选择正确的Node框架：Next, Nuxt, Nest?](https://segmentfault.com/a/1190000019067086)
 * [css解析顺序及优化](https://blog.csdn.net/jinboker/article/details/52126021?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.compare&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.compare)
+* [js书写规范，参考了taro](https://taro-docs.jd.com/taro/docs/2.x/spec-for-taro/#javascript-书写规范)
 
 > 菜单   
 
