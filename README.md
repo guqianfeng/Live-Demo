@@ -45,6 +45,8 @@
 * minapp - 微信小程序标签、属性的智能补全（同时支持原生小程序、mpvue 和 wepy 框架，并提供 snippets）
 * wechat-snippet - 微信小程序代码辅助,代码片段自动完成
 * wxml - 微信小程序wxml格式化以及高亮组件(高度自定义)
+* Reactjs code snippets - react模板快捷键（rsf-函数组件，rcfc-类组件）
+* Auto Import - 自动导入
 
 
 > Tips
