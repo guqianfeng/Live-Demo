@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>小球滚动</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    body {
+      --size: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(45deg, skyblue, orange);
+    }
+    .wrap {
+      width: var(--size);
+      height: var(--size);
+      -webkit-box-reflect: below calc(var(--size) / 20) -webkit-linear-gradient(transparent 10%, rgba(0, 0, 0, .5));
+    }
+    .box {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border: calc(var(--size) / 20) solid transparent;
+      border-bottom-color: black;
+      border-right-color: black;
+      border-radius: 50%;
+      transform: rotate(45deg);
+      animation: 4s box-move ease-in-out infinite alternate;
+    }
+    .ball {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      animation: 4s ball-move ease-in-out infinite alternate;
+    }
+    .ball:after {
+      content: '';
+      position: absolute;
+      width: calc(var(--size) / 10);
+      height: calc(var(--size) / 10);
+      background-color: #fff;
+      bottom: 13%;
+      left: 14%;
+      border-radius: 50%;
+    }
+    @keyframes box-move {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(90deg);
+      }
+    }
+    @keyframes ball-move {
+      from {
+        transform: rotate(0);
+      }
+      to {
+        transform: rotate(-180deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="box">
+      <div class="ball"></div>
+    </div>
+  </div>
+</body>
+</html>
