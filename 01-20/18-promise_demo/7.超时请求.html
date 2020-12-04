@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promise.race</title>
+</head>
+<body>
+  <script>
+    let p1 = new Promise(resolve => {
+      setTimeout(() => {
+        resolve(1)
+      }, 1000)
+    })
+    let p2 = new Promise(resolve => {
+      setTimeout(() => {
+        resolve(2)
+      }, 2000)
+    })
+    let timeout = 500; //因为超时时间设的比较短，远小于模拟的2个请求，所以在race的api下会返回超时
+    let timeoutPromise = new Promise(resolve => {
+      setTimeout(() => {
+        resolve('超时啦')
+      }, timeout)
+    })
+    async function test () {
+      let res = await Promise.race([Promise.all([p1, p2]), timeoutPromise]);
+      console.log(res)
+    }
+    test();
+  </script>
+</body>
+</html>
