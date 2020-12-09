@@ -63,6 +63,7 @@
 * [css解析顺序及优化](https://blog.csdn.net/jinboker/article/details/52126021?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.compare&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.compare)
 * [js书写规范，参考了taro](https://taro-docs.jd.com/taro/docs/2.x/spec-for-taro/#javascript-书写规范)
 * [简繁切换](https://github.com/mumuy/chinese-transverter)
+* [ffmpeg](https://ffmpeg.org/)
 
 > 菜单   
 
