@@ -64,6 +64,7 @@
 * [js书写规范，参考了taro](https://taro-docs.jd.com/taro/docs/2.x/spec-for-taro/#javascript-书写规范)
 * [简繁切换](https://github.com/mumuy/chinese-transverter)
 * [ffmpeg](https://ffmpeg.org/)
+* [小程序中webview,网页触发小程序返回](https://blog.csdn.net/qq_36229632/article/details/100979754)
 
 > 菜单   
 
