@@ -42,9 +42,6 @@
 * px to rem - px转rem，可以在设置中配置基准值，默认是16，写好的px后选中快捷键ALT+Z转换rem
 * Live Share - 实时编码分享
 * Live Server + Browser Preview - vscode里打开浏览器，保存即更新，Live Server需要更改设置liveServer.settings.useBrowserPreview
-* minapp - 微信小程序标签、属性的智能补全（同时支持原生小程序、mpvue 和 wepy 框架，并提供 snippets）
-* wechat-snippet - 微信小程序代码辅助,代码片段自动完成
-* wxml - 微信小程序wxml格式化以及高亮组件(高度自定义)
 * ES7 React/Redux/GraphQL/React-Native snippets - react模板快捷键
 * Auto Import - 自动导入
 
@@ -65,6 +62,7 @@
 * [简繁切换](https://github.com/mumuy/chinese-transverter)
 * [ffmpeg](https://ffmpeg.org/)
 * [小程序中webview,网页触发小程序返回](https://blog.csdn.net/qq_36229632/article/details/100979754)
+* [master回退版本](https://www.cnblogs.com/yulibostu/articles/11551383.html)
 
 > 菜单   
 
