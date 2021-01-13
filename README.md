@@ -44,7 +44,7 @@
 * Live Server + Browser Preview - vscode里打开浏览器，保存即更新，Live Server需要更改设置liveServer.settings.useBrowserPreview
 * ES7 React/Redux/GraphQL/React-Native snippets - react模板快捷键
 * Auto Import - 自动导入
-
+* Codelf - 变量命名
 
 > Tips
 
