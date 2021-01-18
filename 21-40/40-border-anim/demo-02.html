@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>demo-02</title>
+  <style>
+    body {
+      display: flex;
+      min-height: 100vh;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+    div {
+      width: 300px;
+      height: 150px;
+      /* border: 2px dashed black; */
+      cursor: pointer;
+      background: linear-gradient(to right, black, transparent) repeat-x,
+                  linear-gradient(to right, black, transparent) repeat-x,
+                  linear-gradient(to bottom, black, transparent) repeat-y,
+                  linear-gradient(to bottom, black, transparent) repeat-y
+      ;
+      background-size: 4px 2px, 4px 2px, 2px 4px, 2px 4px;
+      background-position: 0px 0px, 0 100%, 0 0, 100% 0;
+    }
+    div:hover {
+      animation: .5s borderAnim linear infinite;
+    }
+    @keyframes borderAnim {
+      to {
+        background-position: 4px 0px, -4px 100%, 0 -4px, 100% 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div></div>
+</body>
+</html>

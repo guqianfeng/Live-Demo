@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>demo-01</title>
+  <style>
+    body {
+      display: flex;
+      min-height: 100vh;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+    div {
+      position: relative;
+      width: 300px;
+      height: 150px;
+      border: 1px solid black;
+      cursor: pointer;
+    }
+    div:after, div:before {
+      position: absolute;
+      content: '';
+      width: 20px;
+      height: 20px;
+      transition: .5s;
+    }
+    div::before {
+      top: -15px;
+      left: -15px;
+      border-top: 1px solid black;
+      border-left: 1px solid black;
+    }
+    div:after {
+      bottom: -15px;
+      right: -15px;
+      border-bottom: 1px solid black;
+      border-right: 1px solid black;
+    }
+    div:hover:before, div:hover:after {
+      width: calc(100% + 29px);
+      height: calc(100% + 29px);
+    }
+  </style>
+</head>
+<body>
+  <div></div>
+</body>
+</html>
