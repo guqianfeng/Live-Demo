@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #my-editor {
+        width: 500px;
+        height: 400px;
+        border: 1px solid #ccc;
+        overflow: auto;
+      }
+      #my-editor:focus {
+        outline: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="my-editor" contenteditable="true"></div>
+    <button id="bold-btn">加粗</button>
+    <button id="set-red">字体变红色</button>
+    <button id="bg-skyblue">字体背景天蓝色</button>
+    <button id="h1-title">h1</button>
+    <script>
+      const boldBtn = document.getElementById("bold-btn");
+      boldBtn.addEventListener("click", () => {
+        document.execCommand("bold");
+      });
+      const redBtn = document.getElementById("set-red");
+      redBtn.addEventListener("click", () => {
+        document.execCommand("foreColor", false, "red");
+      });
+      const bgBtn = document.getElementById("bg-skyblue");
+      bgBtn.addEventListener("click", () => {
+        document.execCommand("backColor", false, "skyblue");
+      });
+      const h1Btn = document.getElementById("h1-title");
+      h1Btn.addEventListener("click", () => {
+        const text = window.getSelection().toString();
+        console.log(text);
+        document.execCommand("insertHTML", false, `<h1>${text}</h1>`);
+      });
+    </script>
+  </body>
+</html>
