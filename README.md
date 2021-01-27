@@ -65,6 +65,7 @@
 * [小程序中webview,网页触发小程序返回](https://blog.csdn.net/qq_36229632/article/details/100979754)
 * [master回退版本](https://www.cnblogs.com/yulibostu/articles/11551383.html)
 * [富文本推荐wangeditor](https://www.wangeditor.com/)
+* [合成雪碧图](http://alloyteam.github.io/gopng/)
 
 > 菜单   
 
