@@ -65,6 +65,9 @@
 * [小程序中webview,网页触发小程序返回](https://blog.csdn.net/qq_36229632/article/details/100979754)
 * [富文本推荐wangeditor](https://www.wangeditor.com/)
 * [合成雪碧图](http://alloyteam.github.io/gopng/)
+* 回退代码
+    * `git reset --hard xxx` - 如果打了tag，可以直接输入tag
+    * `git push --force` - 强制推到远端
 
 > 菜单   
 
