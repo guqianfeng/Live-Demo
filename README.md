@@ -48,6 +48,7 @@
 
 > Tips
 
+* [octotree-github-code-tree](https://chrome.google.com/webstore/detail/octotree-github-code-tree/bkhaagjahfmjljalopjnoealnfndnagc)
 * [freecodecamp](https://learn.freecodecamp.one/)
 * [codepen](https://codepen.io/)
 * [picsumPhotos](https://picsum.photos/)
