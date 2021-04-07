@@ -71,6 +71,7 @@
     * `git push --force` - 强制推到远端
 
 * [低代码](https://www.jianshu.com/p/ca4cef706698?utm_campaign=haruki&utm_content=note&utm_medium=seo_notes&utm_source=recommendation)
+* [简历建议](https://juejin.cn/post/6947863151761162276)
 
 > 菜单   
 
