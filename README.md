@@ -72,6 +72,9 @@
 
 * [低代码](https://www.jianshu.com/p/ca4cef706698?utm_campaign=haruki&utm_content=note&utm_medium=seo_notes&utm_source=recommendation)
 * [简历建议](https://juejin.cn/post/6947863151761162276)
+* 翻译英文文档相关
+    * vs code插件 -  `Code Spell Checker`
+    * 使用[grammarly](https://www.grammarly.com/)
 
 > 菜单   
 
