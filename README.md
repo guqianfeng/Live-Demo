@@ -45,6 +45,7 @@
 * ES7 React/Redux/GraphQL/React-Native snippets - react模板快捷键
 * Auto Import - 自动导入
 * Codelf - 变量命名
+* Code Spell Checker - 检查英文单词拼写
 
 > Tips
 
