@@ -49,6 +49,7 @@
 
 > Tips
 
+* [Storybook](https://storybook.js.org/docs/react/get-started/introduction)
 * [octotree-github-code-tree](https://chrome.google.com/webstore/detail/octotree-github-code-tree/bkhaagjahfmjljalopjnoealnfndnagc)
 * [freecodecamp](https://learn.freecodecamp.one/)
 * [codepen](https://codepen.io/)
