@@ -49,6 +49,7 @@
 
 > Tips
 
+* [react技术揭秘](https://react.iamkasong.com/#%E5%AF%BC%E5%AD%A6%E8%A7%86%E9%A2%91)
 * [Storybook](https://storybook.js.org/docs/react/get-started/introduction)
 * [octotree-github-code-tree](https://chrome.google.com/webstore/detail/octotree-github-code-tree/bkhaagjahfmjljalopjnoealnfndnagc)
 * [freecodecamp](https://learn.freecodecamp.one/)
