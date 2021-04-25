@@ -49,6 +49,7 @@
 
 > Tips
 
+* [lerna官网](https://lerna.js.org/)
 * [react技术揭秘](https://react.iamkasong.com/#%E5%AF%BC%E5%AD%A6%E8%A7%86%E9%A2%91)
 * [微信机器人](https://www.cnblogs.com/twodog/p/12513976.html)
 * [Storybook](https://storybook.js.org/docs/react/get-started/introduction)
