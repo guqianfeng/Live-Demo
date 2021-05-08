@@ -81,6 +81,33 @@
     * vs code插件 -  `Code Spell Checker`
     * 使用[grammarly](https://www.grammarly.com/)
 
+* img的src使用svg，如何hover直接改变img的颜色
+    ```html
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+          img{
+            position: relative;
+            left: 0;
+            cursor: pointer;
+          }
+          img:hover{
+            left: -999px;
+            filter: drop-shadow(red 999px 0);
+          } 
+        </style>
+    </head>
+    <body>
+        <img src="./share-screen.svg" alt="">
+    </body>
+    </html>
+    ```
+
 > 菜单   
 
 * [hover_demo](https://qianfengg.github.io/Live-Demo/01-20/01-hover_demo/), [录制视频](https://www.bilibili.com/video/av72032058)
