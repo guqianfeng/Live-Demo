@@ -82,7 +82,7 @@
     * vs code插件 -  `Code Spell Checker`
     * 使用[grammarly](https://www.grammarly.com/)
 
-* img的src使用svg，如何hover直接改变img的颜色
+* 如何hover直接改变svg颜色(作为img的src使用或者div的背景图片使用都可以)
     ```html
     <!DOCTYPE html>
     <html lang="en">
