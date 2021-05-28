@@ -49,7 +49,7 @@
 
 > Tips
 
-* [vscode-generator-code](https://github.com/Microsoft/vscode-generator-code)
+* [vscode-generator-code](https://github.com/Microsoft/vscode-generator-code), [大佬给的vscode开发攻略](http://blog.haoji.me/vscode-plugin-overview.html)
 * [如何理解动态规划？](https://www.zhihu.com/question/39948290)
 * [lerna官网](https://lerna.js.org/), [用Lerna管理多包JS项目](https://zhuanlan.zhihu.com/p/33858131), [Lerna, TypeScript, CRA and Storybook combined](https://github.com/shnydercom/lerna-typescript-cra-uilib-starter)
 * [react技术揭秘](https://react.iamkasong.com/#%E5%AF%BC%E5%AD%A6%E8%A7%86%E9%A2%91)
