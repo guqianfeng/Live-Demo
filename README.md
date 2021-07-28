@@ -49,6 +49,7 @@
 
 > Tips
 
+* [CDP](https://chromedevtools.github.io/devtools-protocol/)
 * [css-tricks](https://css-tricks.com/)
 * [alpinejs](https://www.alpinejs.cn/)
 * [git-cherry-pick](http://www.ruanyifeng.com/blog/2020/04/git-cherry-pick.html)
