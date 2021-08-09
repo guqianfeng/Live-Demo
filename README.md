@@ -49,6 +49,7 @@
 
 > Tips
 
+* [装饰器](https://www.jianshu.com/p/d2f52a6b9a67)
 * [VsCode安装shader glsl环境](https://zhuanlan.zhihu.com/p/151384233)
 * [CDP](https://chromedevtools.github.io/devtools-protocol/)
 * [css-tricks](https://css-tricks.com/)
