@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>record</title>
+</head>
+<body>
+    <video class="video" width="600px" controls></video>
+    <div>
+        <button class="record-btn">record</button>
+    </div>
+    <script>
+        const btn = document.querySelector(".record-btn");
+        btn.addEventListener("click", async function () {
+            const stream = await navigator.mediaDevices.getDisplayMedia()
+            const mediaRecorder = new MediaRecorder(stream)
+            const chunks = []
+            mediaRecorder.addEventListener('dataavailable', (e) => {
+                chunks.push(e.data)
+            })
+            mediaRecorder.addEventListener('stop', () => {
+                const blob = new Blob(chunks)
+                const url = URL.createObjectURL(blob)
+                const video = document.querySelector(".video")
+                video.src = url
+                const a = document.createElement('a')
+                a.href = url
+                a.download = 'video.webm'
+                a.click()
+            })
+            mediaRecorder.start()
+        });
+    </script>
+</body>
+</html>

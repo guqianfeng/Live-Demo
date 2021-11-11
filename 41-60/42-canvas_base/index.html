@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>base-canvas</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        const { PI } = Math;
+        const deg2Rad = deg => deg * PI / 180
+        class Player {
+            constructor (app, x = 0, y = 0) {
+                this.app = app
+                this.x = x;
+                this.y = y;
+                this.w = 100;
+                this.h = 100;
+                this.scale = 1;
+                this.rotate = 0;
+            }
+            draw () {
+                const {app: {ctx}, x, y, z, w, h, scale, rotate} = this;
+                ctx.save()
+                ctx.translate(x, y)
+                ctx.scale(this.scale, this.scale)
+                ctx.rotate(deg2Rad(this.rotate))
+                ctx.beginPath()
+                ctx.fillStyle = 'red'
+                ctx.fillRect(-w / 2, -h / 2, w, h)
+                ctx.closePath()
+                ctx.restore()
+            }
+            update (deltaY) {
+                this.scale *= (deltaY > 0 ? 1.01 : 0.99)
+                this.rotate += deltaY * 0.1
+            }
+        }
+        class Application {
+            constructor(selector = 'canvas') {
+                console.log('load application')
+                this.selector = selector
+                this.canvas = null;
+                this.ctx = null;
+                this.w = 0;
+                this.h = 0;
+                this.init()
+            }
+            init () {
+                this.canvas = document.querySelector(this.selector)
+                this.ctx = this.canvas.getContext('2d')
+                this.player = new Player(this)
+                this.bindEvent()
+                this.render()
+            }
+
+            bindEvent () {
+                window.addEventListener('resize', this.reset())
+                this.canvas.addEventListener('wheel', ({deltaY}) => {
+                    this.player.update(deltaY)
+                })
+            }
+
+            reset () {
+                this.w = this.canvas.width = window.innerWidth;
+                this.h = this.canvas.height = window.innerHeight;
+                this.player.x = this.w / 2;
+                this.player.y = this.h / 2;
+                return this.reset
+            }
+
+            render () {
+                this.draw()
+                this.step()
+            }
+
+            draw () {
+                this.drawBg()
+                this.player.draw()
+            }
+
+            drawBg () {
+                const {ctx, w, h} = this
+                ctx.fillStyle = '#000'
+                ctx.fillRect(0, 0, w, h)
+            }
+            
+            step = () => {
+                requestAnimationFrame(this.step)
+                const {ctx, w, h} = this
+                ctx.clearRect(0, 0, w, h)
+                this.draw()
+            }
+        }
+        window.onload = new Application()
+    </script>
+</body>
+</html>
