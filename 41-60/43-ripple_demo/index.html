@@ -94,7 +94,7 @@
             const container = document.querySelector('.container')
             const ripple = document.querySelector('.ripple')
             // console.log(container, ripple)
-            container.addEventListener('click', e => {
+            container.addEventListener('mousedown', e => {
                 const rect = ripple.getBoundingClientRect()
                 const left = e.pageX - rect.left
                 const top = e.pageY - rect.top
