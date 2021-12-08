@@ -15,6 +15,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            background: linear-gradient(45deg, orange, skyblue)
         }
         .container {
             position: relative;
@@ -39,7 +40,10 @@
         }
         p {
             position: relative;
+            color: #fff;
+            font-size: 40px;
             z-index: 1;
+            animation: fontChange 0.5s ease-in-out 0s infinite alternate;
         }
         .circle {
             position: absolute;
@@ -57,6 +61,16 @@
             to {
                 transform: scale(250);
                 opacity: 0;
+            }
+        }
+        @keyframes fontChange {
+            from {
+                transform: scale(1);
+                opacity: 1;
+            }
+            to {
+                transform: scale(1.5);
+                opacity: 0.7;
             }
         }
     </style>
@@ -82,7 +96,7 @@
             const container = document.querySelector('.container')
             const ripple = document.querySelector('.ripple')
             // console.log(container, ripple)
-            ripple.addEventListener('click', e => {
+            container.addEventListener('click', e => {
                 const rect = ripple.getBoundingClientRect()
                 const left = e.pageX - rect.left
                 const top = e.pageY - rect.top
