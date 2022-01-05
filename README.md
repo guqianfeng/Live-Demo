@@ -49,6 +49,7 @@
 
 > Tips
 
+* [在线视频转gif](https://airmore.cn/video-to-gif-online)
 * [制作gif](https://www.cockos.com/licecap/)
 * [uigradients](https://uigradients.com/)
 * [装饰器](https://www.jianshu.com/p/d2f52a6b9a67)
