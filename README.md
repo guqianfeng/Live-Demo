@@ -49,6 +49,7 @@
 
 > Tips
 
+* [制作gif](https://www.cockos.com/licecap/)
 * [uigradients](https://uigradients.com/)
 * [装饰器](https://www.jianshu.com/p/d2f52a6b9a67)
 * [CDP](https://chromedevtools.github.io/devtools-protocol/)
