@@ -49,6 +49,7 @@
 
 > Tips
 
+* [.yarnrc](https://gist.github.com/wayou/a1a6fb1fc5153bc20829c7b2700ec0bc)
 * [在线视频转gif](https://airmore.cn/video-to-gif-online)
 * [制作gif](https://www.cockos.com/licecap/)
 * [uigradients](https://uigradients.com/)
