@@ -49,6 +49,7 @@
 
 > Tips
 
+* [MD画流程图、时序图(顺序图)、甘特图](https://www.jianshu.com/p/7ddbb7dc8fec)
 * [apifox文档](https://www.apifox.cn/help/)
 * [.yarnrc](https://gist.github.com/wayou/a1a6fb1fc5153bc20829c7b2700ec0bc)
 * [在线视频转gif](https://airmore.cn/video-to-gif-online)
