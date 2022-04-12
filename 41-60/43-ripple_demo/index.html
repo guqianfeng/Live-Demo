@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,6 +11,7 @@
             padding: 0;
             margin: 0;
         }
+
         body {
             display: flex;
             justify-content: center;
@@ -17,6 +19,7 @@
             height: 100vh;
             background: linear-gradient(45deg, orange, skyblue)
         }
+
         .container {
             position: relative;
             display: flex;
@@ -28,6 +31,7 @@
             cursor: pointer;
             user-select: none;
         }
+
         .ripple {
             position: absolute;
             width: 100%;
@@ -36,6 +40,7 @@
             left: 0;
             overflow: hidden;
         }
+
         p {
             position: relative;
             color: #fff;
@@ -43,6 +48,7 @@
             z-index: 1;
             animation: fontChange 0.5s ease-in-out 0s infinite alternate;
         }
+
         .circle {
             position: absolute;
             border: 1px solid transparent;
@@ -51,21 +57,25 @@
             left: 0;
             animation: ripple 0.75s ease 0s 1;
         }
+
         @keyframes ripple {
             from {
                 transform: scale(0);
                 opacity: 1;
             }
+
             to {
                 transform: scale(250);
                 opacity: 0;
             }
         }
+
         @keyframes fontChange {
             from {
                 transform: scale(1);
                 opacity: 1;
             }
+
             to {
                 transform: scale(1.5);
                 opacity: 0.7;
@@ -73,6 +83,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="ripple"></div>
@@ -80,9 +91,12 @@
     </div>
     <script>
         {
-            const {random} = Math
+            const {
+                random
+            } = Math
             const randomColor = () => '#' + (random() * 0xffffff | 0).toString(16).padStart(6, 0)
-            function createRipple (wrap, x, y) {
+
+            function createRipple(wrap, x, y) {
                 const circle = document.createElement('div')
                 circle.className = 'circle'
                 circle.style.left = x + 'px'
@@ -93,15 +107,16 @@
             }
             const container = document.querySelector('.container')
             const ripple = document.querySelector('.ripple')
-            // console.log(container, ripple)
-            container.addEventListener('mousedown', e => {
+            const run = e => {
                 const rect = ripple.getBoundingClientRect()
-                const left = e.pageX - rect.left
-                const top = e.pageY - rect.top
-                // console.log(ripple, left, top)
+                const left = e.touches ? e.touches[0].pageX : e.pageX - rect.left
+                const top = e.touches ? e.touches[0].pageY : e.pageY - rect.top
                 createRipple(ripple, left, top)
-            })
+            }
+            container.addEventListener('mousedown', run)
+            container.addEventListener('touchstart', run)
         }
     </script>
 </body>
+
 </html>
