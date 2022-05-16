@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       body {
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           height: 100vh;
+           background-color: #222;
+           margin: 0;
+           padding: 0;
+       }
+       h1 {
+           position: relative;
+           color: #333;
+           font-size: 5rem;
+       }
+       h1::after {
+            position: absolute;
+            content: attr(data-text);
+            left: 0;
+            top: 0;
+            color: yellow;
+            clip-path: ellipse(100px 100px at 0% 50%);
+            animation: anim 3s infinite alternate;
+       }
+       @keyframes anim {
+           to {
+            clip-path: ellipse(100px 100px at 100% 50%);
+           }
+       }
+    </style>
+</head>
+<body>
+    <h1 data-text="纯CSS探照灯效果">纯CSS探照灯效果</h1>
+</body>
+</html>

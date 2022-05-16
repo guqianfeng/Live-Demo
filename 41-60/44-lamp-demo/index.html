@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聚光灯特效</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        section {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            background: #000;
+            padding: 100px;
+        }
+        section h2 {
+            color: #fff;
+            font-size: 4em;
+        }
+        section p {
+            color: #fff;
+            font-size: 1.2em;
+            font-weight: 300;
+        }
+        section img {
+            max-width: 100%;
+            margin: 50px 0 0;
+        }
+        section .light {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <div class="light"></div>
+        <h2>Power Of Light</h2>
+        <p>
+            前端开发是创建WEB页面或APP等前端界面呈现给用户的过程，通过HTML，CSS及JavaScript以及衍生出来的各种技术、框架、解决方案，来实现互联网产品的用户界面交互 [1]  。
+            前端开发从网页制作演变而来，名称上有很明显的时代特征。在互联网的演化进程中，网页制作是Web1.0时代的产物，早期网站主要内容都是静态，以图片和文字为主，用户使用网站的行为也以浏览为主。随着互联网技术的发展和HTML5、CSS3的应用，现代网页更加美观，交互效果显著，功能更加强大。 [2] 
+            前端开发跟随移动互联网发展带来了大量高性能的移动终端设备应用。HTML5，Node.js的广泛应用，各类UI框架，JS类库层出不穷，开发难度也在逐步提升。 [1] 
+        </p>
+        <p>
+            前端开发是创建WEB页面或APP等前端界面呈现给用户的过程，通过HTML，CSS及JavaScript以及衍生出来的各种技术、框架、解决方案，来实现互联网产品的用户界面交互 [1]  。
+            前端开发从网页制作演变而来，名称上有很明显的时代特征。在互联网的演化进程中，网页制作是Web1.0时代的产物，早期网站主要内容都是静态，以图片和文字为主，用户使用网站的行为也以浏览为主。随着互联网技术的发展和HTML5、CSS3的应用，现代网页更加美观，交互效果显著，功能更加强大。 [2] 
+            前端开发跟随移动互联网发展带来了大量高性能的移动终端设备应用。HTML5，Node.js的广泛应用，各类UI框架，JS类库层出不穷，开发难度也在逐步提升。 [1] 
+        </p>
+        <p>
+            前端开发是创建WEB页面或APP等前端界面呈现给用户的过程，通过HTML，CSS及JavaScript以及衍生出来的各种技术、框架、解决方案，来实现互联网产品的用户界面交互 [1]  。
+            前端开发从网页制作演变而来，名称上有很明显的时代特征。在互联网的演化进程中，网页制作是Web1.0时代的产物，早期网站主要内容都是静态，以图片和文字为主，用户使用网站的行为也以浏览为主。随着互联网技术的发展和HTML5、CSS3的应用，现代网页更加美观，交互效果显著，功能更加强大。 [2] 
+            前端开发跟随移动互联网发展带来了大量高性能的移动终端设备应用。HTML5，Node.js的广泛应用，各类UI框架，JS类库层出不穷，开发难度也在逐步提升。 [1] 
+        </p>
+        <p>
+            前端开发是创建WEB页面或APP等前端界面呈现给用户的过程，通过HTML，CSS及JavaScript以及衍生出来的各种技术、框架、解决方案，来实现互联网产品的用户界面交互 [1]  。
+            前端开发从网页制作演变而来，名称上有很明显的时代特征。在互联网的演化进程中，网页制作是Web1.0时代的产物，早期网站主要内容都是静态，以图片和文字为主，用户使用网站的行为也以浏览为主。随着互联网技术的发展和HTML5、CSS3的应用，现代网页更加美观，交互效果显著，功能更加强大。 [2] 
+            前端开发跟随移动互联网发展带来了大量高性能的移动终端设备应用。HTML5，Node.js的广泛应用，各类UI框架，JS类库层出不穷，开发难度也在逐步提升。 [1] 
+        </p>
+        <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fup.enterdesk.com%2Fphoto%2F2009-4-13%2F200904112337297068.jpg&refer=http%3A%2F%2Fup.enterdesk.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1655264811&t=712beff96c3b1f0c437b644639df6b17" alt="">
+    </section>
+    <script>
+        {
+            const light = document.querySelector('.light');
+            document.addEventListener('mousemove', e => {
+                const x = e.pageX 
+                const y = e.pageY
+                light.style.backgroundImage = `radial-gradient(circle at ${x}px ${y}px, transparent, #000 30%)`
+            })
+        }
+    </script>
+</body>
+</html>
