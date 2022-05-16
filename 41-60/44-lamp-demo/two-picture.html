@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            position: relative;
+            display: flex;
+            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+        div.box {
+            position: absolute;
+            width: 172px;
+            height: 250px;
+            background-image: url(./person.jpg);
+            background-repeat: no-repeat;
+            background-position: 0px 0px;
+            background-size: 512px 500px;
+        }
+        .box.back {
+            background-position: -194px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="box back"></div>
+    <div class="box front"></div>
+    <script>
+        {
+            const front = document.querySelector('.front')
+            const back = document.querySelector('.back')
+            document.addEventListener('mousemove', e => {
+                const x = e.clientX;
+                const y = e.clientY
+                const {top, left, width, height} = front.getBoundingClientRect()
+                if (x >= left && x <= left + width && y >= top && y <= top + height) {
+                    back.style.zIndex = 1;
+                    back.style.clipPath = `ellipse(60px 60px at ${x - left}px ${y - top}px)`
+                } else {
+                    back.style.zIndex = 0;
+                }
+            })
+        }
+    </script>
+</body>
+</html>
