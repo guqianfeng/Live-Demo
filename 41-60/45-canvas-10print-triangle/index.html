@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas></canvas>
+    <script>
+      const { random, floor } = Math;
+      const randomRange = (min, max) => floor((max - min) * random() + min);
+      const canvas = document.querySelector("canvas");
+      const ctx = canvas.getContext("2d");
+      const w = (canvas.width = window.innerWidth);
+      const h = (canvas.height = window.innerHeight);
+      const size = 50;
+      let x = 0;
+      let y = 0;
+
+      drawBg();
+
+      // drawLine();
+
+      function drawBg() {
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, w, h);
+      }
+
+      function drawLine() {
+        // console.log(x, y)
+        ctx.save()
+        ctx.beginPath();
+        ctx.strokeStyle = "#fff";
+        ctx.lineWidth = 5;
+        ctx.lineCap = 'round'
+
+        const randomNumber = randomRange(0, 4);
+        // console.log(randomNumber)
+
+        switch (randomNumber) {
+          case 0:
+            // triangle0
+            // console.log(0)
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + size, y);
+            ctx.lineTo(x, y + size);
+            break;
+          case 1:
+            // triangle1
+            // console.log(1)
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + size, y);
+            ctx.lineTo(x + size, y + size);
+            break;
+          case 2:
+            // triangle2
+            // console.log(2)
+            ctx.moveTo(x, y);
+            ctx.lineTo(x, y + size);
+            ctx.lineTo(x + size, y + size);
+            break;
+          case 3:
+            // triangle3
+            // console.log(3)
+            ctx.moveTo(x + size, y);
+            ctx.lineTo(x + size, y + size);
+            ctx.lineTo(x, y + size);
+            break;
+        }
+        ctx.closePath();
+        ctx.stroke();
+        ctx.restore()
+      }
+
+      function anim () {
+        // console.log('anim')
+        drawLine()
+        if (x < w) {
+          x += size;
+        } else {
+          x = 0;
+          y += size;
+        }
+        if (y > h) {
+          ctx.clearRect(0, 0, w, h)
+          drawBg()
+          x = 0;
+          y = 0;
+        }
+        requestAnimationFrame(anim)
+      }
+      anim()
+    </script>
+  </body>
+</html>
