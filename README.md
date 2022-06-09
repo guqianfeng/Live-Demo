@@ -19,36 +19,21 @@
 * 项目根目录下，有个images的文件夹，里面会放些好玩的或者有价值的截图，大家无聊可以看下~
 * [直播地址](https://live.bilibili.com/11287766)
 
-> 最近刚入坑VSCode 推荐几个插件(持续更新)
+> VSCode 推荐几个插件(持续更新)
 
 * vscode-icons - 文件夹显示特殊图标 
-* CSS Peek - html与css关联
-* Prettier - 代码格式化
-* Icon Fonts - 图标集
 * Auto Rename Tag - 自动重命名标签
-* HTML Boilerplate - HTML模板
-* Color Info - 颜色提示
 * Auto Close Tag - 自动闭合标签
-* HTML CSS Support - html中css class的智能提示
-* Open In Browser - 用浏览器打开页面
 * GitLens - git源代码管理插件 
-* gitflow - gitflow
-* Markdown Preview Enhanced - 愉快地写md
 * Bracket Pair Colorizer 2 - 突出显示成对的括号
 * highlight-icemode - 选中相同的代码时，让高亮显示更加明显
-* Copy Relative Path - 复制文件的相对路径
-* Path Intellisense - 自动提示文件路径，支持各种快速引入文件
-* Color Manager - 一个很酷炫的颜色管理插件，很强大
-* px to rem - px转rem，可以在设置中配置基准值，默认是16，写好的px后选中快捷键ALT+Z转换rem
-* Live Share - 实时编码分享
-* Live Server + Browser Preview - vscode里打开浏览器，保存即更新，Live Server需要更改设置liveServer.settings.useBrowserPreview
+* Live Server
 * ES7 React/Redux/GraphQL/React-Native snippets - react模板快捷键
 * Auto Import - 自动导入
-* Codelf - 变量命名
-* Code Spell Checker - 检查英文单词拼写
 
 > Tips
 
+* [谷歌插件下载](https://chrome.zzzmh.cn/#/index)
 * [MD画流程图、时序图(顺序图)、甘特图](https://www.jianshu.com/p/7ddbb7dc8fec)
 * [apifox文档](https://www.apifox.cn/help/)
 * [.yarnrc](https://gist.github.com/wayou/a1a6fb1fc5153bc20829c7b2700ec0bc)
