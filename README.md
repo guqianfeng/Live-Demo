@@ -30,6 +30,10 @@
 * Live Server
 * ES7 React/Redux/GraphQL/React-Native snippets - react模板快捷键
 * Auto Import - 自动导入
+* JSON to TS - json格式直接解析ts接口
+* Error Lens - 错误提示
+* Volar - Vue3相关插件
+* Vue VSCode Snippets - Vue模板快捷键
 
 > Tips
 
