@@ -37,6 +37,7 @@
 
 > Tips
 
+* [自动生成文档?](https://www.mintlify.com/)
 * [谷歌插件下载](https://chrome.zzzmh.cn/#/index)
 * [MD画流程图、时序图(顺序图)、甘特图](https://www.jianshu.com/p/7ddbb7dc8fec)
 * [apifox文档](https://www.apifox.cn/help/)
