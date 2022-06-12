@@ -25,7 +25,6 @@
 * Auto Rename Tag - 自动重命名标签
 * Auto Close Tag - 自动闭合标签
 * GitLens - git源代码管理插件 
-* Bracket Pair Colorizer 2 - 突出显示成对的括号
 * highlight-icemode - 选中相同的代码时，让高亮显示更加明显
 * Live Server
 * ES7 React/Redux/GraphQL/React-Native snippets - react模板快捷键
