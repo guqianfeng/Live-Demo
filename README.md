@@ -2,9 +2,16 @@
 
 > 自媒体分享工具
 
-链接：https://pan.baidu.com/s/1WL95RU63KeH1NdqZUE1zZg?pwd=g03o 
-提取码：g03o 
---来自百度网盘超级会员V6的分享
+* windows
+
+    - 链接：https://pan.baidu.com/s/1WL95RU63KeH1NdqZUE1zZg?pwd=g03o 
+    提取码：g03o 
+    --来自百度网盘超级会员V6的分享
+
+* mac(以下工具可以在App Store下载)
+
+    - 电子教鞭 - screenbrush
+    - 截图工具 xnip 
 
 > 直播的背景
 
