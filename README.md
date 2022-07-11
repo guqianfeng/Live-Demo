@@ -40,6 +40,7 @@
 * GitLens - git源代码管理插件 
 * highlight-icemode - 选中相同的代码时，让高亮显示更加明显
 * Live Server
+* Preview on Web Server
 * ES7 React/Redux/GraphQL/React-Native snippets - react模板快捷键
 * Auto Import - 自动导入
 * JSON to TS - json格式直接解析ts接口
