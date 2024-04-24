@@ -22,8 +22,7 @@
     ![](./images/直播的开始.jpg)
 
 * 我的爱好，认识我的人估计就认为喜欢打游戏，编程等
-* 喜欢的游戏有这么几类，一般是基佬互相伤害的格斗类游戏，基佬一起闯关的或者自己单机通关的动作类游戏，
-    还有就是现在依然未退坑的炉石稀有~
+* 喜欢的游戏有这么几类，一般是基佬互相伤害的格斗类游戏，基佬一起闯关的或者自己单机通关的动作类游戏
 * 编程其实不完全是我的爱好，我喜欢的只是做做小游戏，写写小特效，和朋友们分享分享编程的小知识
 * 本项目应该就会记录些我直播后录播的视频吧，会给出视频链接，有游戏，有编程，录播应该就会放在b站上，等审核通过上传成功后，
     会在菜单中更新
@@ -34,17 +33,19 @@
 
 > VSCode 推荐几个插件(持续更新)
 
-* vscode-icons - 文件夹显示特殊图标 
-* Auto Rename Tag - 自动重命名标签
-* Auto Close Tag - 自动闭合标签
-* GitLens - git源代码管理插件 
-* Live Server
-* ES7 React/Redux/GraphQL/React-Native snippets - react模板快捷键
-* Auto Import - 自动导入
-* JSON to TS - json格式直接解析ts接口
-* Error Lens - 错误提示
-* Volar - Vue3相关插件
-* Vue VSCode Snippets - Vue模板快捷键
+* any-rule - 正则
+* Chinese - 简体中文
+* dotenv - 环境变量文件
+* errorLens - 错误提示
+* eslint - 代码质量检查
+* gitlens - git工具
+* JavaScript (ES6) code snippets - es6代码片段
+* JSON to TS - json转ts类型声明文件
+* live server - 本地服务
+* vim - 提高编程的快感
+* vscode-icons - 图标
+* vue-official - vue插件
+* Vue VSCode Snippets - vue代码片段
 
 > Tips
 
